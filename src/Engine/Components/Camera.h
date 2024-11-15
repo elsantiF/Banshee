@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Core/InputManager.h"
 #include "Core/Window.h"
 
 // TODO: Refactor this class to use Transform class

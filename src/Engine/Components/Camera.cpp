@@ -47,38 +47,38 @@ void Camera::Update(const float delta) {
     // Position update
     const float positionSpeed = 10.0f * delta;
 
-    if (m_Window->IsKeyPressed(GLFW_KEY_W)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
         m_Position += m_Front * positionSpeed;
     }
-    if (m_Window->IsKeyPressed(GLFW_KEY_S)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_S)) {
         m_Position -= m_Front * positionSpeed;
     }
-    if (m_Window->IsKeyPressed(GLFW_KEY_D)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_D)) {
         m_Position += m_Right * positionSpeed;
     }
-    if (m_Window->IsKeyPressed(GLFW_KEY_A)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_A)) {
         m_Position -= m_Right * positionSpeed;
     }
-    if (m_Window->IsKeyPressed(GLFW_KEY_Q)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_Q)) {
         m_Position += m_Up * positionSpeed;
     }
-    if (m_Window->IsKeyPressed(GLFW_KEY_E)) {
+    if (InputManager::IsKeyPressed(GLFW_KEY_E)) {
         m_Position -= m_Up * positionSpeed;
     }
 
     // Rotation update
     const float rotationSpeed = 35.0f * delta;
 
-    if(m_Window->IsKeyPressed(GLFW_KEY_DOWN)) {
+    if(InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
         m_Pitch -= rotationSpeed;
     }
-    if(m_Window->IsKeyPressed(GLFW_KEY_UP)) {
+    if(InputManager::IsKeyPressed(GLFW_KEY_UP)) {
         m_Pitch += rotationSpeed;
     }
-    if(m_Window->IsKeyPressed(GLFW_KEY_LEFT)) {
+    if(InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
         m_Yaw -= rotationSpeed;
     }
-    if(m_Window->IsKeyPressed(GLFW_KEY_RIGHT)) {
+    if(InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
         m_Yaw += rotationSpeed;
     }
 

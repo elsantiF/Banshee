@@ -20,6 +20,20 @@ void Window::Create(const std::string &title, const int width, const int height)
     glfwSwapInterval(1);
     glfwShowWindow(m_WindowPtr);
 
+    glfwSetKeyCallback(m_WindowPtr, [](GLFWwindow *window, const int key, int scancode, const int action, int mods) {
+        if (action == GLFW_REPEAT) return;
+        InputManager::SetKeyPressed(key, action == GLFW_PRESS);
+    });
+
+    glfwSetMouseButtonCallback(m_WindowPtr, [](GLFWwindow *window, const int button, const int action, int mods) {
+        if (action == GLFW_REPEAT) return;
+        InputManager::SetMouseButtonPressed(button, action == GLFW_PRESS);
+    });
+
+    glfwSetCursorPosCallback(m_WindowPtr, [](GLFWwindow *window, const double xpos, const double ypos) {
+        InputManager::SetMousePosition(xpos, ypos);
+    });
+
     Logger::INFO("Window created");
 }
 
@@ -34,10 +48,6 @@ bool Window::ShouldClose() const {
 
 void Window::SwapBuffers() const {
     glfwSwapBuffers(m_WindowPtr);
-}
-
-bool Window::IsKeyPressed(const int key) const {
-    return glfwGetKey(m_WindowPtr, key) == GLFW_PRESS;
 }
 
 WindowSize Window::GetSize() const {
