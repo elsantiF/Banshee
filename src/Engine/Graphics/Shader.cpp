@@ -29,7 +29,7 @@ void Shader::Init(const std::string &filename) {
     GLenum type = 0;
     GLsizei actualLength = 0;
 
-    for(int indexUniform = 0; indexUniform < numUniforms; indexUniform++) {
+    for (int indexUniform = 0; indexUniform < numUniforms; indexUniform++) {
         glGetActiveUniform(m_ProgramID, indexUniform, sizeof(uniformName) - 1,
                            &actualLength, &arraySize, &type, &uniformName[0]);
         uniformName[actualLength] = 0;
@@ -68,22 +68,23 @@ std::pair<unsigned int, unsigned int> Shader::CompileShader(const std::string &s
     vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    try {
-        vertexShaderFile.open(shaderName + ".vert");
-        fragmentShaderFile.open(shaderName + ".frag");
-        std::stringstream vShaderStream, fShaderStream;
+    vertexShaderFile.open(shaderName + ".vert");
+    fragmentShaderFile.open(shaderName + ".frag");
 
-        vShaderStream << vertexShaderFile.rdbuf();
-        fShaderStream << fragmentShaderFile.rdbuf();
+    Logger::PANIC(!vertexShaderFile.is_open(), "Can't open vertex shader: " + shaderName);
+    Logger::PANIC(!fragmentShaderFile.is_open(), "Can't open fragment shader: " + shaderName);
 
-        vertexShaderFile.close();
-        fragmentShaderFile.close();
+    std::stringstream vShaderStream, fShaderStream;
 
-        vertexCode = vShaderStream.str();
-        fragmentCode = fShaderStream.str();
-    } catch (std::ifstream::failure &e) {
-        Logger::CRITICAL("Error reading shader: " + shaderName + "\n" + e.what());
-    }
+    vShaderStream << vertexShaderFile.rdbuf();
+    fShaderStream << fragmentShaderFile.rdbuf();
+
+    vertexShaderFile.close();
+    fragmentShaderFile.close();
+
+    vertexCode = vShaderStream.str();
+    fragmentCode = fShaderStream.str();
+
 
     const char *vertxShaderCode = vertexCode.c_str();
     const char *fragmentShaderCode = fragmentCode.c_str();
@@ -91,7 +92,7 @@ std::pair<unsigned int, unsigned int> Shader::CompileShader(const std::string &s
     Logger::INFO("Compiling vertex shader of: " + shaderName);
     glShaderSource(vertexShader, 1, &vertxShaderCode, nullptr);
     glCompileShader(vertexShader);
-    CheckCompilationError(vertexShader,"Vertex");
+    CheckCompilationError(vertexShader, "Vertex");
 
     Logger::INFO("Compiling fragment shader of: " + shaderName);
     glShaderSource(fragmentShader, 1, &fragmentShaderCode, nullptr);
