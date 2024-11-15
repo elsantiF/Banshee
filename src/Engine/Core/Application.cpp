@@ -24,7 +24,7 @@ Application::Application() {
 
     m_Camera = Camera(m_Window.get());
     m_Shader.Init("resources/shaders/basic");
-    m_Model.LoadModel("resources/models/backpack.obj");
+    m_Model = ModelLoader::LoadModel("resources/models/backpack.obj");
 
     Logger::INFO("Engine started");
 

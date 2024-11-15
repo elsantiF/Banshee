@@ -13,6 +13,7 @@
 #include "Graphics/Shader.h"
 #include "Components/Model.h"
 #include "Components/Camera.h"
+#include "Assets/ModelLoader.h"
 
 // TODO: m_Shader, m_Model and m_Camera should be in the scene, not here
 class Application {
