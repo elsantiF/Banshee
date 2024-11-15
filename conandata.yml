@@ -1,0 +1,10 @@
+# This file is managed by Conan, contents will be overwritten.
+# To keep your changes, remove these comment lines, but the plugin won't be able to modify your requirements
+
+requirements:
+  - "imgui/1.90.6"
+  - "stb/cci.20230920"
+  - "assimp/5.3.1"
+  - "glm/1.0.1"
+  - "glad/0.1.36"
+  - "glfw/3.4"
