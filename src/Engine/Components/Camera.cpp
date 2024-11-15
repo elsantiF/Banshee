@@ -1,22 +1,7 @@
 #include "Camera.h"
 
-Camera::Camera() {
-    m_Window = nullptr;
-    m_ProjectionMatrix = glm::identity<glm::mat4>();
-
-    m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
-    m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
-    m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-    m_Yaw = 0.0f;
-    m_Pitch = 0.0f;
-
-    UpdateCameraVectors();
-}
-
-Camera::Camera(Window *window) {
-    m_Window = window;
-    m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), m_Window->GetAspect(), 0.1f, 100.0f);
+Camera::Camera(const float fov, const float aspect, const float near, const float far) {
+    m_ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, near, far);
 
     m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
     m_Front = glm::vec3(0.0f, 0.0f, -1.0f);

@@ -22,7 +22,7 @@ Application::Application() {
     ImGui_ImplOpenGL3_Init("#version 330");
     ImGui::StyleColorsDark();
 
-    m_Camera = Camera(m_Window.get());
+    m_Camera = Camera(45.0f, m_Window->GetAspect(), 0.1f, 100.0f);
     m_Shader.Init("resources/shaders/basic");
     m_Model = ModelLoader::LoadModel("resources/models/backpack.obj");
 
