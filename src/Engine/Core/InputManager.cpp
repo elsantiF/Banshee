@@ -24,10 +24,10 @@ std::pair<float, float> InputManager::GetMousePosition() {
     return m_MousePosition;
 }
 
-float InputManager::GetMouseX() {
+double InputManager::GetMouseX() {
     return m_MousePosition.first;
 }
 
-float InputManager::GetMouseY() {
+double InputManager::GetMouseY() {
     return m_MousePosition.second;
 }

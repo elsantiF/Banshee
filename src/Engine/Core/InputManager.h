@@ -17,8 +17,8 @@ public:
     static bool IsMouseButtonPressed(int button);
 
     static std::pair<float, float> GetMousePosition();
-    static float GetMouseX();
-    static float GetMouseY();
+    static double GetMouseX();
+    static double GetMouseY();
 
     friend class Window;
 };
