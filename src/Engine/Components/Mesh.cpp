@@ -2,6 +2,7 @@
 
 namespace BansheeEngine {
     Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<unsigned int> &indices): m_Vertices{vertices}, m_Indices{indices} {
+        // TODO: All this code is temporary, it will be moved to another place
         m_VAO = MakeUnique<VertexArray>();
         m_VBO = MakeUnique<Buffer>(BufferType::VertexBuffer);
         m_EBO = MakeUnique<Buffer>(BufferType::ElementBuffer);
@@ -28,6 +29,7 @@ namespace BansheeEngine {
 
     // Shader is needed here?
     void Mesh::Draw(Shader &shader) const {
+        // TODO: Same as above, this will be moved to another place
         m_VAO->Bind();
         glDrawArrays(GL_TRIANGLES, 0, m_Indices.size());
     }

@@ -6,17 +6,8 @@ namespace BansheeEngine {
 
         m_Window = MakeUnique<Window>();
         m_Window->Create("GL Renderer", 1280, 720);
-        Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)),
-                      "Failed to initialize GLAD");
 
-        //glViewport(0, 0, 1280, 720);
-        glClearColor(0.3f, 0.0f, 0.3f, 0.0f);
-        glEnable(GL_MULTISAMPLE);
-        glEnable(GL_DEPTH_TEST);
-
-        Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_VERSION)));
-        Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_VENDOR)));
-        Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+        Renderer::Init();
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -37,7 +28,7 @@ namespace BansheeEngine {
         while (!m_Window->ShouldClose()) {
             Update(m_Delta);
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            Renderer::Clear();
             m_Shader->Bind();
 
             ImGui_ImplOpenGL3_NewFrame();
@@ -89,11 +80,11 @@ namespace BansheeEngine {
 
         ImGui::SeparatorText("Render");
         if (ImGui::Button("Solid render")) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            Renderer::SetPolygonMode(PolygonMode::FILL);
         }
 
         if (ImGui::Button("Wireframe render")) {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            Renderer::SetPolygonMode(PolygonMode::LINE);
         }
 
         ImGui::End();
