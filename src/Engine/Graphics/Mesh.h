@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-
+#include "Core/Core.h"
 #include "Vertex.h"
 #include "VertexArray.h"
 #include "Buffer.h"
@@ -9,16 +8,16 @@
 
 namespace BansheeEngine {
     class Mesh {
-        std::vector<Vertex> m_Vertices;
-        std::vector<unsigned int> m_Indices;
+        Vector<Vertex> m_Vertices;
+        Vector<unsigned int> m_Indices;
 
-        VertexArray m_VAO;
-        Buffer m_VBO;
-        Buffer m_EBO;
+        UniquePtr<VertexArray> m_VAO;
+        UniquePtr<Buffer> m_VBO;
+        UniquePtr<Buffer> m_EBO;
 
     public:
-        Mesh() = default;
-        Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
+        Mesh() = delete;
+        Mesh(const Vector<Vertex> &vertices, const Vector<unsigned int> &indices);
         void Draw(Shader &shader) const;
     };
 }

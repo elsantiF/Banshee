@@ -7,8 +7,9 @@ namespace BansheeEngine {
         unsigned int m_VAO{};
 
     public:
-        void Init();
-        void Destroy() const;
+        VertexArray();
+        ~VertexArray();
+
         void Bind() const;
         static void Unbind();
         static void EnableAttribute(unsigned int index, int size, int offset, const void *data);

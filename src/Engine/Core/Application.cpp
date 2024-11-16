@@ -4,7 +4,7 @@ namespace BansheeEngine {
     Application::Application() {
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
-        m_Window = std::make_unique<Window>();
+        m_Window = MakeUnique<Window>();
         m_Window->Create("GL Renderer", 1280, 720);
         Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)),
                       "Failed to initialize GLAD");
@@ -25,7 +25,7 @@ namespace BansheeEngine {
         ImGui::StyleColorsDark();
 
         m_Camera = Camera(45.0f, m_Window->GetAspect(), 0.1f, 100.0f);
-        m_Shader.Init("resources/shaders/basic");
+        m_Shader = MakeUnique<Shader>("resources/shaders/basic");
         m_Model = ModelLoader::LoadModel("resources/models/backpack.obj");
 
         Logger::INFO("Engine started");
@@ -38,19 +38,19 @@ namespace BansheeEngine {
             Update(m_Delta);
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            m_Shader.Bind();
+            m_Shader->Bind();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            m_Shader.SetMat4Uniform("u_MatProjection", m_Camera.GetProjectionMatrix());
-            m_Shader.SetMat4Uniform("u_MatView", m_Camera.GetViewMatrix());
-            m_Shader.SetVec3Uniform("u_LightPosition", glm::vec3(1.2f, 1.0f, 2.0f));
+            m_Shader->SetMat4Uniform("u_MatProjection", m_Camera.GetProjectionMatrix());
+            m_Shader->SetMat4Uniform("u_MatView", m_Camera.GetViewMatrix());
+            m_Shader->SetVec3Uniform("u_LightPosition", glm::vec3(1.2f, 1.0f, 2.0f));
 
             m_Model.Rotate({0.0f, 1.0, 0.0f}, glm::degrees(glfwGetTime()));;
 
-            m_Model.Draw(m_Shader);
+            m_Model.Draw(*m_Shader);
 
             RenderImGUI();
 

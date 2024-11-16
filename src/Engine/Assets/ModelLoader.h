@@ -1,10 +1,10 @@
 #pragma once
 
-#include <string>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "Core/Core.h"
 #include "Graphics/Mesh.h"
 #include "Components/Model.h"
 

@@ -1,11 +1,11 @@
 #include "VertexArray.h"
 
 namespace BansheeEngine {
-    void VertexArray::Init() {
+    VertexArray::VertexArray() {
         glGenVertexArrays(1, &m_VAO);
     }
 
-    void VertexArray::Destroy() const {
+    VertexArray::~VertexArray() {
         glDeleteVertexArrays(1, &m_VAO);
     }
 

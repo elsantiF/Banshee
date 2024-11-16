@@ -1,11 +1,9 @@
 #pragma once
 
-#include <string>
-#include <utility>
 #include <GLFW/glfw3.h>
 
+#include "Core.h"
 #include "InputManager.h"
-#include "Logger.h"
 
 namespace BansheeEngine {
     using WindowSize = std::pair<float, float>;

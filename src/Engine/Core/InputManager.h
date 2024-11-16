@@ -1,7 +1,6 @@
 #pragma once
 
-#include <map>
-#include <utility>
+#include "Core.h"
 
 namespace BansheeEngine {
     class InputManager {

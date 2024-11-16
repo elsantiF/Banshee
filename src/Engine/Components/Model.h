@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Core/Core.h"
 #include "Graphics/Mesh.h"
 #include "Transform.h"
 
 namespace BansheeEngine {
     class Model {
-        std::vector<Mesh> m_Meshes;
+        Vector<Mesh> m_Meshes;
         glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
         Transform m_Transform;
 
@@ -13,7 +14,7 @@ namespace BansheeEngine {
 
     public:
         Model() = default;
-        explicit Model(std::vector<Mesh> &&meshes);
+        explicit Model(Vector<Mesh> &&meshes);
 
         void Draw(Shader &shader);
 

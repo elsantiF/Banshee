@@ -1,7 +1,7 @@
 #include "Model.h"
 
 namespace BansheeEngine {
-    Model::Model(std::vector<Mesh> &&meshes) : m_Meshes(std::move(meshes)) {
+    Model::Model(Vector<Mesh> &&meshes) : m_Meshes(std::move(meshes)) {
         CalculateModelMatrix();
     }
 

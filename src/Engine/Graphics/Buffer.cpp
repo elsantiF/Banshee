@@ -1,12 +1,12 @@
 #include "Buffer.h"
 
 namespace BansheeEngine {
-    void Buffer::Init(const BufferType bufferType) {
+    Buffer::Buffer(const BufferType bufferType) {
         m_BufferType = bufferType;
         glGenBuffers(1, &m_BufferID);
     }
 
-    void Buffer::Destroy() const {
+    Buffer::~Buffer() {
         glDeleteBuffers(1, &m_BufferID);
     }
 

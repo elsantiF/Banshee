@@ -13,8 +13,10 @@ namespace BansheeEngine {
         BufferType m_BufferType{};
 
     public:
-        void Init(BufferType bufferType);
-        void Destroy() const;
+        Buffer() = delete;
+        explicit Buffer(BufferType bufferType);
+        ~Buffer();
+
         void Bind() const;
         void Unbind() const;
         void LoadData(GLsizeiptr size, const void *data) const;

@@ -1,7 +1,7 @@
 #include "Shader.h"
 
 namespace BansheeEngine {
-    void Shader::Init(const std::string &filename) {
+    Shader::Shader(const std::string &filename) {
         m_ShaderName = filename;
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + filename);
@@ -43,7 +43,7 @@ namespace BansheeEngine {
         glDeleteShader(fragmentShader);
     }
 
-    void Shader::Clear() const {
+    Shader::~Shader() {
         glDeleteProgram(m_ProgramID);
     }
 
