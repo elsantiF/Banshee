@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Core.h"
-#include "Graphics/Mesh.h"
+#include "Components/Mesh.h"
 #include "Transform.h"
 
 namespace BansheeEngine {

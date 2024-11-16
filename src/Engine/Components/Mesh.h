@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Core/Core.h"
-#include "Vertex.h"
-#include "VertexArray.h"
-#include "Buffer.h"
-#include "Shader.h"
+#include "Graphics/Vertex.h"
+#include "Graphics/VertexArray.h"
+#include "Graphics/Buffer.h"
+#include "Graphics/Shader.h"
 
 namespace BansheeEngine {
     class Mesh {

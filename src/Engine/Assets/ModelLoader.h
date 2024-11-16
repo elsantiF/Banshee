@@ -5,7 +5,7 @@
 #include <assimp/postprocess.h>
 
 #include "Core/Core.h"
-#include "Graphics/Mesh.h"
+#include "Components/Mesh.h"
 #include "Components/Model.h"
 
 namespace BansheeEngine {
