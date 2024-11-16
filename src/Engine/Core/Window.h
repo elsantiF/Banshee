@@ -7,21 +7,23 @@
 #include "InputManager.h"
 #include "Logger.h"
 
-using WindowSize = std::pair<float, float>;
+namespace BansheeEngine {
+    using WindowSize = std::pair<float, float>;
 
-class Window {
-    int m_Width = 0;
-    int m_Height = 0;
+    class Window {
+        int m_Width = 0;
+        int m_Height = 0;
 
-    std::string m_WindowTitle;
-    GLFWwindow *m_WindowPtr = nullptr;
+        std::string m_WindowTitle;
+        GLFWwindow *m_WindowPtr = nullptr;
 
-public:
-    void Create(const std::string &title, int width, int height);
-    void Destroy() const;
-    [[nodiscard]] bool ShouldClose() const;
-    void SwapBuffers() const;
-    [[nodiscard]] WindowSize GetSize() const;
-    [[nodiscard]] float GetAspect() const;
-    [[nodiscard]] GLFWwindow *GetWindowPtr() const;
-};
+    public:
+        void Create(const std::string &title, int width, int height);
+        void Destroy() const;
+        [[nodiscard]] bool ShouldClose() const;
+        void SwapBuffers() const;
+        [[nodiscard]] WindowSize GetSize() const;
+        [[nodiscard]] float GetAspect() const;
+        [[nodiscard]] GLFWwindow *GetWindowPtr() const;
+    };
+}

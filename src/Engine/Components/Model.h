@@ -3,22 +3,24 @@
 #include "Graphics/Mesh.h"
 #include "Transform.h"
 
-class Model {
-    std::vector<Mesh> m_Meshes;
-    glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
-    Transform m_Transform;
+namespace BansheeEngine {
+    class Model {
+        std::vector<Mesh> m_Meshes;
+        glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
+        Transform m_Transform;
 
-    void CalculateModelMatrix();
+        void CalculateModelMatrix();
 
-public:
-    Model() = default;
-    explicit Model(std::vector<Mesh> &&meshes);
+    public:
+        Model() = default;
+        explicit Model(std::vector<Mesh> &&meshes);
 
-    void Draw(Shader &shader);
+        void Draw(Shader &shader);
 
-    void Translate(const glm::vec3 &translation);
-    void Rotate(const glm::vec3 &axis, float angle);
-    void Scale(const glm::vec3 &scale);
-    void Scale(float scale);
-    [[nodiscard]] glm::mat4 GetModelMatrix() const;
-};
+        void Translate(const glm::vec3 &translation);
+        void Rotate(const glm::vec3 &axis, float angle);
+        void Scale(const glm::vec3 &scale);
+        void Scale(float scale);
+        [[nodiscard]] glm::mat4 GetModelMatrix() const;
+    };
+}

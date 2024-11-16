@@ -2,19 +2,21 @@
 
 #include <glad/glad.h>
 
-enum BufferType {
-    VertexBuffer = GL_ARRAY_BUFFER,
-    ElementBuffer = GL_ELEMENT_ARRAY_BUFFER
-};
+namespace BansheeEngine {
+    enum BufferType {
+        VertexBuffer = GL_ARRAY_BUFFER,
+        ElementBuffer = GL_ELEMENT_ARRAY_BUFFER
+    };
 
-class Buffer {
-    unsigned int m_BufferID{};
-    BufferType m_BufferType{};
+    class Buffer {
+        unsigned int m_BufferID{};
+        BufferType m_BufferType{};
 
-public:
-    void Init(BufferType bufferType);
-    void Destroy() const;
-    void Bind() const;
-    void Unbind() const;
-    void LoadData(GLsizeiptr size, const void *data) const;
-};
+    public:
+        void Init(BufferType bufferType);
+        void Destroy() const;
+        void Bind() const;
+        void Unbind() const;
+        void LoadData(GLsizeiptr size, const void *data) const;
+    };
+}

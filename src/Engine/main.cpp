@@ -1,7 +1,7 @@
 #include "Core/Application.h"
 
 int main() {
-    Application app;
+    BansheeEngine::Application app;
     app.Render();
     return 0;
 }
