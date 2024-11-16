@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Core/Core.h"
 #include "Graphics/Vertex.h"
 #include "Graphics/VertexArray.h"

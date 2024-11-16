@@ -9,14 +9,14 @@ namespace BansheeEngine {
             Logger::CRITICAL("Error loading model: " + path);
         }
 
-        // m_Directory = path.substr(0, path.find_last_of('/'));
         std::vector<Mesh> meshes;
-        ProcessNode(scene->mRootNode, scene, meshes);
+        ProcessNode(scene->mRootNode, scene, meshes); // mRootNode can be null, but don't know when
 
         return Model{std::move(meshes)};
     }
 
-    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene, std::vector<Mesh> &meshes) {
+    // Change this, don't use recursion, use something like BFS
+    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene, Vector<Mesh> &meshes) {
         for (unsigned int i = 0; i < node->mNumMeshes; i++) {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
             meshes.push_back(ProcessMesh(mesh, scene));

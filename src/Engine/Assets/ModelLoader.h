@@ -10,7 +10,7 @@
 
 namespace BansheeEngine {
     class ModelLoader {
-        static void ProcessNode(const aiNode *node, const aiScene *scene, std::vector<Mesh> &meshes);
+        static void ProcessNode(const aiNode *node, const aiScene *scene, Vector<Mesh> &meshes);
         static Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
 
     public:
