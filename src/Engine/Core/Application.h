@@ -12,7 +12,6 @@
 #include "Scene.h"
 
 namespace BansheeEngine {
-    // TODO: m_Shader, m_Model and m_Camera should be in the scene, not here
     class Application {
         inline static Application *m_Instance;
         UniquePtr<Scene> m_ActualScene;

@@ -7,7 +7,6 @@
 #include "Core/Window.h"
 
 // TODO: Refactor this class to use Transform class
-// TODO: Refactor this to remove m_Window
 namespace BansheeEngine {
     class Camera {
         float m_Fov;
