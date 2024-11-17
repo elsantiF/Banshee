@@ -10,6 +10,11 @@
 // TODO: Refactor this to remove m_Window
 namespace BansheeEngine {
     class Camera {
+        float m_Fov;
+        float m_Aspect;
+        float m_Near;
+        float m_Far;
+
         glm::mat4 m_ProjectionMatrix{};
 
         glm::vec3 m_Position{};
@@ -26,7 +31,11 @@ namespace BansheeEngine {
     public:
         Camera() = default;
         Camera(float fov, float aspect, float near, float far);
-        void Update(float delta);
+        void Update(double delta);
+
+        float GetFov() const;
+        void SetFov(float fov);
+
         [[nodiscard]] glm::mat4 GetViewMatrix() const;
         [[nodiscard]] glm::mat4 GetProjectionMatrix() const;
         [[nodiscard]] glm::vec3 GetCameraPosition() const;

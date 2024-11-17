@@ -2,7 +2,12 @@
 
 namespace BansheeEngine {
     Camera::Camera(const float fov, const float aspect, const float near, const float far) {
-        m_ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, near, far);
+        m_Fov = fov;
+        m_Aspect = aspect;
+        m_Near = near;
+        m_Far = far;
+
+        m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
 
         m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
         m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -29,9 +34,9 @@ namespace BansheeEngine {
         m_Up = glm::normalize(glm::cross(m_Right, m_Front));
     }
 
-    void Camera::Update(const float delta) {
+    void Camera::Update(const double delta) {
         // Position update
-        const float positionSpeed = 10.0f * delta;
+        const float positionSpeed = 10.0f * static_cast<float>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
             m_Position += m_Front * positionSpeed;
@@ -53,7 +58,7 @@ namespace BansheeEngine {
         }
 
         // Rotation update
-        const float rotationSpeed = 35.0f * delta;
+        const float rotationSpeed = 35.0f * static_cast<float>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
             m_Pitch -= rotationSpeed;
@@ -69,9 +74,32 @@ namespace BansheeEngine {
         }
 
         if (m_Pitch > 89.0f) m_Pitch = 89.0f;
-        if (m_Pitch<-89.0f) m_Pitch = -89.0f;
+        if (m_Pitch < -89.0f) m_Pitch = -89.0f;
 
-            UpdateCameraVectors();
+        if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
+            const float fov = GetFov();
+            if (fov < 179.9f) {
+                SetFov(GetFov() + 0.1f);
+            }
+        }
+
+        if (InputManager::IsKeyPressed(GLFW_KEY_KP_SUBTRACT)) {
+            const float fov = GetFov();
+            if (fov > 0.1f) {
+                SetFov(GetFov() - 0.1f);
+            }
+        }
+
+        UpdateCameraVectors();
+    }
+
+    float Camera::GetFov() const {
+        return m_Fov;
+    }
+
+    void Camera::SetFov(const float fov) {
+        m_Fov = fov;
+        m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
     }
 
     glm::mat4 Camera::GetViewMatrix() const {
