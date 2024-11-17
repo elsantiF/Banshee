@@ -111,13 +111,20 @@ namespace BansheeEngine {
         glUseProgram(0);
     }
 
-    void Shader::SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const {
-        const auto uniformLocation = m_Uniforms.at(uniformName);
-        glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(mat4));
+    void Shader::SetIntUniform(const std::string &uniformName, int value) const {
+        if (m_Uniforms.contains(uniformName)) {
+            const auto uniformLocation = m_Uniforms.at(uniformName);
+            glUniform1i(uniformLocation, value);
+        }
     }
 
     void Shader::SetVec3Uniform(const std::string &uniformName, glm::vec3 vec3) const {
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniform3fv(uniformLocation, 1, glm::value_ptr(vec3));
+    }
+
+    void Shader::SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const {
+        const auto uniformLocation = m_Uniforms.at(uniformName);
+        glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(mat4));
     }
 }

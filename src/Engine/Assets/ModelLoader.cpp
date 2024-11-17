@@ -1,5 +1,6 @@
 #include "ModelLoader.h"
 
+// TODO: This needs a major refactor URGENTLY
 namespace BansheeEngine {
     Model ModelLoader::LoadModel(const std::string &path) {
         Assimp::Importer importer;
@@ -10,29 +11,32 @@ namespace BansheeEngine {
         }
 
         std::vector<Mesh> meshes;
-        ProcessNode(scene->mRootNode, scene, meshes); // mRootNode can be null, but don't know when
+
+        std::string directory = path.substr(0, path.find_last_of('/')) + "/";
+        ProcessNode(scene->mRootNode, scene, meshes, directory); // mRootNode can be null, but don't know when
 
         return Model{std::move(meshes)};
     }
 
     // Change this, don't use recursion, use something like BFS
-    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene, Vector<Mesh> &meshes) {
+    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene, Vector<Mesh> &meshes, const std::string &directory) {
         for (unsigned int i = 0; i < node->mNumMeshes; i++) {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.push_back(ProcessMesh(mesh, scene));
+            meshes.push_back(ProcessMesh(mesh, scene, directory));
         }
 
         for (unsigned int i = 0; i < node->mNumChildren; i++) {
-            ProcessNode(node->mChildren[i], scene, meshes);
+            ProcessNode(node->mChildren[i], scene, meshes, directory);
         }
     }
 
-    Mesh ModelLoader::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
+    Mesh ModelLoader::ProcessMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) {
+        Vector<Vertex> vertices;
+        Vector<unsigned int> indices;
+        Vector<Texture> textures;
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-            Vertex vertex{};
+            Vertex vertex;
 
             glm::vec3 vector;
             vector.x = mesh->mVertices[i].x;
@@ -40,15 +44,32 @@ namespace BansheeEngine {
             vector.z = mesh->mVertices[i].z;
             vertex.position = vector;
 
-            vector.x = mesh->mNormals[i].x;
-            vector.y = mesh->mNormals[i].y;
-            vector.z = mesh->mNormals[i].z;
-            vertex.normal = vector;
+            if (mesh->HasNormals()) {
+                vector.x = mesh->mNormals[i].x;
+                vector.y = mesh->mNormals[i].y;
+                vector.z = mesh->mNormals[i].z;
+                vertex.normal = vector;
+            }
 
-            glm::vec2 uv;
-            uv.x = mesh->mTextureCoords[0][i].x;
-            uv.y = mesh->mTextureCoords[0][i].y;
-            vertex.uv = uv;
+            if (mesh->HasTextureCoords(0)) {
+                glm::vec2 texCoords;
+                texCoords.x = mesh->mTextureCoords[0][i].x;
+                texCoords.y = mesh->mTextureCoords[0][i].y;
+                vertex.texCoords = texCoords; {
+                }
+            }
+
+            if (mesh->HasTangentsAndBitangents()) {
+                vector.x = mesh->mTangents[i].x;
+                vector.y = mesh->mTangents[i].y;
+                vector.z = mesh->mTangents[i].z;
+                vertex.tangent = vector;
+
+                vector.x = mesh->mBitangents[i].x;
+                vector.y = mesh->mBitangents[i].y;
+                vector.z = mesh->mBitangents[i].z;
+                vertex.bitangent = vector;
+            }
 
             vertices.push_back(vertex);
         }
@@ -61,6 +82,33 @@ namespace BansheeEngine {
             }
         }
 
-        return Mesh{vertices, indices};
+        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+
+        Vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", directory);
+        // Vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", directory);
+        // Vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal", directory);
+        // Vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height", directory);
+
+        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+        // textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+        // textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+        // textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+
+        return Mesh{vertices, indices, textures};
+    }
+
+    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const std::string &typeName,
+                                                      const std::string &directory) {
+        Vector<Texture> textures;
+        for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
+            aiString str;
+            mat->GetTexture(type, i, &str);
+
+            Texture texture(directory + str.C_Str());
+            texture.SetType(typeName);
+            textures.push_back(texture);
+        }
+
+        return textures;
     }
 }

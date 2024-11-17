@@ -13,8 +13,17 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     endif ()
 endif ()
 
+set(SUBMODULES_PATH ${CMAKE_SOURCE_DIR}/src/ThirdParty)
+
+set(stb ${SUBMODULES_PATH}/stb)
+
+set(THIRD_PARTY_INCLUDES
+        ${stb}
+)
+
+include_directories(${THIRD_PARTY_INCLUDES})
+
 find_package(imgui)
-find_package(stb)
 find_package(assimp)
 find_package(glm)
 find_package(glad)
@@ -27,4 +36,4 @@ add_executable(BansheeEngine src/Engine/main.cpp ${SOURCES})
 
 add_subdirectory(src/ThirdParty/imgui)
 
-target_link_libraries(BansheeEngine imgui::imgui stb::stb assimp::assimp glm::glm glad::glad glfw)
+target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glm::glm glad::glad glfw)

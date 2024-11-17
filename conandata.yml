@@ -3,7 +3,6 @@
 
 requirements:
   - "imgui/1.90.6"
-  - "stb/cci.20230920"
   - "assimp/5.3.1"
   - "glm/1.0.1"
   - "glad/0.1.36"

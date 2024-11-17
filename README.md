@@ -24,7 +24,7 @@ The name is temporary and will be changed in the future. (perhaps)
 - [x] Basic rendering
 - [ ] Remove Conan
 - [ ] Change GLFW to SDL3
-- [ ] Support for textures
+- [x] Support for textures
 - [ ] Support for materials
 - [ ] Support for framebuffers
 - [ ] TBD 

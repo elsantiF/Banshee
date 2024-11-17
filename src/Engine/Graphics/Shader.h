@@ -26,7 +26,8 @@ namespace BansheeEngine {
         void Bind() const;
         static void Unbind();
 
-        void SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const;
+        void SetIntUniform(const std::string &uniformName, int value) const;
         void SetVec3Uniform(const std::string &uniformName, glm::vec3 vec3) const;
+        void SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const;
     };
 }
