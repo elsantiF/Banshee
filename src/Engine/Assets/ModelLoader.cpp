@@ -1,36 +1,41 @@
 #include "ModelLoader.h"
 
-// TODO: This needs a major refactor URGENTLY
+// TODO: This needs a refactor
 namespace BansheeEngine {
-    Model ModelLoader::LoadModel(const std::string &path) {
-        Assimp::Importer importer;
-        const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    ModelLoader::ModelLoader() {
+        m_Directory = "";
+        m_Scene = nullptr;
+        m_Meshes.clear();
+        m_Indices.clear();
+        m_Textures.clear();
+    }
 
-        if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+    Model ModelLoader::LoadModel(const std::string &path) {
+        m_Scene = m_Importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+        if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
             Logger::CRITICAL("Error loading model: " + path);
         }
 
-        std::vector<Mesh> meshes;
+        m_Directory = path.substr(0, path.find_last_of('/')) + "/";
+        ProcessNode(m_Scene->mRootNode, m_Scene); // mRootNode can be null, but don't know when
 
-        std::string directory = path.substr(0, path.find_last_of('/')) + "/";
-        ProcessNode(scene->mRootNode, scene, meshes, directory); // mRootNode can be null, but don't know when
-
-        return Model{std::move(meshes)};
+        return Model{std::move(m_Meshes)};
     }
 
     // Change this, don't use recursion, use something like BFS
-    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene, Vector<Mesh> &meshes, const std::string &directory) {
+    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene) {
         for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-            aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.push_back(ProcessMesh(mesh, scene, directory));
+            const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+            ProcessMesh(mesh, scene);
         }
 
         for (unsigned int i = 0; i < node->mNumChildren; i++) {
-            ProcessNode(node->mChildren[i], scene, meshes, directory);
+            ProcessNode(node->mChildren[i], scene);
         }
     }
 
-    Mesh ModelLoader::ProcessMesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) {
+    void ModelLoader::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
         Vector<Vertex> vertices;
         Vector<unsigned int> indices;
         Vector<Texture> textures;
@@ -84,29 +89,42 @@ namespace BansheeEngine {
 
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        Vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", directory);
-        // Vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", directory);
-        // Vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal", directory);
-        // Vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height", directory);
+        Vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        Vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        Vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        Vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        // textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        // textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        // textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-        return Mesh{vertices, indices, textures};
+        m_Meshes.push_back(Mesh(vertices, indices, textures));
     }
 
-    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const std::string &typeName,
-                                                      const std::string &directory) {
+    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const std::string &typeName) {
         Vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
 
-            Texture texture(directory + str.C_Str());
-            texture.SetType(typeName);
-            textures.push_back(texture);
+            bool foundTexture = false;
+
+            for (const auto &texture: m_Textures) {
+                std::string filePath = m_Directory + str.C_Str();
+                if (std::strcmp(texture.GetFilePath().data(), filePath.c_str()) == 0) {
+                    textures.push_back(texture);
+                    foundTexture = true;
+                    break;
+                }
+            }
+
+            if (!foundTexture) {
+                Texture texture(m_Directory + str.C_Str());
+                texture.SetType(typeName);
+                textures.push_back(texture);
+                m_Textures.push_back(texture);
+            }
         }
 
         return textures;

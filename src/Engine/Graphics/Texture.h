@@ -12,6 +12,7 @@ namespace BansheeEngine {
         std::string m_FilePath;
 
     public:
+        Texture() = default;
         explicit Texture(const std::string &path);
         ~Texture();
 
@@ -20,5 +21,7 @@ namespace BansheeEngine {
 
         [[nodiscard]] std::string GetType() const;
         void SetType(const std::string &type);
+
+        std::string GetFilePath() const;
     };
 }

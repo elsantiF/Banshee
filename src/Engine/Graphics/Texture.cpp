@@ -3,6 +3,7 @@
 
 namespace BansheeEngine {
     Texture::Texture(const std::string &path) {
+        m_FilePath = path;
         glGenTextures(1, &m_TextureID); // Can textureID be 0?
 
         int width, height, channels;
@@ -52,5 +53,9 @@ namespace BansheeEngine {
 
     void Texture::SetType(const std::string &type) {
         m_TextureType = type;
+    }
+
+    std::string Texture::GetFilePath() const {
+        return m_FilePath;
     }
 }

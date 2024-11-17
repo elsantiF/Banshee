@@ -16,7 +16,7 @@ class ModelViewer final : public Scene {
         // TODO: Retrieve the aspect from the window
         m_Camera = Camera(45.f, 1280.f / 720.f, 0.1f, 100.f);
         m_Shader = BansheeEngine::MakeUnique<Shader>("resources/shaders/basic");
-        m_Model = ModelLoader::LoadModel("resources/models/backpack/backpack.obj");
+        m_Model = ModelLoader().LoadModel("resources/models/backpack/backpack.obj");
     }
 
     void OnUpdate(const double delta) override {
