@@ -17,10 +17,12 @@ set(SUBMODULES_PATH ${CMAKE_SOURCE_DIR}/src/ThirdParty)
 
 set(stb ${SUBMODULES_PATH}/stb)
 set(glad ${SUBMODULES_PATH}/glad)
+set(glm ${SUBMODULES_PATH}/glm)
 
 set(THIRD_PARTY_INCLUDES
         ${stb}
         ${glad}/include
+        ${glm}
 )
 
 set(THIRD_PARTY_LIBS
@@ -30,7 +32,6 @@ include_directories(${THIRD_PARTY_INCLUDES})
 
 find_package(imgui)
 find_package(assimp)
-find_package(glm)
 find_package(glfw3)
 
 file(GLOB_RECURSE SOURCES "src/Engine/*.cpp")
@@ -40,4 +41,4 @@ add_executable(BansheeEngine src/Engine/main.cpp ${THIRD_PARTY_LIBS} ${SOURCES})
 
 add_subdirectory(src/ThirdParty/imgui)
 
-target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glm::glm glfw)
+target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glfw)
