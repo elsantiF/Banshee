@@ -13,22 +13,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     endif ()
 endif ()
 
-set(SUBMODULES_PATH ${CMAKE_SOURCE_DIR}/src/ThirdParty)
-
-set(stb ${SUBMODULES_PATH}/stb)
-set(glad ${SUBMODULES_PATH}/glad)
-set(glm ${SUBMODULES_PATH}/glm)
-
-set(THIRD_PARTY_INCLUDES
-        ${stb}
-        ${glad}/include
-        ${glm}
-)
-
-set(THIRD_PARTY_LIBS
-        ${glad}/src/glad.c)
-
-include_directories(${THIRD_PARTY_INCLUDES})
+# TODO: Disable warnings for third party libraries
+add_subdirectory(src/ThirdParty)
 
 find_package(imgui)
 find_package(assimp)
@@ -37,8 +23,8 @@ find_package(glfw3)
 file(GLOB_RECURSE SOURCES "src/Engine/*.cpp")
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Engine)
-add_executable(BansheeEngine src/Engine/main.cpp ${THIRD_PARTY_LIBS} ${SOURCES})
+add_executable(BansheeEngine src/Engine/main.cpp ${SOURCES})
 
 add_subdirectory(src/ThirdParty/imgui)
 
-target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glfw)
+target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glfw stb glm glad)
