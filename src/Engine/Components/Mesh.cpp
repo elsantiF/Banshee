@@ -44,8 +44,8 @@ namespace BansheeEngine {
         for (unsigned int i = 0; i < m_Textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i);
 
-            std::string number;
-            const std::string name = m_Textures[i].GetType();
+            String number;
+            const String name = m_Textures[i].GetType();
             if (name == "texture_diffuse") {
                 number = std::to_string(diffuseNr++);
             } else if (name == "texture_specular") {

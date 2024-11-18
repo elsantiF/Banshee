@@ -1,7 +1,7 @@
 #include "Shader.h"
 
 namespace BansheeEngine {
-    Shader::Shader(const std::string &filename) {
+    Shader::Shader(const String &filename) {
         m_ShaderName = filename;
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + filename);
@@ -18,7 +18,7 @@ namespace BansheeEngine {
         if (!success) {
             char infoLog[1024];
             glGetProgramInfoLog(m_ProgramID, 1024, nullptr, infoLog);
-            Logger::CRITICAL("Error compiling shader: " + m_ShaderName + "\nLog: " + std::string{infoLog});
+            Logger::CRITICAL("Error compiling shader: " + m_ShaderName + "\nLog: " + String{infoLog});
         }
 
         GLint numUniforms = 0;
@@ -47,22 +47,22 @@ namespace BansheeEngine {
         glDeleteProgram(m_ProgramID);
     }
 
-    void Shader::CheckCompilationError(const unsigned int shaderProgram, const std::string &shaderType) const {
+    void Shader::CheckCompilationError(const unsigned int shaderProgram, const String &shaderType) const {
         int success;
         glGetShaderiv(shaderProgram, GL_COMPILE_STATUS, &success);
         if (!success) {
             char infoLog[1024];
             glGetShaderInfoLog(shaderProgram, 1024, nullptr, infoLog);
-            Logger::CRITICAL("Error linking the shader: " + m_ShaderName + "\nLog: " + std::string{infoLog});
+            Logger::CRITICAL("Error linking the shader: " + m_ShaderName + "\nLog: " + String{infoLog});
         }
     }
 
-    std::pair<unsigned int, unsigned int> Shader::CompileShader(const std::string &shaderName) const {
+    Pair<unsigned int, unsigned int> Shader::CompileShader(const String &shaderName) const {
         unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
         unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-        std::string vertexCode;
-        std::string fragmentCode;
+        String vertexCode;
+        String fragmentCode;
         std::ifstream vertexShaderFile;
         std::ifstream fragmentShaderFile;
 
@@ -111,19 +111,19 @@ namespace BansheeEngine {
         glUseProgram(0);
     }
 
-    void Shader::SetIntUniform(const std::string &uniformName, int value) const {
+    void Shader::SetIntUniform(const String &uniformName, int value) const {
         if (m_Uniforms.contains(uniformName)) {
             const auto uniformLocation = m_Uniforms.at(uniformName);
             glUniform1i(uniformLocation, value);
         }
     }
 
-    void Shader::SetVec3Uniform(const std::string &uniformName, glm::vec3 vec3) const {
+    void Shader::SetVec3Uniform(const String &uniformName, glm::vec3 vec3) const {
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniform3fv(uniformLocation, 1, glm::value_ptr(vec3));
     }
 
-    void Shader::SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const {
+    void Shader::SetMat4Uniform(const String &uniformName, glm::mat4 mat4) const {
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(mat4));
     }

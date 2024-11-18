@@ -21,7 +21,7 @@ namespace BansheeEngine {
         return m_MouseButtons[button];
     }
 
-    std::pair<float, float> InputManager::GetMousePosition() {
+    Pair<double, double> InputManager::GetMousePosition() {
         return m_MousePosition;
     }
 

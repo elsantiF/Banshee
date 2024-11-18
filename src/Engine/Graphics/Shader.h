@@ -11,23 +11,23 @@
 
 namespace BansheeEngine {
     class Shader {
-        std::string m_ShaderName;
+        String m_ShaderName;
         unsigned int m_ProgramID = 0;
-        std::map<std::string, int> m_Uniforms;
+        Map<String, int> m_Uniforms;
 
-        void CheckCompilationError(unsigned int shaderProgram, const std::string &shaderType) const;
-        [[nodiscard]] std::pair<unsigned int, unsigned int> CompileShader(const std::string &filename) const;
+        void CheckCompilationError(unsigned int shaderProgram, const String &shaderType) const;
+        [[nodiscard]] Pair<unsigned int, unsigned int> CompileShader(const String &filename) const;
 
     public:
         Shader() = default;
-        explicit Shader(const std::string &filename);
+        explicit Shader(const String &filename);
         ~Shader();
 
         void Bind() const;
         static void Unbind();
 
-        void SetIntUniform(const std::string &uniformName, int value) const;
-        void SetVec3Uniform(const std::string &uniformName, glm::vec3 vec3) const;
-        void SetMat4Uniform(const std::string &uniformName, glm::mat4 mat4) const;
+        void SetIntUniform(const String &uniformName, int value) const;
+        void SetVec3Uniform(const String &uniformName, glm::vec3 vec3) const;
+        void SetMat4Uniform(const String &uniformName, glm::mat4 mat4) const;
     };
 }

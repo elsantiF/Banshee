@@ -1,7 +1,7 @@
 #include "Window.h"
 
 namespace BansheeEngine {
-    void Window::Create(const std::string &title, const int width, const int height) {
+    void Window::Create(const String &title, const int width, const int height) {
         m_WindowTitle = title;
         m_Width = width;
         m_Height = height;
@@ -52,12 +52,14 @@ namespace BansheeEngine {
         glfwSwapBuffers(m_WindowPtr);
     }
 
+    // TODO: Change this
     WindowSize Window::GetSize() const {
         int width, height;
         glfwGetWindowSize(m_WindowPtr, &width, &height);
-        return std::pair<float, float>{width, height};
+        return WindowSize{width, height};
     }
 
+    // TODO: Change this as well
     float Window::GetAspect() const {
         return static_cast<float>(m_Width) / static_cast<float>(m_Height);
     }

@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 namespace BansheeEngine {
-    Texture::Texture(const std::string &path) {
+    Texture::Texture(const String &path) {
         m_FilePath = path;
         glGenTextures(1, &m_TextureID); // Can textureID be 0?
 
@@ -47,15 +47,15 @@ namespace BansheeEngine {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    std::string Texture::GetType() const {
+    String Texture::GetType() const {
         return m_TextureType;
     }
 
-    void Texture::SetType(const std::string &type) {
+    void Texture::SetType(const String &type) {
         m_TextureType = type;
     }
 
-    std::string Texture::GetFilePath() const {
+    String Texture::GetFilePath() const {
         return m_FilePath;
     }
 }

@@ -8,20 +8,20 @@
 namespace BansheeEngine {
     class Texture {
         unsigned int m_TextureID;
-        std::string m_TextureType;
-        std::string m_FilePath;
+        String m_TextureType;
+        String m_FilePath;
 
     public:
         Texture() = default;
-        explicit Texture(const std::string &path);
+        explicit Texture(const String &path);
         ~Texture();
 
         void Bind() const;
         static void Unbind();
 
-        [[nodiscard]] std::string GetType() const;
-        void SetType(const std::string &type);
+        [[nodiscard]] String GetType() const;
+        void SetType(const String &type);
 
-        std::string GetFilePath() const;
+        String GetFilePath() const;
     };
 }

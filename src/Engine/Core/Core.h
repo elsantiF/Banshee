@@ -22,5 +22,15 @@ namespace BansheeEngine {
 #pragma region Container Macros
     template<typename T>
     using Vector = std::vector<T>;
+
+    template<typename K, typename V>
+    using Map = std::map<K, V>;
+
+    template<typename T, typename U>
+    using Pair = std::pair<T, U>; // Is not a "container" but it's used in the same way
+#pragma endregion
+
+#pragma region Utilities
+    using String = std::string;
 #pragma endregion
 }

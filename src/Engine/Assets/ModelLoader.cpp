@@ -10,7 +10,7 @@ namespace BansheeEngine {
         m_Textures.clear();
     }
 
-    Model ModelLoader::LoadModel(const std::string &path) {
+    Model ModelLoader::LoadModel(const String &path) {
         m_Scene = m_Importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
         if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
@@ -102,7 +102,7 @@ namespace BansheeEngine {
         m_Meshes.push_back(Mesh(vertices, indices, textures));
     }
 
-    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const std::string &typeName) {
+    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         Vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
@@ -111,7 +111,7 @@ namespace BansheeEngine {
             bool foundTexture = false;
 
             for (const auto &texture: m_Textures) {
-                std::string filePath = m_Directory + str.C_Str();
+                String filePath = m_Directory + str.C_Str();
                 if (std::strcmp(texture.GetFilePath().data(), filePath.c_str()) == 0) {
                     textures.push_back(texture);
                     foundTexture = true;
