@@ -16,15 +16,10 @@ endif ()
 # TODO: Disable warnings for third party libraries
 add_subdirectory(src/ThirdParty)
 
-find_package(imgui)
 find_package(assimp)
-find_package(glfw3)
 
 file(GLOB_RECURSE SOURCES "src/Engine/*.cpp")
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Engine)
 add_executable(BansheeEngine src/Engine/main.cpp ${SOURCES})
-
-add_subdirectory(src/ThirdParty/imgui)
-
-target_link_libraries(BansheeEngine imgui::imgui assimp::assimp glfw stb glm glad)
+target_link_libraries(BansheeEngine assimp::assimp stb glm glad glfw imgui)
