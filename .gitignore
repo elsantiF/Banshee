@@ -6,3 +6,4 @@ cmake-build-release/
 *.exe
 *.dll
 *.pdb
+*.ilk

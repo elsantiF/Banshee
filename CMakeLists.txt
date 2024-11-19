@@ -4,22 +4,20 @@ project(BansheeEngine)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    add_compile_options(/W4 /Wall /MP)
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_compile_options(/Zi /Zf)
-    else ()
-        add_compile_options(/O2)
-    endif ()
-endif ()
+# if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+#     add_compile_options(/W4 /Wall /MP)
+#     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+#         add_compile_options(/Zi /Zf)
+#     else ()
+#         add_compile_options(/O2)
+#     endif ()
+# endif ()
 
 # TODO: Disable warnings for third party libraries
 add_subdirectory(src/ThirdParty)
-
-find_package(assimp)
 
 file(GLOB_RECURSE SOURCES "src/Engine/*.cpp")
 
 include_directories(${CMAKE_SOURCE_DIR}/src/Engine)
 add_executable(BansheeEngine src/Engine/main.cpp ${SOURCES})
-target_link_libraries(BansheeEngine assimp::assimp stb glm glad glfw imgui)
+target_link_libraries(BansheeEngine stb glm assimp::assimp glad glfw imgui)
