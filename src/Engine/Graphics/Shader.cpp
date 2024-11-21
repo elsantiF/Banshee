@@ -66,10 +66,6 @@ namespace BansheeEngine {
         std::ifstream vertexShaderFile;
         std::ifstream fragmentShaderFile;
 
-        vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
-        // TODO: This can abort the program if the file doesn't exist, fix it
         vertexShaderFile.open(shaderName + ".vert");
         fragmentShaderFile.open(shaderName + ".frag");
 
