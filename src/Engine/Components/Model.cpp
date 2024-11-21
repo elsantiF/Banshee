@@ -39,7 +39,7 @@ namespace BansheeEngine {
     }
 
     void Model::Draw(Shader &shader) {
-        shader.SetMat4Uniform("u_MatModel", m_ModelMatrix);
+        shader.SetMat4("u_MatModel", m_ModelMatrix);
         for (Mesh &mesh: m_Meshes) {
             mesh.Draw(shader);
         }

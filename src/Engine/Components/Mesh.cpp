@@ -56,7 +56,7 @@ namespace BansheeEngine {
                 number = std::to_string(heightNr++);
             }
 
-            shader.SetIntUniform(name + number, i);
+            shader.SetInt(name + number, i);
             m_Textures[i].Bind();
         }
 

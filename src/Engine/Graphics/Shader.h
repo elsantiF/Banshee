@@ -26,8 +26,8 @@ namespace BansheeEngine {
         void Bind() const;
         static void Unbind();
 
-        void SetIntUniform(const String &uniformName, int value) const;
-        void SetVec3Uniform(const String &uniformName, glm::vec3 vec3) const;
-        void SetMat4Uniform(const String &uniformName, glm::mat4 mat4) const;
+        void SetInt(const String &uniformName, int value) const;
+        void SetVec3(const String &uniformName, glm::vec3 vec3) const;
+        void SetMat4(const String &uniformName, glm::mat4 mat4) const;
     };
 }
