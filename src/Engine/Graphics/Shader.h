@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Core/Core.h"
+#include "Assets/AssetManager.h"
 
 namespace BansheeEngine {
     class Shader {

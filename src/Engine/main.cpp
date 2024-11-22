@@ -1,3 +1,5 @@
+#include <Assets/AssetManager.h>
+
 #include "Core/Core.h"
 #include "Core/Application.h"
 #include "Core/Scene.h"
@@ -13,10 +15,11 @@ class ModelViewer final : public Scene {
     Camera m_Camera;
 
     void OnCreate() override {
+        AssetManager::SetRoot("resources");
         // TODO: Retrieve the aspect from the window
         m_Camera = Camera(45.f, 1280.f / 720.f, 0.1f, 100.f);
-        m_Shader = BansheeEngine::MakeUnique<Shader>("resources/shaders/basic");
-        m_Model = ModelLoader().LoadModel("resources/models/backpack/backpack.obj");
+        m_Shader = BansheeEngine::MakeUnique<Shader>("shaders/basic");
+        m_Model = ModelLoader().LoadModel("models/backpack/backpack.obj");
     }
 
     void OnUpdate(const double delta) override {

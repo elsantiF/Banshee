@@ -8,6 +8,7 @@
 #include "Components/Mesh.h"
 #include "Components/Model.h"
 #include "Graphics/Texture.h"
+#include "AssetManager.h"
 
 namespace BansheeEngine {
     // TODO: Make this thread safe

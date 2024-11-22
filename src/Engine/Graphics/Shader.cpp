@@ -6,7 +6,7 @@ namespace BansheeEngine {
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + filename);
 
-        const auto [vertexShader, fragmentShader] = CompileShader(filename);
+        const auto [vertexShader, fragmentShader] = CompileShader(AssetManager::GetRoot() + filename);
 
         glAttachShader(m_ProgramID, vertexShader);
         glAttachShader(m_ProgramID, fragmentShader);
@@ -57,7 +57,7 @@ namespace BansheeEngine {
         }
     }
 
-    Pair<unsigned int, unsigned int> Shader::CompileShader(const String &shaderName) const {
+    Pair<unsigned int, unsigned int> Shader::CompileShader(const String &filename) const {
         unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
         unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -66,11 +66,11 @@ namespace BansheeEngine {
         std::ifstream vertexShaderFile;
         std::ifstream fragmentShaderFile;
 
-        vertexShaderFile.open(shaderName + ".vert");
-        fragmentShaderFile.open(shaderName + ".frag");
+        vertexShaderFile.open(filename + ".vert");
+        fragmentShaderFile.open(filename + ".frag");
 
-        Logger::PANIC(!vertexShaderFile.is_open(), "Can't open vertex shader: " + shaderName);
-        Logger::PANIC(!fragmentShaderFile.is_open(), "Can't open fragment shader: " + shaderName);
+        Logger::PANIC(!vertexShaderFile.is_open(), "Can't open vertex shader: " + filename);
+        Logger::PANIC(!fragmentShaderFile.is_open(), "Can't open fragment shader: " + filename);
 
         std::stringstream vShaderStream, fShaderStream;
 
@@ -87,12 +87,12 @@ namespace BansheeEngine {
         const char *vertxShaderCode = vertexCode.c_str();
         const char *fragmentShaderCode = fragmentCode.c_str();
 
-        Logger::INFO("Compiling vertex shader of: " + shaderName);
+        Logger::INFO("Compiling vertex shader of: " + filename);
         glShaderSource(vertexShader, 1, &vertxShaderCode, nullptr);
         glCompileShader(vertexShader);
         CheckCompilationError(vertexShader, "Vertex");
 
-        Logger::INFO("Compiling fragment shader of: " + shaderName);
+        Logger::INFO("Compiling fragment shader of: " + filename);
         glShaderSource(fragmentShader, 1, &fragmentShaderCode, nullptr);
         glCompileShader(fragmentShader);
         CheckCompilationError(fragmentShader, "Fragment");

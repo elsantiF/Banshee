@@ -11,13 +11,14 @@ namespace BansheeEngine {
     }
 
     Model ModelLoader::LoadModel(const String &path) {
-        m_Scene = m_Importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+        const String realPath = AssetManager::GetRoot() + path;
+        m_Scene = m_Importer.ReadFile(realPath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
         if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
             Logger::CRITICAL("Error loading model: " + path);
         }
 
-        m_Directory = path.substr(0, path.find_last_of('/')) + "/";
+        m_Directory = realPath.substr(0, realPath.find_last_of('/')) + "/";
         ProcessNode(m_Scene->mRootNode, m_Scene); // mRootNode can be null, but don't know when
 
         return Model{std::move(m_Meshes)};
