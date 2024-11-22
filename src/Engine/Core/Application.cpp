@@ -2,6 +2,7 @@
 
 namespace BansheeEngine {
     Application::Application(UniquePtr<Scene> scene) {
+        m_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
         m_Window = MakeUnique<Window>();
@@ -19,8 +20,6 @@ namespace BansheeEngine {
         m_ActualScene->OnCreate();
 
         Logger::INFO("Engine started");
-
-        m_Instance = this;
     }
 
     void Application::Render() {

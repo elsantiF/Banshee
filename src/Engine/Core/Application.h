@@ -8,7 +8,6 @@
 #include "Core.h"
 #include "Graphics/Renderer.h" // This needs to be in this order
 #include "Window.h"
-#include "Assets/ModelLoader.h"
 #include "Scene.h"
 
 namespace BansheeEngine {
