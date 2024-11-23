@@ -13,7 +13,7 @@ namespace BansheeEngine {
 
     public:
         Texture() = default;
-        explicit Texture(const String &path);
+        explicit Texture(const String &texturePath);
         ~Texture();
 
         void Bind() const;

@@ -2,15 +2,14 @@
 #include "Texture.h"
 
 namespace BansheeEngine {
-    Texture::Texture(const String &path) {
-        m_FilePath = path;
+    Texture::Texture(const String &texturePath): m_FilePath{texturePath} {
         glGenTextures(1, &m_TextureID); // Can textureID be 0?
 
         int width, height, channels;
         stbi_set_flip_vertically_on_load(true);
-        unsigned char *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+        unsigned char *data = stbi_load(texturePath.c_str(), &width, &height, &channels, 0);
         if (!data) {
-            Logger::CRITICAL("Error loading texture: " + path);
+            Logger::CRITICAL("Error loading texture: " + texturePath);
         }
 
         GLenum format;
