@@ -6,7 +6,7 @@ namespace BansheeEngine {
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + filename);
 
-        const auto [vertexShader, fragmentShader] = CompileShader(AssetManager::GetRoot() + filename);
+        const auto [vertexShader, fragmentShader] = CompileShader(AssetManager::GetRoot().generic_string() + "/" + filename);
 
         glAttachShader(m_ProgramID, vertexShader);
         glAttachShader(m_ProgramID, fragmentShader);

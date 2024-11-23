@@ -1,11 +1,11 @@
 #include "AssetManager.h"
 
 namespace BansheeEngine {
-    void AssetManager::SetRoot(const String &path) {
-        m_RootPath = path + "/";
+    void AssetManager::SetRoot(const fs::path &path) {
+        m_RootPath = fs::path(path);
     }
 
-    String AssetManager::GetRoot() {
+    fs::path AssetManager::GetRoot() {
         return m_RootPath;
     }
 }

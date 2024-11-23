@@ -1,12 +1,15 @@
 #pragma once
 
+#include <filesystem>
+
 #include "Core/Core.h"
 
 namespace BansheeEngine {
     class AssetManager {
-      inline static String m_RootPath = "";
+        inline static fs::path m_RootPath = fs::current_path();
+
     public:
-        static void SetRoot(const String &path);
-        static String GetRoot();
+        static void SetRoot(const fs::path &path);
+        static fs::path GetRoot();
     };
 }

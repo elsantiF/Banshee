@@ -37,4 +37,8 @@ namespace BansheeEngine {
 #pragma region Utilities
     using String = std::string;
 #pragma endregion
+
+#pragma region Filesystem
+    namespace fs = std::filesystem;
+#pragma endregion
 }
