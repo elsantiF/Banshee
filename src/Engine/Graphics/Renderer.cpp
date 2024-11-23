@@ -10,6 +10,10 @@ namespace BansheeEngine {
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_DEPTH_TEST);
 
+        glEnable(GL_CULL_FACE);
+        glFrontFace(GL_CCW);
+        glCullFace(GL_BACK);
+
         Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_VERSION)));
         Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_VENDOR)));
         Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
