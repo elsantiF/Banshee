@@ -14,8 +14,8 @@ The name is temporary and will be changed in the future. (perhaps)
 
 ### Build steps
 1) Clone the repository
-3) Use CMake to build the project
-4) Enjoy
+2) Use CMake to build the project
+3) Enjoy
 
 ## Roadmap
 - [x] Basic rendering
