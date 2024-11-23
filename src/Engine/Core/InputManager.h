@@ -4,8 +4,8 @@
 
 namespace BansheeEngine {
     class InputManager {
-        inline static Map<int, bool> m_Keys;
-        inline static Map<int, bool> m_MouseButtons;
+        inline static UnorderedMap<int, bool> m_Keys;
+        inline static UnorderedMap<int, bool> m_MouseButtons;
         inline static Pair<double, double> m_MousePosition;
 
         static void SetKeyPressed(int keycode, bool isPressed);

@@ -14,7 +14,7 @@ namespace BansheeEngine {
     class Shader {
         String m_ShaderName;
         unsigned int m_ProgramID = 0;
-        Map<String, int> m_Uniforms;
+        UnorderedMap<String, int> m_Uniforms;
 
         void CheckCompilationError(unsigned int shaderProgram, const String &shaderType) const;
         [[nodiscard]] Pair<unsigned int, unsigned int> CompileShader(const String &filename) const;
