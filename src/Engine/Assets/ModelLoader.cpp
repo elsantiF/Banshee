@@ -10,15 +10,16 @@ namespace BansheeEngine {
         m_Textures.clear();
     }
 
-    Model ModelLoader::LoadModel(const String &path) {
-        const fs::path realPath = AssetManager::GetRoot() / path;
+    Model ModelLoader::LoadModel(const fs::path &modelPath) {
+        const fs::path realPath = AssetManager::GetRoot() / modelPath;
         m_Scene = m_Importer.ReadFile(realPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs);
+        Logger::INFO("Loading model: " + modelPath.generic_string());
 
         if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
-            Logger::CRITICAL("Error loading model: " + path);
+            Logger::CRITICAL("Error loading model: " + modelPath.generic_string());
         }
 
-        m_Directory = realPath.parent_path().generic_string();
+        m_Directory = realPath.parent_path();
         ProcessNode(m_Scene->mRootNode, m_Scene); // mRootNode can be null, but don't know when
 
         return Model{std::move(m_Meshes)};
@@ -100,7 +101,7 @@ namespace BansheeEngine {
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-        m_Meshes.push_back(Mesh(vertices, indices, textures));
+        m_Meshes.emplace_back(vertices, indices, textures);
     }
 
     Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
@@ -112,8 +113,8 @@ namespace BansheeEngine {
             bool foundTexture = false;
 
             for (const auto &texture: m_Textures) {
-                String filePath = m_Directory + "/" + str.C_Str();
-                if (std::strcmp(texture.GetFilePath().data(), filePath.c_str()) == 0) {
+                fs::path filePath = m_Directory / str.C_Str();
+                if (std::strcmp(texture.GetFilePath().data(), filePath.generic_string().c_str()) == 0) {
                     textures.push_back(texture);
                     foundTexture = true;
                     break;
@@ -121,7 +122,7 @@ namespace BansheeEngine {
             }
 
             if (!foundTexture) {
-                Texture texture(m_Directory + "/" + str.C_Str());
+                Texture texture((m_Directory / str.C_Str()).generic_string());
                 texture.SetType(typeName);
                 textures.push_back(texture);
                 m_Textures.push_back(texture);

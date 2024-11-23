@@ -17,7 +17,7 @@ namespace BansheeEngine {
     class ModelLoader {
         Assimp::Importer m_Importer;
         const aiScene *m_Scene;
-        String m_Directory;
+        fs::path m_Directory;
 
         Vector<Mesh> m_Meshes;
         Vector<unsigned int> m_Indices;
@@ -29,6 +29,6 @@ namespace BansheeEngine {
 
     public:
         ModelLoader();
-        Model LoadModel(const String &path);
+        Model LoadModel(const fs::path &modelPath);
     };
 }
