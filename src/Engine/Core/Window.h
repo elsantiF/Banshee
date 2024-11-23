@@ -10,15 +10,15 @@ namespace BansheeEngine {
 
     // TODO: Add a way to set the window to be resizable
     class Window {
-        int m_Width = 0;
-        int m_Height = 0;
+        unsigned int m_Width = 0;
+        unsigned int m_Height = 0;
 
         String m_WindowTitle;
         GLFWwindow *m_WindowPtr = nullptr;
 
     public:
-        void Create(const String &title, int width, int height);
-        void Destroy() const;
+        Window(const String &title, int unsigned width, int unsigned height);
+        ~Window();
         [[nodiscard]] bool ShouldClose() const;
         void SwapBuffers() const;
         [[nodiscard]] WindowSize GetSize() const;

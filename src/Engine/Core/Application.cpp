@@ -5,8 +5,7 @@ namespace BansheeEngine {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
-        m_Window = MakeUnique<Window>();
-        m_Window->Create("GL Renderer", 1280, 720);
+        m_Window = MakeUnique<Window>("GL Renderer", 1280, 720);
 
         Renderer::Init();
 
@@ -57,7 +56,6 @@ namespace BansheeEngine {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-        m_Window->Destroy();
         Logger::INFO("Engine closing");
         glfwTerminate();
     }

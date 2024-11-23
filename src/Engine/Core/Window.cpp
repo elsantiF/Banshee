@@ -1,11 +1,7 @@
 #include "Window.h"
 
 namespace BansheeEngine {
-    void Window::Create(const String &title, const int width, const int height) {
-        m_WindowTitle = title;
-        m_Width = width;
-        m_Height = height;
-
+    Window::Window(const String &title, const unsigned int width, const unsigned int height): m_Width{width}, m_Height{height}, m_WindowTitle{title} {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -15,18 +11,17 @@ namespace BansheeEngine {
         glfwWindowHint(GLFW_SAMPLES, 4);
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-        m_WindowPtr = glfwCreateWindow(m_Width, m_Height, m_WindowTitle.c_str(), nullptr, nullptr);
+        m_WindowPtr = glfwCreateWindow(static_cast<int>(m_Width), static_cast<int>(m_Height), m_WindowTitle.c_str(), nullptr, nullptr);
         Logger::PANIC(!m_WindowPtr, "Failed to create window");
 
         glfwMakeContextCurrent(m_WindowPtr);
         glfwSwapInterval(1);
         glfwShowWindow(m_WindowPtr);
 
-        glfwSetKeyCallback(m_WindowPtr,
-                           [](GLFWwindow *window, const int key, int scancode, const int action, int mods) {
-                               if (action == GLFW_REPEAT) return;
-                               InputManager::SetKeyPressed(key, action == GLFW_PRESS);
-                           });
+        glfwSetKeyCallback(m_WindowPtr, [](GLFWwindow *window, const int key, int scancode, const int action, int mods) {
+            if (action == GLFW_REPEAT) return;
+            InputManager::SetKeyPressed(key, action == GLFW_PRESS);
+        });
 
         glfwSetMouseButtonCallback(m_WindowPtr, [](GLFWwindow *window, const int button, const int action, int mods) {
             if (action == GLFW_REPEAT) return;
@@ -40,7 +35,7 @@ namespace BansheeEngine {
         Logger::INFO("Window created");
     }
 
-    void Window::Destroy() const {
+    Window::~Window() {
         Logger::INFO("Destroying window");
         glfwDestroyWindow(m_WindowPtr);
     }
