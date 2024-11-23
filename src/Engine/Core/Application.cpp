@@ -48,14 +48,13 @@ namespace BansheeEngine {
             m_Delta = currentFrame - m_LastFrame;
             m_LastFrame = currentFrame;
         }
-
-        Terminate();
     }
 
-    void Application::Terminate() const {
+    Application::~Application() {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
+        delete m_Window; // Destroy the window first,
         Logger::INFO("Engine closing");
         glfwTerminate();
     }

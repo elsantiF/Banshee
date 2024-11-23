@@ -24,8 +24,8 @@ namespace BansheeEngine {
 
     public:
         explicit Application(UniquePtr<Scene> scene);
+        ~Application();
         void Render();
-        void Terminate() const;
         UniquePtr<Window> &GetWindow() { return m_Window; }
         static Application *GetInstance() { return s_Instance; }
     };
