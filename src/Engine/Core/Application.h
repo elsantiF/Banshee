@@ -12,7 +12,7 @@
 
 namespace BansheeEngine {
     class Application {
-        inline static Application *m_Instance;
+        inline static Application *s_Instance = nullptr;
         UniquePtr<Scene> m_ActualScene;
         UniquePtr<Window> m_Window;
 
@@ -24,6 +24,6 @@ namespace BansheeEngine {
         void Render();
         void Terminate() const;
         UniquePtr<Window> &GetWindow() { return m_Window; }
-        static Application *GetInstance() { return m_Instance; }
+        static Application *GetInstance() { return s_Instance; }
     };
 }
