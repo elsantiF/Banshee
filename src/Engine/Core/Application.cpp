@@ -19,6 +19,7 @@ namespace BansheeEngine {
         m_ActualScene = std::move(scene);
         m_ActualScene->OnCreate();
 
+        m_Framebuffer = MakeUnique<Framebuffer>(m_Window->GetSize().first, m_Window->GetSize().second, 24);
         Logger::INFO("Engine started");
     }
 
@@ -26,9 +27,20 @@ namespace BansheeEngine {
         while (!m_Window->ShouldClose()) {
             m_ActualScene->OnUpdate(m_Delta);
 
+            // Framebuffer begin
+            m_Framebuffer->Bind();
+            glEnable(GL_DEPTH_TEST);
             Renderer::Clear();
 
             m_ActualScene->OnRender(m_Delta);
+
+            m_Framebuffer->Unbind();
+            glDisable(GL_DEPTH_TEST);
+            // Framebuffer end
+
+            // Framebuffer display
+            Renderer::Clear();
+            m_Framebuffer->Draw();
 
             m_Window->SwapBuffers();
             glfwPollEvents();

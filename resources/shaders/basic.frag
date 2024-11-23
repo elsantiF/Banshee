@@ -9,8 +9,7 @@ uniform vec3 u_LightPosition;
 
 uniform sampler2D texture_diffuse1;
 
-void main()
-{
+void main() {
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * vec3(1.0);
 

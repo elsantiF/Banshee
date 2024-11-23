@@ -11,8 +11,7 @@ out vec3 Normal;
 out vec3 FragPos;
 out vec2 TexCoords;
 
-void main()
-{
+void main() {
     TexCoords = aTexCoords;
     Normal = mat3(transpose(inverse(u_MatModel))) * aNormal;
     FragPos = vec3(u_MatModel * vec4(aPos, 1.0));

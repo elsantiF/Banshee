@@ -23,7 +23,7 @@ The name is temporary and will be changed in the future. (perhaps)
 - [ ] Change GLFW to SDL3
 - [x] Support for textures
 - [ ] Support for materials
-- [ ] Support for framebuffers
+- [x] Support for framebuffers
 - [ ] TBD 
 
 This is a non-exhaustive list of features that will be implemented in the future. 

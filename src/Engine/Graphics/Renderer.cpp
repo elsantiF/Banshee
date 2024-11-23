@@ -8,7 +8,6 @@ namespace BansheeEngine {
         //glViewport(0, 0, 1280, 720);
         SetClearColor(glm::vec4{0.3f, 0.0f, 0.3f, 0.0f});
         glEnable(GL_MULTISAMPLE);
-        glEnable(GL_DEPTH_TEST);
 
         glEnable(GL_CULL_FACE);
         glFrontFace(GL_CCW);
