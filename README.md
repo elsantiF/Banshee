@@ -9,25 +9,13 @@ The name is temporary and will be changed in the future. (perhaps)
 ### Prerequisites
 - OpenGL 4.6 compatible GPU
 - Git
-- CMake 3.20 or higher
+- CMake 3.28 or higher
 - C++23 compiler (GCC 11 or higher, Clang 12 or higher, MSVC 19.29 or higher)
 
 ### Build steps
 1) Clone the repository
 2) Use CMake to build the project
 3) Enjoy
-
-## Roadmap
-- [x] Basic rendering
-- [x] Remove Conan
-- [ ] Change GLFW to SDL3
-- [x] Support for textures
-- [ ] Support for materials
-- [x] Support for framebuffers
-- [ ] TBD 
-
-This is a non-exhaustive list of features that will be implemented in the future. 
-Don't hesitate to suggest new features. Don't expect them to be implemented fast.
 
 ## License
 This project is licensed under the MIT License.
