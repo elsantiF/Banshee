@@ -54,7 +54,6 @@ namespace BansheeEngine {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-        delete m_Window; // Destroy the window first,
         Logger::INFO("Engine closing");
         glfwTerminate();
     }

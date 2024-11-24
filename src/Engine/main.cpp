@@ -31,9 +31,9 @@ class ModelViewer final : public Scene {
         m_Shader->Bind();
         m_Shader->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
         m_Shader->SetMat4("u_MatView", m_Camera.GetViewMatrix());
-        m_Shader->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.0f, 2.0f));
+        m_Shader->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
 
-        m_Model.Rotate({0.0f, 1.0, 0.0f}, glm::degrees(glfwGetTime()));;
+        m_Model.GetTransform().RotateY(50.0 * delta);
 
         m_Model.Draw(*m_Shader);
 

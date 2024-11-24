@@ -1,0 +1,98 @@
+#include "Transform.h"
+
+namespace BansheeEngine {
+    glm::mat4 Transform::GetModelMatrix() const {
+        auto modelMatrix = glm::identity<glm::mat4>();
+        modelMatrix = glm::translate(modelMatrix, this->m_Position);
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(this->m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(this->m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(this->m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        modelMatrix = glm::scale(modelMatrix, this->m_Scale);
+        return modelMatrix;
+    }
+
+    Transform &Transform::SetPosition(const glm::vec3 &position) {
+        this->m_Position = position;
+        return *this;
+    }
+
+    Transform &Transform::SetRotation(const glm::vec3 &rotation) {
+        this->m_Rotation = rotation;
+        return *this;
+    }
+
+    Transform &Transform::SetScale(const glm::vec3 &scale) {
+        this->m_Scale = scale;
+        return *this;
+    }
+
+    glm::vec3 Transform::GetPosition() const {
+        return this->m_Position;
+    }
+
+    glm::vec3 Transform::GetRotation() const {
+        return this->m_Rotation;
+    }
+
+    glm::vec3 Transform::GetScale() const {
+        return this->m_Scale;
+    }
+
+    Transform &Transform::Translate(const glm::vec3 &translation) {
+        this->m_Position += translation;
+        return *this;
+    }
+
+    Transform &Transform::TranslateX(const float x) {
+        return this->Translate(glm::vec3(x, 0.0f, 0.0f));
+    }
+
+    Transform &Transform::TranslateY(const float y) {
+        return this->Translate(glm::vec3(0.0f, y, 0.0f));
+    }
+
+    Transform &Transform::TranslateZ(const float z) {
+        return this->Translate(glm::vec3(0.0f, 0.0f, z));
+    }
+
+    Transform &Transform::Scale(const glm::vec3 &scale) {
+        this->m_Scale *= scale;
+        return *this;
+    }
+
+    Transform &Transform::Scale(const float scale) {
+        return this->Scale(glm::vec3(scale));
+    }
+
+    Transform &Transform::ScaleX(const float x) {
+        return this->Scale(glm::vec3(x, 1.0f, 1.0f));
+    }
+
+    Transform &Transform::ScaleY(const float y) {
+        return this->Scale(glm::vec3(1.0f, y, 1.0f));
+    }
+
+    Transform &Transform::ScaleZ(const float z) {
+        return this->Scale(glm::vec3(1.0f, 1.0f, z));
+    }
+
+    Transform &Transform::Rotate(const glm::vec3 &rotation) {
+        this->m_Rotation += rotation;
+        this->m_Rotation.x = glm::mod(this->m_Rotation.x, 360.0f);
+        this->m_Rotation.y = glm::mod(this->m_Rotation.y, 360.0f);
+        this->m_Rotation.z = glm::mod(this->m_Rotation.z, 360.0f);
+        return *this;
+    }
+
+    Transform &Transform::RotateX(const float x) {
+        return this->Rotate(glm::vec3(x, 0.0f, 0.0f));
+    }
+
+    Transform &Transform::RotateY(const float y) {
+        return this->Rotate(glm::vec3(0.0f, y, 0.0f));
+    }
+
+    Transform &Transform::RotateZ(const float z) {
+        return this->Rotate(glm::vec3(0.0f, 0.0f, z));
+    }
+}
