@@ -9,8 +9,10 @@ namespace BansheeEngine {
         glm::vec3 m_Rotation = glm::vec3(0.0f);
         glm::vec3 m_Scale = glm::vec3(1.0f);
 
+        glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
+        bool m_Dirty = true;
     public:
-        [[nodiscard]] glm::mat4 GetModelMatrix() const;
+        [[nodiscard]] glm::mat4 GetModelMatrix();
 
         Transform &SetPosition(const glm::vec3 &position);
         Transform &SetRotation(const glm::vec3 &rotation);
