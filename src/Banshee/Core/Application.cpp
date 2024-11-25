@@ -1,5 +1,12 @@
 #include "Application.h"
 
+#ifdef BE_OVER_9000
+extern "C" {
+__declspec(dllexport) unsigned long NvOptimusEnablement = 1;
+__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif
+
 namespace BansheeEngine {
     Application::Application(UniquePtr<Scene> scene) {
         s_Instance = this;
