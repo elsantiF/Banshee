@@ -17,10 +17,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # TODO: Disable warnings for third party libraries
 add_subdirectory(src/ThirdParty)
 
-file(GLOB_RECURSE SOURCES "src/Engine/*.cpp")
+file(GLOB_RECURSE SOURCES "src/Banshee/*.cpp")
 
-include_directories(${CMAKE_SOURCE_DIR}/src/Engine)
-add_executable(BansheeEngine src/Engine/main.cpp ${SOURCES})
+include_directories(${CMAKE_SOURCE_DIR}/src/Banshee)
+add_executable(BansheeEngine src/Banshee/main.cpp ${SOURCES})
 target_link_libraries(BansheeEngine stb glm assimp::assimp glad glfw imgui)
 
 add_custom_command(TARGET BansheeEngine POST_BUILD
