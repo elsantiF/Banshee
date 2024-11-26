@@ -1,13 +1,13 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <Graphics/Texture.h>
 
 #include "Core/Core.h"
 #include "Graphics/Vertex.h"
 #include "Graphics/VertexArray.h"
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
 
 namespace BansheeEngine {
     class Mesh {
