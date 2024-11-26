@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Camera::Camera(const float fov, const float aspect, const float near, const float far) {
         m_Fov = fov;
         m_Aspect = aspect;

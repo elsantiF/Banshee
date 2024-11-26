@@ -1,6 +1,6 @@
 #include "InputManager.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     void InputManager::SetKeyPressed(const int keycode, const bool isPressed) {
         m_Keys[keycode] = isPressed;
     }

@@ -8,7 +8,7 @@
 #include "VertexArray.h"
 
 // TODO: Refactor this to use Mesh and Texture instead of m_VAO and m_VBO and m_Texture
-namespace BansheeEngine {
+namespace Banshee {
     class Framebuffer {
         unsigned int m_Framebuffer;
         unsigned int m_Renderbuffer;

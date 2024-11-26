@@ -4,7 +4,7 @@
 
 #include "Core/Core.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class AssetManager {
         inline static fs::path m_RootPath = fs::current_path();
 

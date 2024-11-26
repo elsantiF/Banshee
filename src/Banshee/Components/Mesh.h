@@ -9,7 +9,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Mesh {
         Vector<Vertex> m_Vertices;
         Vector<unsigned int> m_Indices;

@@ -1,6 +1,6 @@
 #include "Window.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Window::Window(const String &title, const unsigned int width, const unsigned int height): m_Width{width}, m_Height{height}, m_WindowTitle{title} {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);

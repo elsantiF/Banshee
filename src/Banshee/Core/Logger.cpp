@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     void Logger::InternalPrint(const std::string &type, const std::string &message) {
         std::cout << "[" << type << "] " << std::chrono::system_clock::now() << ": " << message << std::endl;
     }

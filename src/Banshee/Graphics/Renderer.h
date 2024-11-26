@@ -6,7 +6,7 @@
 
 #include "Core/Core.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     enum PolygonMode {
         FILL = GL_FILL,
         LINE = GL_LINE,

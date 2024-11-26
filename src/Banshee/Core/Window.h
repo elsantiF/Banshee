@@ -5,7 +5,7 @@
 #include "Core.h"
 #include "InputManager.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     using WindowSize = Pair<float, float>;
 
     // TODO: Add a way to set the window to be resizable

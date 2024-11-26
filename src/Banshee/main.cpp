@@ -7,7 +7,7 @@
 #include "Assets/AssetManager.h"
 #include "Assets/ModelLoader.h"
 
-using namespace BansheeEngine;
+using namespace Banshee;
 
 class ModelViewer final : public Scene {
     UniquePtr<Shader> m_Shader;
@@ -18,7 +18,7 @@ class ModelViewer final : public Scene {
         AssetManager::SetRoot(fs::current_path() / "resources");
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
-        m_Shader = BansheeEngine::MakeUnique<Shader>("shaders/basic");
+        m_Shader = Banshee::MakeUnique<Shader>("shaders/basic");
         m_Model = ModelLoader().LoadModel("models/backpack/backpack.obj");
     }
 

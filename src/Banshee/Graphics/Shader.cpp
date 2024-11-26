@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Shader::Shader(const String &filename) {
         m_ShaderName = filename;
         m_ProgramID = glCreateProgram();

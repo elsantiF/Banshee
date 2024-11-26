@@ -1,6 +1,6 @@
 #include "Buffer.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Buffer::Buffer(const BufferType bufferType) {
         m_BufferType = bufferType;
         glGenBuffers(1, &m_BufferID);

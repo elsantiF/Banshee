@@ -5,7 +5,7 @@
 
 #include "Core/Core.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Texture {
         unsigned int m_TextureID;
         String m_TextureType;

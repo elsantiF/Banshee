@@ -1,7 +1,7 @@
 #pragma once
 #include "Application.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Scene {
     public:
         Scene() = default;

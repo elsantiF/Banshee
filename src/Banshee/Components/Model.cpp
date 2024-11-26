@@ -1,6 +1,6 @@
 #include "Model.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Transform &Model::GetTransform() {
         return m_Transform;
     }

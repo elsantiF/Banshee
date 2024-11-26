@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-namespace BansheeEngine {
+namespace Banshee {
     class VertexArray {
         unsigned int m_VAO{};
 

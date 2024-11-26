@@ -1,6 +1,6 @@
 #include "AssetManager.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     void AssetManager::SetRoot(const fs::path &path) {
         m_RootPath = fs::path(path);
     }

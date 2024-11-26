@@ -10,7 +10,7 @@
 #include "Core/Core.h"
 #include "Assets/AssetManager.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Shader {
         String m_ShaderName;
         unsigned int m_ProgramID = 0;

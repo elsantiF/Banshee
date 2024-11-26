@@ -12,7 +12,7 @@
 #include "Window.h"
 #include "Scene.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Application {
         inline static Application *s_Instance = nullptr;
         UniquePtr<Scene> m_ActualScene;

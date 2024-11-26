@@ -7,7 +7,7 @@ __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 #endif
 
-namespace BansheeEngine {
+namespace Banshee {
     Application::Application(UniquePtr<Scene> scene) {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");

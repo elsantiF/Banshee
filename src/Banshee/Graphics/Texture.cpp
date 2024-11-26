@@ -1,7 +1,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Texture::Texture(const String &texturePath): m_FilePath{texturePath} {
         glGenTextures(1, &m_TextureID); // Can textureID be 0?
 

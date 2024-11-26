@@ -5,7 +5,7 @@
 
 // TODO: Add a way to log to a file
 // TODO: Add preprocessor directives to enable/disable logging
-namespace BansheeEngine {
+namespace Banshee {
     class Logger {
         static void InternalPrint(const std::string &type, const std::string &message);
 

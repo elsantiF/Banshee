@@ -7,7 +7,7 @@
 #include "Components/Mesh.h"
 #include "Transform.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class Model {
         Vector<Mesh> m_Meshes;
         Transform m_Transform;

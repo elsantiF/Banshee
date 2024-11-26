@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace BansheeEngine {
+namespace Banshee {
     class Transform {
         glm::vec3 m_Position = glm::vec3(0.0f);
         glm::vec3 m_Rotation = glm::vec3(0.0f);

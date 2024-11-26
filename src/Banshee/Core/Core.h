@@ -9,7 +9,7 @@
 
 #include "Logger.h"
 
-namespace BansheeEngine {
+namespace Banshee {
 #pragma region Memory Macros
     template<typename T>
     using UniquePtr = std::unique_ptr<T>;

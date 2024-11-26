@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<unsigned int> &indices, const Vector<Texture> &textures): m_Vertices{vertices},
         m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place

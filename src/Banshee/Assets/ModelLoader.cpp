@@ -1,7 +1,7 @@
 #include "ModelLoader.h"
 
 // TODO: This needs a refactor
-namespace BansheeEngine {
+namespace Banshee {
     ModelLoader::ModelLoader() {
         m_Directory = "";
         m_Scene = nullptr;

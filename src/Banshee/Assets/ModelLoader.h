@@ -11,7 +11,7 @@
 #include "Graphics/Texture.h"
 #include "AssetManager.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     // TODO: Make this thread safe
     // This will not be thread safe, use with caution
     class ModelLoader {

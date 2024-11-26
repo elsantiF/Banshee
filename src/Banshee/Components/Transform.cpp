@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     glm::mat4 Transform::GetModelMatrix() {
         if (!this->m_Dirty) {
             return this->m_ModelMatrix;

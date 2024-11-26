@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-namespace BansheeEngine {
+namespace Banshee {
     class InputManager {
         inline static UnorderedMap<int, bool> m_Keys;
         inline static UnorderedMap<int, bool> m_MouseButtons;

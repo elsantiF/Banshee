@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-namespace BansheeEngine {
+namespace Banshee {
     enum BufferType {
         VertexBuffer = GL_ARRAY_BUFFER,
         ElementBuffer = GL_ELEMENT_ARRAY_BUFFER
