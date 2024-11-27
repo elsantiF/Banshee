@@ -43,8 +43,14 @@ class ModelViewer final : public Scene {
         ImGui::Text("Delta: %04f ms", delta * 1000);
 
         ImGui::SeparatorText("Camera");
-        glm::vec3 cameraPosition = m_Camera.GetCameraPosition();
+        const glm::vec3 cameraPosition = m_Camera.GetCameraPosition();
         ImGui::Text("X: %04f Y: %04f Z: %04f", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+
+        ImGui::SeparatorText("Model");
+        const glm::vec3 modelPosition = m_Model.GetTransform().GetPosition();
+        const glm::vec3 modelRotation = m_Model.GetTransform().GetRotation();
+        ImGui::Text("Position X: %04f Y: %04f Z: %04f", modelPosition.x, modelPosition.y, modelPosition.z);
+        ImGui::Text("Rotation X: %04f Y: %04f Z: %04f", modelRotation.x, modelRotation.y, modelRotation.z);
 
         ImGui::SeparatorText("Render");
         if (ImGui::Button("Solid render")) {
