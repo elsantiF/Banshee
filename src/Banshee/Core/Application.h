@@ -19,6 +19,8 @@ namespace Banshee {
         UniquePtr<Window> m_Window;
         UniquePtr<Framebuffer> m_Framebuffer;
 
+        bool m_Wireframe = false; // TODO: Move to Renderer when it's ready
+
         double m_Delta = 0.0;
         double m_LastFrame = 0.0;
 
@@ -28,5 +30,6 @@ namespace Banshee {
         void Render();
         UniquePtr<Window> &GetWindow() { return m_Window; }
         static Application *GetInstance() { return s_Instance; }
+        void SetWireframe(const bool wireframe) { m_Wireframe = wireframe; } // TODO: Move to Renderer when it's ready
     };
 }

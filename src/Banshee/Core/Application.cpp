@@ -38,11 +38,20 @@ namespace Banshee {
             glEnable(GL_DEPTH_TEST);
             Renderer::Clear();
 
+            // Scene rendering
+            // TODO: Move to Renderer when it's ready, this is just a temporary solution
+            if (m_Wireframe) {
+                Renderer::SetPolygonMode(PolygonMode::LINE);
+            } else {
+                Renderer::SetPolygonMode(PolygonMode::FILL);
+            }
+
             m_ActualScene->OnRender(m_Delta);
+
+            Renderer::SetPolygonMode(PolygonMode::FILL);
 
             m_Framebuffer->Unbind();
             glDisable(GL_DEPTH_TEST);
-            // Framebuffer end
 
             // Framebuffer display
             Renderer::Clear();

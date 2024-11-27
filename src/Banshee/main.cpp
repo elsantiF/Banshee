@@ -48,11 +48,11 @@ class ModelViewer final : public Scene {
 
         ImGui::SeparatorText("Render");
         if (ImGui::Button("Solid render")) {
-            Renderer::SetPolygonMode(PolygonMode::FILL);
+            Application::GetInstance()->SetWireframe(false);
         }
 
         if (ImGui::Button("Wireframe render")) {
-            Renderer::SetPolygonMode(PolygonMode::LINE);
+            Application::GetInstance()->SetWireframe(true);
         }
 
         ImGui::End();
