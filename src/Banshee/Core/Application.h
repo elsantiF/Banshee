@@ -10,12 +10,12 @@
 #include "Graphics/Renderer.h" // This needs to be in this order
 #include "Graphics/Framebuffer.h"
 #include "Window.h"
-#include "Scene.h"
+#include "Level.h"
 
 namespace Banshee {
     class Application {
         inline static Application *s_Instance = nullptr;
-        UniquePtr<Scene> m_ActualScene;
+        UniquePtr<Level> m_ActualLevel;
         UniquePtr<Window> m_Window;
         UniquePtr<Framebuffer> m_Framebuffer;
 
@@ -25,7 +25,7 @@ namespace Banshee {
         double m_LastFrame = 0.0;
 
     public:
-        explicit Application(UniquePtr<Scene> scene);
+        explicit Application(UniquePtr<Level> level);
         ~Application();
         void Render();
         UniquePtr<Window> &GetWindow() { return m_Window; }

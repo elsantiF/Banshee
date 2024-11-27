@@ -1,6 +1,6 @@
 #include "Banshee/Core/Core.h"
 #include "Banshee/Core/Application.h"
-#include "Banshee/Core/Scene.h"
+#include "Banshee/Core/Level.h"
 #include "Banshee/Graphics/Shader.h"
 #include "Banshee/Components/Model.h"
 #include "Banshee/Components/Camera.h"
@@ -9,7 +9,7 @@
 
 using namespace Banshee;
 
-class ModelViewer final : public Scene {
+class ModelViewer final : public Level {
     UniquePtr<Shader> m_Shader;
     Model m_Model;
     Camera m_Camera;
@@ -66,8 +66,8 @@ class ModelViewer final : public Scene {
 };
 
 int main() {
-    UniquePtr<Scene> mainScene = MakeUnique<ModelViewer>();
-    Application app((std::move(mainScene)));
+    UniquePtr<Level> mainLevel = MakeUnique<ModelViewer>();
+    Application app((std::move(mainLevel)));
     app.Render();
     return 0;
 }

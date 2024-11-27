@@ -8,7 +8,7 @@ __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 #endif
 
 namespace Banshee {
-    Application::Application(UniquePtr<Scene> scene) {
+    Application::Application(UniquePtr<Level> level) {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
@@ -22,8 +22,8 @@ namespace Banshee {
         ImGui_ImplOpenGL3_Init("#version 330");
         ImGui::StyleColorsDark();
 
-        m_ActualScene = std::move(scene);
-        m_ActualScene->OnCreate();
+        m_ActualLevel = std::move(level);
+        m_ActualLevel->OnCreate();
 
         m_Framebuffer = MakeUnique<Framebuffer>(m_Window->GetSize().first, m_Window->GetSize().second, 24);
         Logger::INFO("Engine started");
@@ -31,14 +31,14 @@ namespace Banshee {
 
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
-            m_ActualScene->OnUpdate(m_Delta);
+            m_ActualLevel->OnUpdate(m_Delta);
 
             // Framebuffer begin
             m_Framebuffer->Bind();
             glEnable(GL_DEPTH_TEST);
             Renderer::Clear();
 
-            // Scene rendering
+            // Level rendering
             // TODO: Move to Renderer when it's ready, this is just a temporary solution
             if (m_Wireframe) {
                 Renderer::SetPolygonMode(PolygonMode::LINE);
@@ -46,7 +46,7 @@ namespace Banshee {
                 Renderer::SetPolygonMode(PolygonMode::FILL);
             }
 
-            m_ActualScene->OnRender(m_Delta);
+            m_ActualLevel->OnRender(m_Delta);
 
             Renderer::SetPolygonMode(PolygonMode::FILL);
 
@@ -62,7 +62,7 @@ namespace Banshee {
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            m_ActualScene->OnImGUI(m_Delta);
+            m_ActualLevel->OnImGUI(m_Delta);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

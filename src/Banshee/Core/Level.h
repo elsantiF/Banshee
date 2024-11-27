@@ -2,10 +2,10 @@
 #include "Application.h"
 
 namespace Banshee {
-    class Scene {
+    class Level {
     public:
-        Scene() = default;
-        virtual ~Scene() = default;
+        Level() = default;
+        virtual ~Level() = default;
 
         virtual void OnCreate() = 0;
         virtual void OnUpdate(double delta) = 0;
