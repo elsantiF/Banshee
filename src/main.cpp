@@ -15,7 +15,7 @@ class ModelViewer final : public Scene {
     Camera m_Camera;
 
     void OnCreate() override {
-        AssetManager::SetRoot(fs::current_path() / "resources");
+        AssetManager::SetRoot(fs::current_path().parent_path() / "resources");
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Shader = Banshee::MakeUnique<Shader>("shaders/basic");

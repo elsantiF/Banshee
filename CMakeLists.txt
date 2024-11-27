@@ -45,13 +45,3 @@ target_link_libraries(Application PUBLIC stb glad glm assimp::assimp glad glfw i
 #         add_compile_options(/O2)
 #     endif ()
 # endif ()
-
-# --- Custom Commands ---
-
-add_custom_command(TARGET Application POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/resources
-        ${CMAKE_BINARY_DIR}/resources
-)
-
-# ---
