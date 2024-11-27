@@ -48,6 +48,17 @@ namespace Banshee {
             Renderer::Clear();
             m_Framebuffer->Draw();
 
+            // Render ImGUI
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
+            m_ActualScene->OnImGUI(m_Delta);
+
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            // Swap buffers
             m_Window->SwapBuffers();
             glfwPollEvents();
 

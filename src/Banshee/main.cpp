@@ -35,11 +35,9 @@ class ModelViewer final : public Scene {
         m_Model.GetTransform().RotateY(50.0 * delta);
 
         m_Model.Draw(*m_Shader);
+    }
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
+    void OnImGUI(const double delta) override {
         ImGui::Begin("Engine");
 
         ImGui::Text("Delta: %04f ms", delta * 1000);
@@ -58,9 +56,6 @@ class ModelViewer final : public Scene {
         }
 
         ImGui::End();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 };
 
