@@ -1,11 +1,11 @@
-#include "Core/Core.h"
-#include "Core/Application.h"
-#include "Core/Scene.h"
-#include "Graphics/Shader.h"
-#include "Components/Model.h"
-#include "Components/Camera.h"
-#include "Assets/AssetManager.h"
-#include "Assets/ModelLoader.h"
+#include "Banshee/Core/Core.h"
+#include "Banshee/Core/Application.h"
+#include "Banshee/Core/Scene.h"
+#include "Banshee/Graphics/Shader.h"
+#include "Banshee/Components/Model.h"
+#include "Banshee/Components/Camera.h"
+#include "Banshee/Assets/AssetManager.h"
+#include "Banshee/Assets/ModelLoader.h"
 
 using namespace Banshee;
 
