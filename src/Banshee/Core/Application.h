@@ -29,6 +29,6 @@ namespace Banshee {
         void Render();
         UniquePtr<Window> &GetWindow();
         static Application *GetInstance();
-        void SetWireframe(const bool wireframe); // TODO: Move to Renderer when it's ready
+        void SetWireframe(bool wireframe); // TODO: Move to Renderer when it's ready
     };
 }

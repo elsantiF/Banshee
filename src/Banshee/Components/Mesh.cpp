@@ -4,6 +4,8 @@ namespace Banshee {
     Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures): m_Vertices{vertices},
         m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place
+        m_IndexCount = m_Indices.size();
+
         m_VAO = MakeUnique<VertexArray>();
         m_VBO = MakeUnique<Buffer>(BufferType::VertexBuffer);
         m_EBO = MakeUnique<Buffer>(BufferType::ElementBuffer);
@@ -34,7 +36,7 @@ namespace Banshee {
         m_VAO->Unbind();
     }
 
-    void Mesh::Draw(Shader &shader) const {
+    void Mesh::Draw(const Shader &shader) const {
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;
@@ -61,7 +63,7 @@ namespace Banshee {
         }
 
         m_VAO->Bind();
-        glDrawArrays(GL_TRIANGLES, 0, m_Indices.size());
+        glDrawArrays(GL_TRIANGLES, 0, m_IndexCount);
         m_VAO->Unbind();
         glActiveTexture(GL_TEXTURE0);
     }
