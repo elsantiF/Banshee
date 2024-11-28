@@ -81,6 +81,7 @@ namespace Banshee {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
+        m_Window.reset();
         Logger::INFO("Engine closing");
         glfwTerminate();
     }
