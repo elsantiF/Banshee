@@ -12,7 +12,7 @@ namespace Banshee {
     class Framebuffer {
         u32 m_Framebuffer;
         u32 m_Renderbuffer;
-        UniquePtr<Shader> m_Shader;
+        UniquePtr<ShaderProgram> m_Shader;
         UniquePtr<VertexArray> m_VAO;
         UniquePtr<Buffer> m_VBO;
         u32 m_Texture;

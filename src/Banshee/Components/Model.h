@@ -20,6 +20,6 @@ namespace Banshee {
 
         Transform &GetTransform();
 
-        void Draw(Shader &shader);
+        void Draw(const ShaderProgram &shader);
     };
 }

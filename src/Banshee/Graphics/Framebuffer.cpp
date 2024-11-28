@@ -14,7 +14,7 @@ float vertices[] = {
 
 namespace Banshee {
     Framebuffer::Framebuffer(const u32 width, const u32 height, const u32 colorDepth) : m_Width(width), m_Height(height), m_ColorDepth(colorDepth) {
-        m_Shader = MakeUnique<Shader>("shaders/framebuffer");
+        m_Shader = MakeUnique<ShaderProgram>("shaders/framebuffer");
         m_VAO = MakeUnique<VertexArray>();
         m_VAO->Bind();
 

@@ -11,18 +11,43 @@
 #include "Assets/AssetManager.h"
 
 namespace Banshee {
+    enum ShaderType {
+        VERTEX_SHADER,
+        FRAGMENT_SHADER,
+        GEOMETRY_SHADER,
+        COMPUTE_SHADER
+    };
+
     class Shader {
         String m_ShaderName;
+        u32 m_ShaderID = 0;
+        ShaderType m_ShaderType;
+
+        void CheckCompilationError() const;
+        [[nodiscard]] static GLenum ShaderTypeToGLenum(ShaderType shaderType);
+        [[nodiscard]] static String ShaderTypeToString(ShaderType shaderType);
+        [[nodiscard]] static String GetShaderExtension(ShaderType shaderType);
+
+    public:
+        Shader() = delete;
+        explicit Shader(const String &shaderName, ShaderType shaderType);
+        ~Shader();
+
+        [[nodiscard]] u32 GetShaderID() const;
+    };
+
+    class ShaderProgram {
+        String m_ShaderProgramName;
         u32 m_ProgramID = 0;
         UnorderedMap<String, i32> m_Uniforms;
 
-        void CheckCompilationError(u32 shaderProgram, const String &shaderType) const;
-        [[nodiscard]] Pair<u32, u32> CompileShader(const String &filename) const;
+        void GetUniforms();
+        void CheckCompilationError() const;
 
     public:
-        Shader() = default;
-        explicit Shader(const String &filename);
-        ~Shader();
+        ShaderProgram() = delete;
+        explicit ShaderProgram(const String &shaderName);
+        ~ShaderProgram();
 
         void Bind() const;
         static void Unbind();

@@ -24,6 +24,6 @@ namespace Banshee {
     public:
         Mesh() = delete;
         Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures);
-        void Draw(const Shader &shader) const;
+        void Draw(const ShaderProgram &shader) const;
     };
 }

@@ -1,26 +1,115 @@
 #include "Shader.h"
 
 namespace Banshee {
-    Shader::Shader(const String &filename) {
-        m_ShaderName = filename;
-        m_ProgramID = glCreateProgram();
-        Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + filename);
+#pragma region Shader class
+    Shader::Shader(const String &shaderName, const ShaderType shaderType): m_ShaderName{shaderName}, m_ShaderType{shaderType} {
+        m_ShaderID = glCreateShader(ShaderTypeToGLenum(shaderType));
 
-        const auto [vertexShader, fragmentShader] = CompileShader(AssetManager::GetRoot().generic_string() + "/" + filename);
+        std::ifstream shaderFile;
+        // TODO: Do better file reading
+        shaderFile.open(AssetManager::GetRoot().generic_string() + "/" + shaderName + GetShaderExtension(shaderType));
+        Logger::PANIC(!shaderFile.is_open(), "Can't open " + ShaderTypeToString(shaderType) + " shader: " + shaderName);
+        std::stringstream shaderStream;
+        shaderStream << shaderFile.rdbuf();
+        shaderFile.close();
+        const String shaderCode = shaderStream.str();
 
-        glAttachShader(m_ProgramID, vertexShader);
-        glAttachShader(m_ProgramID, fragmentShader);
-        glLinkProgram(m_ProgramID);
+        // TODO: Find a better way to do this
+        const char *shaderCodeChar = shaderCode.c_str();
+        Logger::INFO("Compiling " + ShaderTypeToString(shaderType) + " shader of: " + shaderName);
+        glShaderSource(m_ShaderID, 1, &shaderCodeChar, nullptr);
+        glCompileShader(m_ShaderID);
+        CheckCompilationError();
+    }
 
+    Shader::~Shader() {
+        glDeleteShader(m_ShaderID);
+    }
+
+    void Shader::CheckCompilationError() const {
         i32 success;
-
-        glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &success);
+        glGetShaderiv(m_ShaderID, GL_COMPILE_STATUS, &success);
         if (!success) {
             char infoLog[1024];
-            glGetProgramInfoLog(m_ProgramID, 1024, nullptr, infoLog);
+            glGetShaderInfoLog(m_ShaderID, 1024, nullptr, infoLog);
             Logger::CRITICAL("Error compiling shader: " + m_ShaderName + "\nLog: " + String{infoLog});
         }
+    }
 
+    u32 Shader::GetShaderID() const {
+        return m_ShaderID;
+    }
+
+    GLenum Shader::ShaderTypeToGLenum(const ShaderType shaderType) {
+        switch (shaderType) {
+            case VERTEX_SHADER:
+                return GL_VERTEX_SHADER;
+            case FRAGMENT_SHADER:
+                return GL_FRAGMENT_SHADER;
+            case GEOMETRY_SHADER:
+                return GL_GEOMETRY_SHADER;
+            case COMPUTE_SHADER:
+                return GL_COMPUTE_SHADER;
+            default:
+                static_assert("Invalid shader type");
+                return 0;
+        }
+    }
+
+    String Shader::ShaderTypeToString(const ShaderType shaderType) {
+        switch (shaderType) {
+            case VERTEX_SHADER:
+                return "Vertex";
+            case FRAGMENT_SHADER:
+                return "Fragment";
+            case GEOMETRY_SHADER:
+                return "Geometry";
+            case COMPUTE_SHADER:
+                return "Compute";
+            default:
+                static_assert("Invalid shader type");
+                return "";
+        }
+    }
+
+    String Shader::GetShaderExtension(const ShaderType shaderType) {
+        switch (shaderType) {
+            case VERTEX_SHADER:
+                return ".vert";
+            case FRAGMENT_SHADER:
+                return ".frag";
+            case GEOMETRY_SHADER:
+                return ".geom";
+            case COMPUTE_SHADER:
+                return ".comp";
+            default:
+                static_assert("Invalid shader type");
+                return "";
+        }
+    }
+#pragma endregion
+
+#pragma region ShaderProgram class
+    ShaderProgram::ShaderProgram(const String &shaderName): m_ShaderProgramName{shaderName} {
+        m_ProgramID = glCreateProgram();
+        Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + shaderName);
+
+        const auto vertexShader = Shader(shaderName, VERTEX_SHADER);
+        const auto fragmentShader = Shader(shaderName, FRAGMENT_SHADER);
+
+        glAttachShader(m_ProgramID, vertexShader.GetShaderID());
+        glAttachShader(m_ProgramID, fragmentShader.GetShaderID());
+        glLinkProgram(m_ProgramID);
+
+        CheckCompilationError();
+        GetUniforms();
+    }
+
+    ShaderProgram::~ShaderProgram() {
+        glDeleteProgram(m_ProgramID);
+    }
+
+    void ShaderProgram::GetUniforms() {
         GLint numUniforms = 0;
         glGetProgramiv(m_ProgramID, GL_ACTIVE_UNIFORMS, &numUniforms);
 
@@ -37,90 +126,41 @@ namespace Banshee {
             // Store uniform
             m_Uniforms[uniformName] = glGetUniformLocation(m_ProgramID, uniformName);
         }
-
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
     }
 
-    Shader::~Shader() {
-        glDeleteProgram(m_ProgramID);
-    }
-
-    void Shader::CheckCompilationError(const u32 shaderProgram, const String &shaderType) const {
+    void ShaderProgram::CheckCompilationError() const {
         i32 success;
-        glGetShaderiv(shaderProgram, GL_COMPILE_STATUS, &success);
+        glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &success);
         if (!success) {
             char infoLog[1024];
-            glGetShaderInfoLog(shaderProgram, 1024, nullptr, infoLog);
-            Logger::CRITICAL("Error linking the shader: " + m_ShaderName + "\nLog: " + String{infoLog});
+            glGetProgramInfoLog(m_ProgramID, 1024, nullptr, infoLog);
+            Logger::CRITICAL("Error compiling shader: " + m_ShaderProgramName + "\nLog: " + String{infoLog});
         }
     }
 
-    Pair<u32, u32> Shader::CompileShader(const String &filename) const {
-        u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        u32 fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-        String vertexCode;
-        String fragmentCode;
-        std::ifstream vertexShaderFile;
-        std::ifstream fragmentShaderFile;
-
-        vertexShaderFile.open(filename + ".vert");
-        fragmentShaderFile.open(filename + ".frag");
-
-        Logger::PANIC(!vertexShaderFile.is_open(), "Can't open vertex shader: " + filename);
-        Logger::PANIC(!fragmentShaderFile.is_open(), "Can't open fragment shader: " + filename);
-
-        std::stringstream vShaderStream, fShaderStream;
-
-        vShaderStream << vertexShaderFile.rdbuf();
-        fShaderStream << fragmentShaderFile.rdbuf();
-
-        vertexShaderFile.close();
-        fragmentShaderFile.close();
-
-        vertexCode = vShaderStream.str();
-        fragmentCode = fShaderStream.str();
-
-
-        const char *vertxShaderCode = vertexCode.c_str();
-        const char *fragmentShaderCode = fragmentCode.c_str();
-
-        Logger::INFO("Compiling vertex shader of: " + filename);
-        glShaderSource(vertexShader, 1, &vertxShaderCode, nullptr);
-        glCompileShader(vertexShader);
-        CheckCompilationError(vertexShader, "Vertex");
-
-        Logger::INFO("Compiling fragment shader of: " + filename);
-        glShaderSource(fragmentShader, 1, &fragmentShaderCode, nullptr);
-        glCompileShader(fragmentShader);
-        CheckCompilationError(fragmentShader, "Fragment");
-
-        return std::make_pair(vertexShader, fragmentShader);
-    }
-
-    void Shader::Bind() const {
+    void ShaderProgram::Bind() const {
         glUseProgram(m_ProgramID);
     }
 
-    void Shader::Unbind() {
+    void ShaderProgram::Unbind() {
         glUseProgram(0);
     }
 
-    void Shader::SetInt(const String &uniformName, const i32 value) const {
+    void ShaderProgram::SetInt(const String &uniformName, const i32 value) const {
         if (m_Uniforms.contains(uniformName)) {
             const auto uniformLocation = m_Uniforms.at(uniformName);
             glUniform1i(uniformLocation, value);
         }
     }
 
-    void Shader::SetVec3(const String &uniformName, glm::vec3 vec3) const {
+    void ShaderProgram::SetVec3(const String &uniformName, glm::vec3 vec3) const {
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniform3fv(uniformLocation, 1, glm::value_ptr(vec3));
     }
 
-    void Shader::SetMat4(const String &uniformName, glm::mat4 mat4) const {
+    void ShaderProgram::SetMat4(const String &uniformName, glm::mat4 mat4) const {
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(mat4));
     }
+#pragma endregion
 }

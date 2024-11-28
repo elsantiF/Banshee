@@ -36,7 +36,7 @@ namespace Banshee {
         m_VAO->Unbind();
     }
 
-    void Mesh::Draw(const Shader &shader) const {
+    void Mesh::Draw(const ShaderProgram &shader) const {
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;
