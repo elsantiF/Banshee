@@ -9,12 +9,8 @@ namespace Banshee {
 
         m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
 
-        m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
         m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
         m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-        m_Yaw = 0.0f;
-        m_Pitch = 0.0f;
 
         UpdateCameraVectors();
     }
@@ -22,8 +18,8 @@ namespace Banshee {
     void Camera::UpdateCameraVectors() {
         glm::vec3 front;
 
-        const f32 radiansYaw = glm::radians(m_Yaw);
-        const f32 radiansPitch = glm::radians(m_Pitch);
+        const f32 radiansYaw = glm::radians(m_Transform.GetRotation().y);
+        const f32 radiansPitch = glm::radians(m_Transform.GetRotation().x);
 
         front.x = cos(radiansYaw) * cos(radiansPitch);
         front.y = sin(radiansPitch);
@@ -39,42 +35,43 @@ namespace Banshee {
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
-            m_Position += m_Front * positionSpeed;
+            m_Transform.Translate(m_Front * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_S)) {
-            m_Position -= m_Front * positionSpeed;
+            m_Transform.Translate(-m_Front * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_D)) {
-            m_Position += m_Right * positionSpeed;
+            m_Transform.Translate(m_Right * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_A)) {
-            m_Position -= m_Right * positionSpeed;
+            m_Transform.Translate(-m_Right * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_Q)) {
-            m_Position += m_Up * positionSpeed;
+            m_Transform.Translate(m_Up * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_E)) {
-            m_Position -= m_Up * positionSpeed;
+            m_Transform.Translate(-m_Up * positionSpeed);
         }
 
         // Rotation update
         const f32 rotationSpeed = 35.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
-            m_Pitch -= rotationSpeed;
+            m_Transform.RotateX(-rotationSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_UP)) {
-            m_Pitch += rotationSpeed;
+            m_Transform.RotateX(rotationSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
-            m_Yaw -= rotationSpeed;
+            m_Transform.RotateY(-rotationSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
-            m_Yaw += rotationSpeed;
+            m_Transform.RotateY(rotationSpeed);
         }
 
-        if (m_Pitch > 89.0f) m_Pitch = 89.0f;
-        if (m_Pitch < -89.0f) m_Pitch = -89.0f;
+        // TODO: Add this again
+        // if (m_Pitch > 89.0f) m_Pitch = 89.0f;
+        // if (m_Pitch < -89.0f) m_Pitch = -89.0f;
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
             const f32 fov = GetFov();
@@ -103,7 +100,7 @@ namespace Banshee {
     }
 
     glm::mat4 Camera::GetViewMatrix() const {
-        return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+        return glm::lookAt(m_Transform.GetPosition(), m_Transform.GetPosition() + m_Front, m_Up);
     }
 
     glm::mat4 Camera::GetProjectionMatrix() const {
@@ -111,6 +108,6 @@ namespace Banshee {
     }
 
     glm::vec3 Camera::GetCameraPosition() const {
-        return m_Position;
+        return m_Transform.GetPosition();
     }
 }
