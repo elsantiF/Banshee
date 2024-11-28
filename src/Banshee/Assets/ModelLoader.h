@@ -6,7 +6,7 @@
 #include <assimp/postprocess.h>
 
 #include "Core/Core.h"
-#include "Components/Mesh.h"
+#include "Components/StaticMesh.h"
 #include "Components/Model.h"
 #include "Graphics/Texture.h"
 #include "AssetManager.h"

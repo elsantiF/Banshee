@@ -1,4 +1,4 @@
-#include "Mesh.h"
+#include "StaticMesh.h"
 
 namespace Banshee {
     Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures): m_Vertices{vertices},

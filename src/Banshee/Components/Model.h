@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Core/Core.h"
-#include "Components/Mesh.h"
+#include "Components/StaticMesh.h"
 #include "Transform.h"
 
 namespace Banshee {
