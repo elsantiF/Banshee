@@ -20,8 +20,8 @@ namespace Banshee {
 
         bool m_Wireframe = false; // TODO: Move to Renderer when it's ready
 
-        double m_Delta = 0.0;
-        double m_LastFrame = 0.0;
+        f64 m_Delta = 0.0;
+        f64 m_LastFrame = 0.0;
 
     public:
         explicit Application(UniquePtr<Level> level);

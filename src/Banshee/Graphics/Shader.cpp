@@ -12,7 +12,7 @@ namespace Banshee {
         glAttachShader(m_ProgramID, fragmentShader);
         glLinkProgram(m_ProgramID);
 
-        int success;
+        i32 success;
 
         glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &success);
         if (!success) {
@@ -31,8 +31,7 @@ namespace Banshee {
         GLsizei actualLength = 0;
 
         for (int indexUniform = 0; indexUniform < numUniforms; indexUniform++) {
-            glGetActiveUniform(m_ProgramID, indexUniform, sizeof(uniformName) - 1,
-                               &actualLength, &arraySize, &type, &uniformName[0]);
+            glGetActiveUniform(m_ProgramID, indexUniform, sizeof(uniformName) - 1, &actualLength, &arraySize, &type, &uniformName[0]);
             uniformName[actualLength] = 0;
 
             // Store uniform
@@ -47,8 +46,8 @@ namespace Banshee {
         glDeleteProgram(m_ProgramID);
     }
 
-    void Shader::CheckCompilationError(const unsigned int shaderProgram, const String &shaderType) const {
-        int success;
+    void Shader::CheckCompilationError(const u32 shaderProgram, const String &shaderType) const {
+        i32 success;
         glGetShaderiv(shaderProgram, GL_COMPILE_STATUS, &success);
         if (!success) {
             char infoLog[1024];
@@ -57,9 +56,9 @@ namespace Banshee {
         }
     }
 
-    Pair<unsigned int, unsigned int> Shader::CompileShader(const String &filename) const {
-        unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    Pair<u32, u32> Shader::CompileShader(const String &filename) const {
+        u32 vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        u32 fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
         String vertexCode;
         String fragmentCode;
@@ -108,7 +107,7 @@ namespace Banshee {
         glUseProgram(0);
     }
 
-    void Shader::SetInt(const String &uniformName, int value) const {
+    void Shader::SetInt(const String &uniformName, const i32 value) const {
         if (m_Uniforms.contains(uniformName)) {
             const auto uniformLocation = m_Uniforms.at(uniformName);
             glUniform1i(uniformLocation, value);

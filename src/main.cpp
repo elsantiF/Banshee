@@ -22,11 +22,11 @@ class ModelViewer final : public Level {
         m_Model = ModelLoader().LoadModel("models/backpack/backpack.obj");
     }
 
-    void OnUpdate(const double delta) override {
+    void OnUpdate(const f64 delta) override {
         m_Camera.Update(delta);
     }
 
-    void OnRender(const double delta) override {
+    void OnRender(const f64 delta) override {
         m_Shader->Bind();
         m_Shader->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
         m_Shader->SetMat4("u_MatView", m_Camera.GetViewMatrix());
@@ -37,7 +37,7 @@ class ModelViewer final : public Level {
         m_Model.Draw(*m_Shader);
     }
 
-    void OnImGUI(const double delta) override {
+    void OnImGUI(const f64 delta) override {
         ImGui::Begin("Engine");
 
         ImGui::Text("Delta: %04f ms", delta * 1000);

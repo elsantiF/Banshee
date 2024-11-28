@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 namespace Banshee {
-    Camera::Camera(const float fov, const float aspect, const float near, const float far) {
+    Camera::Camera(const f32 fov, const f32 aspect, const f32 near, const f32 far) {
         m_Fov = fov;
         m_Aspect = aspect;
         m_Near = near;
@@ -22,8 +22,8 @@ namespace Banshee {
     void Camera::UpdateCameraVectors() {
         glm::vec3 front;
 
-        const float radiansYaw = glm::radians(m_Yaw);
-        const float radiansPitch = glm::radians(m_Pitch);
+        const f32 radiansYaw = glm::radians(m_Yaw);
+        const f32 radiansPitch = glm::radians(m_Pitch);
 
         front.x = cos(radiansYaw) * cos(radiansPitch);
         front.y = sin(radiansPitch);
@@ -34,9 +34,9 @@ namespace Banshee {
         m_Up = glm::normalize(glm::cross(m_Right, m_Front));
     }
 
-    void Camera::Update(const double delta) {
+    void Camera::Update(const f64 delta) {
         // Position update
-        const float positionSpeed = 10.0f * static_cast<float>(delta);
+        const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
             m_Position += m_Front * positionSpeed;
@@ -58,7 +58,7 @@ namespace Banshee {
         }
 
         // Rotation update
-        const float rotationSpeed = 35.0f * static_cast<float>(delta);
+        const f32 rotationSpeed = 35.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
             m_Pitch -= rotationSpeed;
@@ -77,14 +77,14 @@ namespace Banshee {
         if (m_Pitch < -89.0f) m_Pitch = -89.0f;
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
-            const float fov = GetFov();
+            const f32 fov = GetFov();
             if (fov < 179.9f) {
                 SetFov(GetFov() + 0.1f);
             }
         }
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_SUBTRACT)) {
-            const float fov = GetFov();
+            const f32 fov = GetFov();
             if (fov > 0.1f) {
                 SetFov(GetFov() - 0.1f);
             }
@@ -93,11 +93,11 @@ namespace Banshee {
         UpdateCameraVectors();
     }
 
-    float Camera::GetFov() const {
+    f32 Camera::GetFov() const {
         return m_Fov;
     }
 
-    void Camera::SetFov(const float fov) {
+    void Camera::SetFov(const f32 fov) {
         m_Fov = fov;
         m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
     }

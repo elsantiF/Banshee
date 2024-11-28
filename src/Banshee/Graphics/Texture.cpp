@@ -5,7 +5,7 @@ namespace Banshee {
     Texture::Texture(const String &texturePath): m_FilePath{texturePath} {
         glGenTextures(1, &m_TextureID); // Can textureID be 0?
 
-        int width, height, channels;
+        i32 width, height, channels;
         stbi_set_flip_vertically_on_load(true);
         unsigned char *data = stbi_load(texturePath.c_str(), &width, &height, &channels, 0);
         if (!data) {

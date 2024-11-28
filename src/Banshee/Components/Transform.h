@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Core/Core.h"
+
 namespace Banshee {
     class Transform {
         glm::vec3 m_Position = glm::vec3(0.0f);
@@ -23,20 +25,20 @@ namespace Banshee {
         [[nodiscard]] glm::vec3 GetScale() const;
 
         Transform &Translate(const glm::vec3 &translation);
-        Transform &TranslateX(float x);
-        Transform &TranslateY(float y);
-        Transform &TranslateZ(float z);
+        Transform &TranslateX(f32 x);
+        Transform &TranslateY(f32 y);
+        Transform &TranslateZ(f32 z);
 
         Transform &Scale(const glm::vec3 &scale);
-        Transform &Scale(float scale);
-        Transform &ScaleX(float x);
-        Transform &ScaleY(float y);
-        Transform &ScaleZ(float z);
+        Transform &Scale(f32 scale);
+        Transform &ScaleX(f32 x);
+        Transform &ScaleY(f32 y);
+        Transform &ScaleZ(f32 z);
 
         Transform &Rotate(const glm::vec3 &rotation);
         // TODO: Add Quaternion rotation
-        Transform &RotateX(float x);
-        Transform &RotateY(float y);
-        Transform &RotateZ(float z);
+        Transform &RotateX(f32 x);
+        Transform &RotateY(f32 y);
+        Transform &RotateZ(f32 z);
     };
 }

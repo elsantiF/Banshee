@@ -10,23 +10,23 @@
 // TODO: Refactor this to use Mesh and Texture instead of m_VAO and m_VBO and m_Texture
 namespace Banshee {
     class Framebuffer {
-        unsigned int m_Framebuffer;
-        unsigned int m_Renderbuffer;
+        u32 m_Framebuffer;
+        u32 m_Renderbuffer;
         UniquePtr<Shader> m_Shader;
         UniquePtr<VertexArray> m_VAO;
         UniquePtr<Buffer> m_VBO;
-        unsigned int m_Texture;
+        u32 m_Texture;
 
-        unsigned int m_Width;
-        unsigned int m_Height;
-        unsigned int m_ColorDepth;
+        u32 m_Width;
+        u32 m_Height;
+        u32 m_ColorDepth;
 
     public:
-        Framebuffer(unsigned int width, unsigned int height, unsigned int colorDepth);
+        Framebuffer(u32 width, u32 height, u32 colorDepth);
         ~Framebuffer();
 
-        void Bind();
-        void Unbind();
-        void Draw();
+        void Bind() const;
+        static void Unbind();
+        void Draw() const;
     };
 }

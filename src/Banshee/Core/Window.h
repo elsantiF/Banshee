@@ -6,12 +6,12 @@
 #include "InputManager.h"
 
 namespace Banshee {
-    using WindowSize = Pair<float, float>;
+    using WindowSize = Pair<f32, f32>;
 
     // TODO: Add a way to set the window to be resizable
     class Window {
-        unsigned int m_Width = 0;
-        unsigned int m_Height = 0;
+        u32 m_Width = 0;
+        u32 m_Height = 0;
 
         String m_WindowTitle;
         GLFWwindow *m_WindowPtr = nullptr;
@@ -22,7 +22,7 @@ namespace Banshee {
         [[nodiscard]] bool ShouldClose() const;
         void SwapBuffers() const;
         [[nodiscard]] WindowSize GetSize() const;
-        [[nodiscard]] float GetAspect() const;
+        [[nodiscard]] f32 GetAspect() const;
         [[nodiscard]] GLFWwindow *GetWindowPtr() const;
     };
 }

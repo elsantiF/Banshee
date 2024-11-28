@@ -7,7 +7,7 @@
 
 namespace Banshee {
     class Texture {
-        unsigned int m_TextureID;
+        u32 m_TextureID;
         String m_TextureType;
         String m_FilePath;
 

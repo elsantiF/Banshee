@@ -1,5 +1,6 @@
 #include "Framebuffer.h"
 
+// TODO: Move this to a separate file
 float vertices[] = {
     //position     //texture
     -1.0f,  1.0f,  0.0f, 1.0f,
@@ -12,7 +13,7 @@ float vertices[] = {
 };
 
 namespace Banshee {
-    Framebuffer::Framebuffer(unsigned int width, unsigned int height, unsigned int colorDepth) : m_Width(width), m_Height(height), m_ColorDepth(colorDepth) {
+    Framebuffer::Framebuffer(const u32 width, const u32 height, const u32 colorDepth) : m_Width(width), m_Height(height), m_ColorDepth(colorDepth) {
         m_Shader = MakeUnique<Shader>("shaders/framebuffer");
         m_VAO = MakeUnique<VertexArray>();
         m_VAO->Bind();
@@ -52,7 +53,7 @@ namespace Banshee {
         glDeleteRenderbuffers(1, &m_Renderbuffer);
     }
 
-    void Framebuffer::Bind() {
+    void Framebuffer::Bind() const {
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
         glViewport(0, 0, m_Width, m_Height);
     }
@@ -61,7 +62,7 @@ namespace Banshee {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void Framebuffer::Draw() {
+    void Framebuffer::Draw() const {
         m_Shader->Bind();
         m_VAO->Bind();
         glBindTexture(GL_TEXTURE_2D, m_Texture);

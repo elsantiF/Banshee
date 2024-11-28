@@ -9,7 +9,7 @@ namespace Banshee {
         m_MouseButtons[button] = isPressed;
     }
 
-    void InputManager::SetMousePosition(const double x, const double y) {
+    void InputManager::SetMousePosition(const f64 x, const f64 y) {
         m_MousePosition = std::make_pair(x, y);
     }
 
@@ -21,15 +21,15 @@ namespace Banshee {
         return m_MouseButtons[button];
     }
 
-    Pair<double, double> InputManager::GetMousePosition() {
+    Pair<f64, f64> InputManager::GetMousePosition() {
         return m_MousePosition;
     }
 
-    double InputManager::GetMouseX() {
+    f64 InputManager::GetMouseX() {
         return m_MousePosition.first;
     }
 
-    double InputManager::GetMouseY() {
+    f64 InputManager::GetMouseY() {
         return m_MousePosition.second;
     }
 }

@@ -1,7 +1,7 @@
 #include "Window.h"
 
 namespace Banshee {
-    Window::Window(const String &title, const unsigned int width, const unsigned int height): m_Width{width}, m_Height{height}, m_WindowTitle{title} {
+    Window::Window(const String &title, const u32 width, const u32 height): m_Width{width}, m_Height{height}, m_WindowTitle{title} {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -28,7 +28,7 @@ namespace Banshee {
             InputManager::SetMouseButtonPressed(button, action == GLFW_PRESS);
         });
 
-        glfwSetCursorPosCallback(m_WindowPtr, [](GLFWwindow *window, const double xpos, const double ypos) {
+        glfwSetCursorPosCallback(m_WindowPtr, [](GLFWwindow *window, const f64 xpos, const f64 ypos) {
             InputManager::SetMousePosition(xpos, ypos);
         });
 
@@ -56,8 +56,8 @@ namespace Banshee {
     }
 
     // TODO: Change this as well
-    float Window::GetAspect() const {
-        return static_cast<float>(m_Width) / static_cast<float>(m_Height);
+    f32 Window::GetAspect() const {
+        return static_cast<f32>(m_Width) / static_cast<f32>(m_Height);
     }
 
     GLFWwindow *Window::GetWindowPtr() const {

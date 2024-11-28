@@ -2,9 +2,11 @@
 
 #include <glad/glad.h>
 
+#include "Core/Core.h"
+
 namespace Banshee {
     class VertexArray {
-        unsigned int m_VAO{};
+        u32 m_VAO{};
 
     public:
         VertexArray();
@@ -12,6 +14,6 @@ namespace Banshee {
 
         void Bind() const;
         static void Unbind();
-        static void EnableAttribute(unsigned int index, int size, int offset, const void *data);
+        static void EnableAttribute(u32 index, i32 size, i32 offset, const void *data);
     };
 }

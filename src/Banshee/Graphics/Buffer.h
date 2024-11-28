@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include "Core/Core.h"
+
 namespace Banshee {
     enum BufferType {
         VertexBuffer = GL_ARRAY_BUFFER,
@@ -9,7 +11,7 @@ namespace Banshee {
     };
 
     class Buffer {
-        unsigned int m_BufferID{};
+        u32 m_BufferID{};
         BufferType m_BufferType{};
 
     public:

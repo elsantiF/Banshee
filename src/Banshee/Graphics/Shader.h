@@ -13,11 +13,11 @@
 namespace Banshee {
     class Shader {
         String m_ShaderName;
-        unsigned int m_ProgramID = 0;
-        UnorderedMap<String, int> m_Uniforms;
+        u32 m_ProgramID = 0;
+        UnorderedMap<String, i32> m_Uniforms;
 
-        void CheckCompilationError(unsigned int shaderProgram, const String &shaderType) const;
-        [[nodiscard]] Pair<unsigned int, unsigned int> CompileShader(const String &filename) const;
+        void CheckCompilationError(u32 shaderProgram, const String &shaderType) const;
+        [[nodiscard]] Pair<u32, u32> CompileShader(const String &filename) const;
 
     public:
         Shader() = default;
@@ -27,7 +27,7 @@ namespace Banshee {
         void Bind() const;
         static void Unbind();
 
-        void SetInt(const String &uniformName, int value) const;
+        void SetInt(const String &uniformName, i32 value) const;
         void SetVec3(const String &uniformName, glm::vec3 vec3) const;
         void SetMat4(const String &uniformName, glm::mat4 mat4) const;
     };

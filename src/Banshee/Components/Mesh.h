@@ -12,7 +12,7 @@
 namespace Banshee {
     class Mesh {
         Vector<Vertex> m_Vertices;
-        Vector<unsigned int> m_Indices;
+        Vector<u32> m_Indices;
         Vector<Texture> m_Textures;
 
         // TODO: Is really needed to have these here? If mesh is only static perhaps it can use only the VAO
@@ -22,7 +22,7 @@ namespace Banshee {
 
     public:
         Mesh() = delete;
-        Mesh(const Vector<Vertex> &vertices, const Vector<unsigned int> &indices, const Vector<Texture> &textures);
+        Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures);
         void Draw(Shader &shader) const;
     };
 }

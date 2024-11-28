@@ -1,7 +1,7 @@
 #include "Mesh.h"
 
 namespace Banshee {
-    Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<unsigned int> &indices, const Vector<Texture> &textures): m_Vertices{vertices},
+    Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures): m_Vertices{vertices},
         m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place
         m_VAO = MakeUnique<VertexArray>();
@@ -14,7 +14,7 @@ namespace Banshee {
         m_VBO->LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
 
         m_EBO->Bind();
-        m_EBO->LoadData(m_Indices.size() * sizeof(unsigned int), &m_Indices[0]);
+        m_EBO->LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
 
         // Position Attribute
         m_VAO->EnableAttribute(0, 3, sizeof(Vertex), nullptr);
@@ -36,12 +36,12 @@ namespace Banshee {
 
     void Mesh::Draw(Shader &shader) const {
         // TODO: Same as above, this will be moved to another place
-        unsigned int diffuseNr = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr = 1;
-        unsigned int heightNr = 1;
+        u32 diffuseNr = 1;
+        u32 specularNr = 1;
+        u32 normalNr = 1;
+        u32 heightNr = 1;
 
-        for (unsigned int i = 0; i < m_Textures.size(); i++) {
+        for (u32 i = 0; i < m_Textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i);
 
             String number;

@@ -3,16 +3,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Core/Core.h"
 #include "Core/InputManager.h"
 #include "Core/Window.h"
 
 // TODO: Refactor this class to use Transform class
 namespace Banshee {
     class Camera {
-        float m_Fov;
-        float m_Aspect;
-        float m_Near;
-        float m_Far;
+        f32 m_Fov{};
+        f32 m_Aspect{};
+        f32 m_Near{};
+        f32 m_Far{};
 
         glm::mat4 m_ProjectionMatrix{};
 
@@ -22,18 +23,18 @@ namespace Banshee {
         glm::vec3 m_Right{};
         glm::vec3 m_WorldUp{};
 
-        float m_Yaw = 0.f;
-        float m_Pitch = 0.f;
+        f32 m_Yaw{};
+        f32 m_Pitch{};
 
         void UpdateCameraVectors();
 
     public:
         Camera() = default;
-        Camera(float fov, float aspect, float near, float far);
-        void Update(double delta);
+        Camera(f32 fov, f32 aspect, f32 near, f32 far);
+        void Update(f64 delta);
 
-        float GetFov() const;
-        void SetFov(float fov);
+        [[nodiscard]] f32 GetFov() const;
+        void SetFov(f32 fov);
 
         [[nodiscard]] glm::mat4 GetViewMatrix() const;
         [[nodiscard]] glm::mat4 GetProjectionMatrix() const;

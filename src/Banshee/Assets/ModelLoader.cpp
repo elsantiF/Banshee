@@ -27,22 +27,22 @@ namespace Banshee {
 
     // Change this, don't use recursion, use something like BFS
     void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene) {
-        for (unsigned int i = 0; i < node->mNumMeshes; i++) {
+        for (u32 i = 0; i < node->mNumMeshes; i++) {
             const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
             ProcessMesh(mesh, scene);
         }
 
-        for (unsigned int i = 0; i < node->mNumChildren; i++) {
+        for (u32 i = 0; i < node->mNumChildren; i++) {
             ProcessNode(node->mChildren[i], scene);
         }
     }
 
     void ModelLoader::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
         Vector<Vertex> vertices;
-        Vector<unsigned int> indices;
+        Vector<u32> indices;
         Vector<Texture> textures;
 
-        for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+        for (u32 i = 0; i < mesh->mNumVertices; i++) {
             Vertex vertex;
 
             glm::vec3 vector;
@@ -81,10 +81,10 @@ namespace Banshee {
             vertices.push_back(vertex);
         }
 
-        for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+        for (u32 i = 0; i < mesh->mNumFaces; i++) {
             aiFace face = mesh->mFaces[i];
 
-            for (unsigned int j = 0; j < face.mNumIndices; j++) {
+            for (u32 j = 0; j < face.mNumIndices; j++) {
                 indices.push_back(face.mIndices[j]);
             }
         }
@@ -106,7 +106,7 @@ namespace Banshee {
 
     Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         Vector<Texture> textures;
-        for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
+        for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
 

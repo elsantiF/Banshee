@@ -80,7 +80,7 @@ namespace Banshee {
             m_Window->SwapBuffers();
             glfwPollEvents();
 
-            const double currentFrame = glfwGetTime();
+            const f64 currentFrame = glfwGetTime();
             m_Delta = currentFrame - m_LastFrame;
             m_LastFrame = currentFrame;
         }

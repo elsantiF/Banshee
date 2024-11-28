@@ -52,15 +52,15 @@ namespace Banshee {
         return *this;
     }
 
-    Transform &Transform::TranslateX(const float x) {
+    Transform &Transform::TranslateX(const f32 x) {
         return this->Translate(glm::vec3(x, 0.0f, 0.0f));
     }
 
-    Transform &Transform::TranslateY(const float y) {
+    Transform &Transform::TranslateY(const f32 y) {
         return this->Translate(glm::vec3(0.0f, y, 0.0f));
     }
 
-    Transform &Transform::TranslateZ(const float z) {
+    Transform &Transform::TranslateZ(const f32 z) {
         return this->Translate(glm::vec3(0.0f, 0.0f, z));
     }
 
@@ -70,19 +70,19 @@ namespace Banshee {
         return *this;
     }
 
-    Transform &Transform::Scale(const float scale) {
+    Transform &Transform::Scale(const f32 scale) {
         return this->Scale(glm::vec3(scale));
     }
 
-    Transform &Transform::ScaleX(const float x) {
+    Transform &Transform::ScaleX(const f32 x) {
         return this->Scale(glm::vec3(x, 1.0f, 1.0f));
     }
 
-    Transform &Transform::ScaleY(const float y) {
+    Transform &Transform::ScaleY(const f32 y) {
         return this->Scale(glm::vec3(1.0f, y, 1.0f));
     }
 
-    Transform &Transform::ScaleZ(const float z) {
+    Transform &Transform::ScaleZ(const f32 z) {
         return this->Scale(glm::vec3(1.0f, 1.0f, z));
     }
 
@@ -95,15 +95,15 @@ namespace Banshee {
         return *this;
     }
 
-    Transform &Transform::RotateX(const float x) {
+    Transform &Transform::RotateX(const f32 x) {
         return this->Rotate(glm::vec3(x, 0.0f, 0.0f));
     }
 
-    Transform &Transform::RotateY(const float y) {
+    Transform &Transform::RotateY(const f32 y) {
         return this->Rotate(glm::vec3(0.0f, y, 0.0f));
     }
 
-    Transform &Transform::RotateZ(const float z) {
+    Transform &Transform::RotateZ(const f32 z) {
         return this->Rotate(glm::vec3(0.0f, 0.0f, z));
     }
 }

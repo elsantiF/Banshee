@@ -17,8 +17,7 @@ namespace Banshee {
         glBindVertexArray(0);
     }
 
-    void VertexArray::EnableAttribute(const unsigned int index, const int size,
-                                      const int offset, const void *data) {
+    void VertexArray::EnableAttribute(const u32 index, const i32 size, const i32 offset, const void *data) {
         glEnableVertexAttribArray(index);
         glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, offset, data);
     }

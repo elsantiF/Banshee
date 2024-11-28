@@ -2,8 +2,7 @@
 
 namespace Banshee {
     void Renderer::Init() {
-        Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)),
-                      "Failed to initialize GLAD");
+        Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), "Failed to initialize GLAD");
 
         //glViewport(0, 0, 1280, 720);
         SetClearColor(glm::vec4{0.3f, 0.0f, 0.3f, 0.0f});
@@ -17,7 +16,7 @@ namespace Banshee {
         Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_VENDOR)));
         Logger::INFO(reinterpret_cast<const char *const>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
 
-        int flags;
+        i32 flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
         if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
             glEnable(GL_DEBUG_OUTPUT);

@@ -20,7 +20,7 @@ namespace Banshee {
         fs::path m_Directory;
 
         Vector<Mesh> m_Meshes;
-        Vector<unsigned int> m_Indices;
+        Vector<u32> m_Indices;
         Vector<Texture> m_Textures;
 
         void ProcessNode(const aiNode *node, const aiScene *scene);
