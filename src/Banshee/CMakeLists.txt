@@ -7,7 +7,7 @@ else ()
 endif ()
 
 if (USE_HYBRID_GRAPHICS AND WIN32)
-    target_compile_definitions(Banshee PRIVATE
+    target_compile_definitions(Banshee PUBLIC
             BE_OVER_9000 # Enables Nvidia Optimus/AMD Hybrid Graphics support
     )
 endif ()
