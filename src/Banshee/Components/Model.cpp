@@ -1,6 +1,8 @@
 #include "Model.h"
 
 namespace Banshee {
+    Model::Model(Vector<Mesh> &&meshes): m_Meshes(std::move(meshes)) {}
+
     Transform &Model::GetTransform() {
         return m_Transform;
     }

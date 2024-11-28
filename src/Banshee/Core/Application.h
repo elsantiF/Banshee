@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -28,8 +27,8 @@ namespace Banshee {
         explicit Application(UniquePtr<Level> level);
         ~Application();
         void Render();
-        UniquePtr<Window> &GetWindow() { return m_Window; }
-        static Application *GetInstance() { return s_Instance; }
-        void SetWireframe(const bool wireframe) { m_Wireframe = wireframe; } // TODO: Move to Renderer when it's ready
+        UniquePtr<Window> &GetWindow();
+        static Application *GetInstance();
+        void SetWireframe(const bool wireframe); // TODO: Move to Renderer when it's ready
     };
 }

@@ -16,7 +16,7 @@ namespace Banshee {
 
     public:
         Model() = default;
-        explicit Model(Vector<Mesh> &&meshes): m_Meshes(std::move(meshes)) {}
+        explicit Model(Vector<Mesh> &&meshes);
 
         Transform &GetTransform();
 

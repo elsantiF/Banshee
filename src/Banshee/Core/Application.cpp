@@ -29,6 +29,15 @@ namespace Banshee {
         Logger::INFO("Engine started");
     }
 
+    Application::~Application() {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
+        m_Window.reset();
+        Logger::INFO("Engine closing");
+        glfwTerminate();
+    }
+
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
             m_ActualLevel->OnUpdate(m_Delta);
@@ -77,12 +86,15 @@ namespace Banshee {
         }
     }
 
-    Application::~Application() {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-        m_Window.reset();
-        Logger::INFO("Engine closing");
-        glfwTerminate();
+    UniquePtr<Window> &Application::GetWindow() {
+        return m_Window;
+    }
+
+    Application *Application::GetInstance() {
+        return s_Instance;
+    }
+
+    void Application::SetWireframe(const bool wireframe) {
+        m_Wireframe = wireframe;
     }
 }
