@@ -36,6 +36,6 @@ namespace Banshee {
 
         [[nodiscard]] glm::mat4 GetViewMatrix() const;
         [[nodiscard]] glm::mat4 GetProjectionMatrix() const;
-        [[nodiscard]] glm::vec3 GetCameraPosition() const;
+        [[nodiscard]] Transform GetTransform() const;
     };
 }

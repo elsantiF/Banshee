@@ -107,7 +107,7 @@ namespace Banshee {
         return m_ProjectionMatrix;
     }
 
-    glm::vec3 Camera::GetCameraPosition() const {
-        return m_Transform.GetPosition();
+    Transform Camera::GetTransform() const {
+        return m_Transform;
     }
 }
