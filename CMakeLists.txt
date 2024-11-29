@@ -33,15 +33,6 @@ add_subdirectory(src/Banshee)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(Application src/main.cpp)
 link_directories(${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(Application PUBLIC stb glad glm assimp::assimp glad glfw imgui Banshee)
+target_link_libraries(Application PUBLIC stb glad glm assimp::assimp glad glfw imgui fmt::fmt Banshee)
 
 # ---
-
-# if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-#     add_compile_options(/W4 /Wall)
-#     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-#         add_compile_options(/Zi /Zf)
-#     else ()
-#         add_compile_options(/O2)
-#     endif ()
-# endif ()

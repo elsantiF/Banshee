@@ -13,3 +13,6 @@
 [submodule "src/ThirdParty/assimp"]
 	path = src/ThirdParty/assimp
 	url = git@github.com:assimp/assimp.git
+[submodule "src/ThirdParty/fmt"]
+	path = src/ThirdParty/fmt
+	url = git@github.com:fmtlib/fmt.git
