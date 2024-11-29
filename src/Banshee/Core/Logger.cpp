@@ -1,34 +1,65 @@
 #include "Logger.h"
 
 namespace Banshee {
-    void Logger::InternalPrint(const std::string &type, const std::string &message) {
-        std::cout << "[" << type << "] " << std::chrono::system_clock::now() << ": " << message << std::endl;
+    fmt::color Logger::GetColor(const LogType type) {
+        switch (type) {
+            case LogType::INFO:
+                return fmt::color::green;
+            case LogType::WARN:
+                return fmt::color::yellow;
+            case LogType::ERROR:
+            case LogType::CRITICAL:
+                return fmt::color::red;
+            default:
+                return fmt::color::white;
+        }
     }
 
-    void Logger::INFO(const std::string &message) {
-        InternalPrint("INFO", message);
+    String Logger::GetLogTypeString(const LogType type) {
+        switch (type) {
+            case LogType::INFO:
+                return "INFO";
+            case LogType::WARN:
+                return "WARN";
+            case LogType::ERROR:
+                return "ERROR";
+            case LogType::CRITICAL:
+                return "CRITICAL";
+            default:
+                return "UNKNOWN";
+        }
     }
 
-    void Logger::WARN(const std::string &message) {
-        InternalPrint("WARN", message);
+    void Logger::InternalPrint(const LogType type, const String &message) {
+        const auto time = std::chrono::system_clock::now();
+        auto strType = GetLogTypeString(type);
+        fmt::print(fg(GetColor(type)), "{:%d-%m-%Y %H:%M:%S} [{}]: {}\n", time, strType, message);
     }
 
-    void Logger::ERROR(const std::string &message) {
-        InternalPrint("ERROR", message);
+    void Logger::INFO(const String &message) {
+        InternalPrint(LogType::INFO, message);
     }
 
-    void Logger::CRITICAL(const std::string &message) {
-        InternalPrint("CRITICAL", message);
+    void Logger::WARN(const String &message) {
+        InternalPrint(LogType::WARN, message);
+    }
+
+    void Logger::ERROR(const String &message) {
+        InternalPrint(LogType::ERROR, message);
+    }
+
+    void Logger::CRITICAL(const String &message) {
+        InternalPrint(LogType::CRITICAL, message);
         std::exit(-1);
     }
 
-    void Logger::CHECK(const bool test, const std::string &message) {
+    void Logger::CHECK(const bool test, const String &message) {
         if (test) {
             ERROR(message);
         }
     }
 
-    void Logger::PANIC(const bool test, const std::string &message) {
+    void Logger::PANIC(const bool test, const String &message) {
         if (test) {
             CRITICAL(message);
         }
