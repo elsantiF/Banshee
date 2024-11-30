@@ -18,8 +18,8 @@ namespace Banshee {
 
         // TODO: Is really needed to have these here? If mesh is only static perhaps it can use only the VAO
         UniquePtr<VertexArray> m_VAO;
-        UniquePtr<Buffer> m_VBO;
-        UniquePtr<Buffer> m_EBO;
+        UniquePtr<VertexBuffer> m_VBO;
+        UniquePtr<ElementBuffer> m_EBO;
 
     public:
         Mesh() = delete;

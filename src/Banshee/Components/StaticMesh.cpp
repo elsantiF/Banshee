@@ -7,8 +7,8 @@ namespace Banshee {
         m_IndexCount = m_Indices.size();
 
         m_VAO = MakeUnique<VertexArray>();
-        m_VBO = MakeUnique<Buffer>(BufferType::VertexBuffer);
-        m_EBO = MakeUnique<Buffer>(BufferType::ElementBuffer);
+        m_VBO = MakeUnique<VertexBuffer>();
+        m_EBO = MakeUnique<ElementBuffer>();
 
         m_VAO->Bind();
 

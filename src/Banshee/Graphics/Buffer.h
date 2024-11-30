@@ -10,17 +10,31 @@ namespace Banshee {
         ElementBuffer = GL_ELEMENT_ARRAY_BUFFER
     };
 
-    class Buffer {
+    class BufferBase {
         u32 m_BufferID{};
-        BufferType m_BufferType{};
+        BufferType m_BufferType;
 
     public:
-        Buffer() = delete;
-        explicit Buffer(BufferType bufferType);
-        ~Buffer();
+        explicit BufferBase(BufferType type);
+        ~BufferBase();
+
+        [[nodiscard]] u32 GetID() const;
+        [[nodiscard]] BufferType GetType() const;
 
         void Bind() const;
         void Unbind() const;
         void LoadData(GLsizeiptr size, const void *data) const;
+    };
+
+    class VertexBuffer final : public BufferBase {
+    public:
+        VertexBuffer();
+        ~VertexBuffer() = default;
+    };
+
+    class ElementBuffer final : public BufferBase {
+    public:
+        ElementBuffer();
+        ~ElementBuffer() = default;
     };
 }

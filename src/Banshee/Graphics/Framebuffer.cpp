@@ -18,8 +18,7 @@ namespace Banshee {
         m_VAO = MakeUnique<VertexArray>();
         m_VAO->Bind();
 
-        m_VBO = MakeUnique<Buffer>(BufferType::VertexBuffer);
-        m_VBO->Bind();
+        m_VBO = MakeUnique<VertexBuffer>();
         m_VBO->LoadData(sizeof(vertices), vertices);
 
         m_VAO->EnableAttribute(0, 2, 4 * sizeof(float), nullptr);

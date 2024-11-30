@@ -1,24 +1,41 @@
 #include "Buffer.h"
 
 namespace Banshee {
-    Buffer::Buffer(const BufferType bufferType) {
-        m_BufferType = bufferType;
+    BufferBase::BufferBase(const BufferType type) : m_BufferType{type} {
         glGenBuffers(1, &m_BufferID);
+        Logger::PANIC(m_BufferID == 0, "Can't create buffer");
     }
 
-    Buffer::~Buffer() {
+    BufferBase::~BufferBase() {
+        if (!m_BufferID) {
+            Logger::ERROR("Trying to delete a non-existent buffer");
+        }
+
         glDeleteBuffers(1, &m_BufferID);
     }
 
-    void Buffer::Bind() const {
+    u32 BufferBase::GetID() const {
+        return m_BufferID;
+    }
+
+    BufferType BufferBase::GetType() const {
+        return m_BufferType;
+    }
+
+    void BufferBase::Bind() const {
         glBindBuffer(m_BufferType, m_BufferID);
     }
 
-    void Buffer::Unbind() const {
+    void BufferBase::Unbind() const {
         glBindBuffer(m_BufferType, 0);
     }
 
-    void Buffer::LoadData(const GLsizeiptr size, const void *data) const {
+    void BufferBase::LoadData(const GLsizeiptr size, const void *data) const {
+        Bind();
         glBufferData(m_BufferType, size, data, GL_STATIC_DRAW);
     }
+
+    VertexBuffer::VertexBuffer() : BufferBase{BufferType::VertexBuffer} {}
+
+    ElementBuffer::ElementBuffer() : BufferBase{BufferType::ElementBuffer} {}
 }
