@@ -7,17 +7,16 @@ namespace Banshee {
         m_IndexCount = m_Indices.size();
 
         m_VAO = MakeUnique<VertexArray>();
-        m_VBO = MakeUnique<VertexBuffer>();
-        m_EBO = MakeUnique<ElementBuffer>();
+
+        const auto m_VBO = VertexBuffer();
+        m_VBO.LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
+        m_VAO->SetVertexBuffer(m_VBO);
+
+        const auto m_EBO = ElementBuffer();
+        m_EBO.LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
+        m_VAO->SetElementBuffer(m_EBO);
 
         m_VAO->Bind();
-
-        m_VBO->Bind();
-        m_VBO->LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
-
-        m_EBO->Bind();
-        m_EBO->LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
-
         // Position Attribute
         m_VAO->EnableAttribute(0, 3, sizeof(Vertex), nullptr);
 

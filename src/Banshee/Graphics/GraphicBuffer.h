@@ -6,8 +6,8 @@
 
 namespace Banshee {
     enum BufferType {
-        VertexBuffer = GL_ARRAY_BUFFER,
-        ElementBuffer = GL_ELEMENT_ARRAY_BUFFER
+        VERTEX_BUFFER = GL_ARRAY_BUFFER,
+        ELEMENT_BUFFER = GL_ELEMENT_ARRAY_BUFFER
     };
 
     class BufferBase {

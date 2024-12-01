@@ -5,7 +5,7 @@
 #include "Core/Core.h"
 #include "Graphics/Vertex.h"
 #include "Graphics/VertexArray.h"
-#include "Graphics/Buffer.h"
+#include "Graphics/GraphicBuffer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 
@@ -18,8 +18,6 @@ namespace Banshee {
 
         // TODO: Is really needed to have these here? If mesh is only static perhaps it can use only the VAO
         UniquePtr<VertexArray> m_VAO;
-        UniquePtr<VertexBuffer> m_VBO;
-        UniquePtr<ElementBuffer> m_EBO;
 
     public:
         Mesh() = delete;

@@ -1,4 +1,4 @@
-#include "Buffer.h"
+#include "GraphicBuffer.h"
 
 namespace Banshee {
     BufferBase::BufferBase(const BufferType type) : m_BufferType{type} {
@@ -35,7 +35,7 @@ namespace Banshee {
         glBufferData(m_BufferType, size, data, GL_STATIC_DRAW);
     }
 
-    VertexBuffer::VertexBuffer() : BufferBase{BufferType::VertexBuffer} {}
+    VertexBuffer::VertexBuffer() : BufferBase{BufferType::VERTEX_BUFFER} {}
 
-    ElementBuffer::ElementBuffer() : BufferBase{BufferType::ElementBuffer} {}
+    ElementBuffer::ElementBuffer() : BufferBase{BufferType::ELEMENT_BUFFER} {}
 }

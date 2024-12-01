@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 #include "Core/Core.h"
-#include "Buffer.h"
+#include "GraphicBuffer.h"
 #include "Shader.h"
 #include "VertexArray.h"
 
