@@ -86,4 +86,9 @@ namespace Banshee {
     String Texture::GetFilePath() const {
         return m_FilePath;
     }
+
+    u32 Texture::GetTextureID() {
+        return m_TextureID;
+    }
+
 }

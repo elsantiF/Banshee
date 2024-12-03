@@ -27,12 +27,8 @@ namespace Banshee {
         glGenFramebuffers(1, &m_Framebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
 
-        glGenTextures(1, &m_Texture);
-        glBindTexture(GL_TEXTURE_2D, m_Texture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
+        m_Texture = MakeUnique<Texture>(m_Width, m_Height, 3);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->GetTextureID(), 0);
 
         glGenRenderbuffers(1, &m_Renderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, m_Renderbuffer);
@@ -48,7 +44,6 @@ namespace Banshee {
 
     Framebuffer::~Framebuffer() {
         glDeleteFramebuffers(1, &m_Framebuffer);
-        glDeleteTextures(1, &m_Texture);
         glDeleteRenderbuffers(1, &m_Renderbuffer);
     }
 
@@ -64,7 +59,7 @@ namespace Banshee {
     void Framebuffer::Draw() const {
         m_Shader->Bind();
         m_VAO->Bind();
-        glBindTexture(GL_TEXTURE_2D, m_Texture);
+        m_Texture->Bind();
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }

@@ -29,5 +29,7 @@ namespace Banshee {
         void SetType(const String &type);
 
         [[nodiscard]] String GetFilePath() const;
+
+        [[nodiscard]] u32 GetTextureID();
     };
 }
