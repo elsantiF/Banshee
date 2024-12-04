@@ -20,10 +20,9 @@ namespace Banshee {
 
         u32 m_Width;
         u32 m_Height;
-        u32 m_ColorDepth;
 
     public:
-        Framebuffer(u32 width, u32 height, u32 colorDepth);
+        Framebuffer(u32 width, u32 height);
         ~Framebuffer();
 
         void Bind() const;
