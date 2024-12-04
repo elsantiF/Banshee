@@ -26,6 +26,7 @@ namespace Banshee {
         m_ActualLevel->OnCreate();
 
         m_Framebuffer = MakeUnique<Framebuffer>(m_Window->GetSize().first, m_Window->GetSize().second, 24);
+        m_LastFrame = glfwGetTime();
         Logger::INFO("Engine started");
     }
 
