@@ -16,9 +16,6 @@ namespace Banshee {
         inline static Application *s_Instance = nullptr;
         UniquePtr<Level> m_ActualLevel;
         UniquePtr<Window> m_Window;
-        UniquePtr<Framebuffer> m_Framebuffer;
-
-        bool m_Wireframe = false; // TODO: Move to Renderer when it's ready
 
         f64 m_Delta = 0.0;
         f64 m_LastFrame = 0.0;
@@ -29,6 +26,5 @@ namespace Banshee {
         void Render();
         UniquePtr<Window> &GetWindow();
         static Application *GetInstance();
-        void SetWireframe(bool wireframe); // TODO: Move to Renderer when it's ready
     };
 }

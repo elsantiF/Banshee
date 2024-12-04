@@ -25,7 +25,6 @@ namespace Banshee {
         m_ActualLevel = std::move(level);
         m_ActualLevel->OnCreate();
 
-        m_Framebuffer = MakeUnique<Framebuffer>(m_Window->GetSize().first, m_Window->GetSize().second, 24);
         m_LastFrame = glfwGetTime();
         Logger::INFO("Engine started");
     }
@@ -41,31 +40,11 @@ namespace Banshee {
 
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
+            // Update scene
             m_ActualLevel->OnUpdate(m_Delta);
 
-            // Framebuffer begin
-            m_Framebuffer->Bind();
-            glEnable(GL_DEPTH_TEST);
-            Renderer::Clear();
-
-            // Level rendering
-            // TODO: Move to Renderer when it's ready, this is just a temporary solution
-            if (m_Wireframe) {
-                Renderer::SetPolygonMode(PolygonMode::LINE);
-            } else {
-                Renderer::SetPolygonMode(PolygonMode::FILL);
-            }
-
+            // Render scene
             m_ActualLevel->OnRender(m_Delta);
-
-            Renderer::SetPolygonMode(PolygonMode::FILL);
-
-            m_Framebuffer->Unbind();
-            glDisable(GL_DEPTH_TEST);
-
-            // Framebuffer display
-            Renderer::Clear();
-            m_Framebuffer->Draw();
 
             // Render ImGUI
             ImGui_ImplOpenGL3_NewFrame();
@@ -93,9 +72,5 @@ namespace Banshee {
 
     Application *Application::GetInstance() {
         return s_Instance;
-    }
-
-    void Application::SetWireframe(const bool wireframe) {
-        m_Wireframe = wireframe;
     }
 }

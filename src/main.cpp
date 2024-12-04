@@ -11,30 +11,54 @@ using namespace Banshee;
 
 class ModelViewer final : public Level {
     UniquePtr<ShaderProgram> m_Shader;
+    UniquePtr<Framebuffer> m_Framebuffer;
     Model m_Model;
     Camera m_Camera;
+    bool m_Wireframe = false;
 
     void OnCreate() override {
         AssetManager::SetRoot(fs::current_path().parent_path() / "resources");
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
+        m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second, 24);
         m_Shader = Banshee::MakeUnique<ShaderProgram>("shaders/basic");
         m_Model = ModelLoader().LoadModel("models/backpack/backpack.obj");
     }
 
     void OnUpdate(const f64 delta) override {
         m_Camera.Update(delta);
+        m_Model.GetTransform().RotateY(50.0 * delta);
     }
 
     void OnRender(const f64 delta) override {
+        // Framebuffer begin
+        m_Framebuffer->Bind();
+        glEnable(GL_DEPTH_TEST);
+        Renderer::Clear();
+
+        // Level rendering
+        if (m_Wireframe) {
+            Renderer::SetPolygonMode(PolygonMode::LINE);
+        } else {
+            Renderer::SetPolygonMode(PolygonMode::FILL);
+        }
+
         m_Shader->Bind();
         m_Shader->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
         m_Shader->SetMat4("u_MatView", m_Camera.GetViewMatrix());
         m_Shader->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
 
-        m_Model.GetTransform().RotateY(50.0 * delta);
-
         m_Model.Draw(*m_Shader);
+        // End of level rendering
+
+        Renderer::SetPolygonMode(PolygonMode::FILL);
+
+        m_Framebuffer->Unbind();
+        glDisable(GL_DEPTH_TEST);
+
+        // Framebuffer display
+        Renderer::Clear();
+        m_Framebuffer->Draw();
     }
 
     void OnImGUI(const f64 delta) override {
@@ -56,13 +80,7 @@ class ModelViewer final : public Level {
         ImGui::Text("Rotation X: %04f Y: %04f Z: %04f", modelRotation.x, modelRotation.y, modelRotation.z);
 
         ImGui::SeparatorText("Render");
-        if (ImGui::Button("Solid render")) {
-            Application::GetInstance()->SetWireframe(false);
-        }
-
-        if (ImGui::Button("Wireframe render")) {
-            Application::GetInstance()->SetWireframe(true);
-        }
+        ImGui::Checkbox("Wireframe Render?", &m_Wireframe);
 
         ImGui::End();
     }
