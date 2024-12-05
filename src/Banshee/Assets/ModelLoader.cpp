@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 #include "ModelLoader.h"
 
 // TODO: This needs a refactor
@@ -108,7 +110,7 @@ namespace Banshee {
 
             for (const auto &texture: m_Textures) {
                 fs::path filePath = m_Directory / str.C_Str();
-                if (std::strcmp(texture.GetFilePath().data(), filePath.generic_string().c_str()) == 0) {
+                if (texture.GetFilePath() == filePath) {
                     textures.push_back(texture);
                     foundTexture = true;
                     break;
@@ -116,8 +118,18 @@ namespace Banshee {
             }
 
             if (!foundTexture) {
-                Texture texture((m_Directory / str.C_Str()).generic_string());
+                auto path = m_Directory / str.C_Str();
+                stbi_set_flip_vertically_on_load(true);
+                int width, height, channels;
+                const unsigned char *data = stbi_load(path.generic_string().c_str(), &width, &height, &channels, 0);
+                if (!data) {
+                    Logger::CRITICAL("Error loading texture: " + path.generic_string());
+                }
+
+                const TextureSpec spec{static_cast<u32>(width), static_cast<u32>(height), static_cast<u32>(channels)};
+                Texture texture(spec, data);
                 texture.SetType(typeName);
+                texture.SetFilePath(path);
                 textures.push_back(texture);
                 m_Textures.push_back(texture);
             }

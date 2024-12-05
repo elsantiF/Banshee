@@ -1,56 +1,24 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 
 namespace Banshee {
-    Texture::Texture(const String &texturePath): m_FilePath{texturePath} {
+    Texture::Texture() {
         glGenTextures(1, &m_TextureID);
-
-        i32 width, height, channels;
-        stbi_set_flip_vertically_on_load(true);
-        unsigned char *data = stbi_load(texturePath.c_str(), &width, &height, &channels, 0);
-        if (!data) {
-            Logger::CRITICAL("Error loading texture: " + texturePath);
-        }
-
-        GLenum format;
-        if (channels == 1) {
-            format = GL_RED;
-        } else if (channels == 3) {
-            format = GL_RGB;
-        } else if (channels == 4) {
-            format = GL_RGBA;
-        }
-
-        glBindTexture(GL_TEXTURE_2D, m_TextureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        m_Width = width;
-        m_Height = height;
-        m_Channels = channels;
-
-        stbi_image_free(data);
     }
 
-    Texture::Texture(const u32 width, const u32 height, const u32 channels): m_Width{width}, m_Height{height}, m_Channels{channels} {
+    Texture::Texture(const TextureSpec spec): m_TextureSpec{spec} {
         glGenTextures(1, &m_TextureID);
 
         GLenum format;
-        if (channels == 1) {
+        if (m_TextureSpec.channels == 1) {
             format = GL_RED;
-        } else if (channels == 3) {
+        } else if (m_TextureSpec.channels == 3) {
             format = GL_RGB;
-        } else if (channels == 4) {
+        } else if (m_TextureSpec.channels == 4) {
             format = GL_RGBA;
         }
 
         glBindTexture(GL_TEXTURE_2D, m_TextureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -58,7 +26,26 @@ namespace Banshee {
 
         // TODO: This doesn't make sense
         m_TextureType = "undefined";
-        m_FilePath = "undefined";
+    }
+
+    Texture::Texture(const TextureSpec spec, const u8 *textureData): m_TextureSpec{spec} {
+        glGenTextures(1, &m_TextureID);
+
+        GLenum format;
+        if (m_TextureSpec.channels == 1) {
+            format = GL_RED;
+        } else if (m_TextureSpec.channels == 3) {
+            format = GL_RGB;
+        } else if (m_TextureSpec.channels == 4) {
+            format = GL_RGBA;
+        }
+
+        glBindTexture(GL_TEXTURE_2D, m_TextureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, textureData);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
 
@@ -83,12 +70,15 @@ namespace Banshee {
         m_TextureType = type;
     }
 
-    String Texture::GetFilePath() const {
-        return m_FilePath;
-    }
-
-    u32 Texture::GetTextureID() {
+    u32 Texture::GetTextureID() const {
         return m_TextureID;
     }
 
+    void Texture::SetFilePath(const fs::path &path) {
+        m_FilePath = path;
+    }
+
+    const fs::path &Texture::GetFilePath() const {
+        return m_FilePath;
+    }
 }

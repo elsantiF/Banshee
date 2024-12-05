@@ -1,25 +1,26 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <stb_image.h>
 
 #include "Core/Core.h"
 
-// TODO: Do a big refactor on this class, consider create a TextureLoader class
 namespace Banshee {
+    struct TextureSpec {
+        u32 width = 0;
+        u32 height = 0;
+        u32 channels = 0;
+    };
+
     class Texture {
         u32 m_TextureID{};
         String m_TextureType;
-        String m_FilePath;
-
-        u32 m_Width{};
-        u32 m_Height{};
-        u32 m_Channels{};
+        TextureSpec m_TextureSpec;
+        fs::path m_FilePath;
 
     public:
-        Texture() = delete;
-        explicit Texture(u32 width, u32 height, u32 channels);
-        explicit Texture(const String &texturePath);
+        Texture();
+        explicit Texture(TextureSpec spec);
+        explicit Texture(TextureSpec spec, const u8 *textureData);
         ~Texture();
 
         void Bind() const;
@@ -28,8 +29,9 @@ namespace Banshee {
         [[nodiscard]] String GetType() const;
         void SetType(const String &type);
 
-        [[nodiscard]] String GetFilePath() const;
+        [[nodiscard]] u32 GetTextureID() const;
 
-        [[nodiscard]] u32 GetTextureID();
+        void SetFilePath(const fs::path &path);
+        [[nodiscard]] const fs::path &GetFilePath() const;
     };
 }

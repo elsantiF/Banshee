@@ -28,7 +28,7 @@ namespace Banshee {
         glGenFramebuffers(1, &m_Framebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
 
-        m_Texture = MakeUnique<Texture>(m_Width, m_Height, 3);
+        m_Texture = MakeUnique<Texture>(TextureSpec{width, height, 3});
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->GetTextureID(), 0);
 
         m_Renderbuffer = MakeUnique<Renderbuffer>(m_Width, m_Height);
