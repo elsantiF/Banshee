@@ -39,4 +39,4 @@ endif ()
 file(GLOB_RECURSE BANSHEE_SOURCES "*.cpp") # TODO: Change this to only include the necessary files
 target_sources(Banshee PUBLIC ${BANSHEE_SOURCES})
 target_include_directories(Banshee SYSTEM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(Banshee stb glm assimp::assimp glad glfw imgui fmt::fmt)
+target_link_libraries(Banshee stb glm assimp::assimp glad glfw imgui fmt::fmt GSL)
