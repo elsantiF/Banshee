@@ -2,10 +2,9 @@
 
 #include <string>
 #include <utility>
+#include <filesystem>
 
 #include <GSL.h>
-
-#include "Logger.h"
 
 namespace Banshee {
     using namespace GSL;

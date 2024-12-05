@@ -34,6 +34,6 @@ add_subdirectory(src/Banshee)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(Application src/main.cpp)
 link_directories(${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(Application PUBLIC stb glad glm assimp::assimp glad glfw imgui fmt::fmt GSL Banshee)
+target_link_libraries(Application PUBLIC stb glad glm assimp::assimp glad glfw imgui GSL Banshee)
 
 # ---

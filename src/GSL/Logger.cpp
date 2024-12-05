@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-namespace Banshee {
+namespace GSL {
     fmt::color Logger::GetColor(const LogType type) {
         switch (type) {
             case LogType::INFO:
@@ -10,8 +10,6 @@ namespace Banshee {
             case LogType::ERROR:
             case LogType::CRITICAL:
                 return fmt::color::red;
-            default:
-                return fmt::color::white;
         }
     }
 
@@ -25,8 +23,6 @@ namespace Banshee {
                 return "ERROR";
             case LogType::CRITICAL:
                 return "CRITICAL";
-            default:
-                return "UNKNOWN";
         }
     }
 

@@ -4,9 +4,7 @@
 #include <fmt/chrono.h>
 #include <fmt/color.h>
 
-// TODO: Add a way to log to a file
-// TODO: Add preprocessor directives to enable/disable logging
-namespace Banshee {
+namespace GSL {
     using String = std::string;
 
     enum LogType {
