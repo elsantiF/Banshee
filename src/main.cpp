@@ -12,7 +12,7 @@ using namespace Banshee;
 class ModelViewer final : public Level {
     UniquePtr<ShaderProgram> m_Shader;
     UniquePtr<Framebuffer> m_Framebuffer;
-    Model m_Model;
+    Ref<Model> m_Model;
     Camera m_Camera;
     bool m_Wireframe = false;
 
@@ -22,12 +22,12 @@ class ModelViewer final : public Level {
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Shader = Banshee::MakeUnique<ShaderProgram>("shaders/basic");
-        m_Model = ModelLoader().LoadModel("models/backpack/backpack.obj");
+        m_Model = ModelLoader("models/backpack/backpack.obj").GetResource();
     }
 
     void OnUpdate(const f64 delta) override {
         m_Camera.Update(delta);
-        m_Model.GetTransform().RotateY(50.0 * delta);
+        m_Model->GetTransform().RotateY(50.0 * delta);
     }
 
     void OnRender(const f64 delta) override {
@@ -48,7 +48,7 @@ class ModelViewer final : public Level {
         m_Shader->SetMat4("u_MatView", m_Camera.GetViewMatrix());
         m_Shader->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
 
-        m_Model.Draw(*m_Shader);
+        m_Model->Draw(*m_Shader);
         // End of level rendering
 
         Renderer::SetPolygonMode(PolygonMode::FILL);
@@ -74,8 +74,8 @@ class ModelViewer final : public Level {
         ImGui::Text("Rotation: X: %04f Y: %04f Z: %04f", cameraRotation.x, cameraRotation.y, cameraRotation.z);
 
         ImGui::SeparatorText("Model");
-        const glm::vec3 modelPosition = m_Model.GetTransform().GetPosition();
-        const glm::vec3 modelRotation = m_Model.GetTransform().GetRotation();
+        const glm::vec3 modelPosition = m_Model->GetTransform().GetPosition();
+        const glm::vec3 modelRotation = m_Model->GetTransform().GetRotation();
         ImGui::Text("Position X: %04f Y: %04f Z: %04f", modelPosition.x, modelPosition.y, modelPosition.z);
         ImGui::Text("Rotation X: %04f Y: %04f Z: %04f", modelRotation.x, modelRotation.y, modelRotation.z);
 

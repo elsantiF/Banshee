@@ -9,12 +9,13 @@
 #include "Components/StaticMesh.h"
 #include "Components/Model.h"
 #include "Graphics/Texture.h"
+#include "Resource.h"
 #include "AssetManager.h"
 
 namespace Banshee {
     // TODO: Make this thread safe
     // This will not be thread safe, use with caution
-    class ModelLoader {
+    class ModelLoader final : public Resource<Model> {
         Assimp::Importer m_Importer;
         const aiScene *m_Scene;
         fs::path m_Directory;
@@ -28,7 +29,8 @@ namespace Banshee {
         Vector<Texture> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
     public:
-        ModelLoader();
-        Model LoadModel(const fs::path &modelPath);
+        explicit ModelLoader(const fs::path &modelPath);
+
+        void Load(const fs::path &modelPath) override;
     };
 }
