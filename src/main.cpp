@@ -10,7 +10,7 @@
 using namespace Banshee;
 
 class ModelViewer final : public Level {
-    UniquePtr<ShaderProgram> m_Shader;
+    Ref<ShaderProgram> m_Shader;
     UniquePtr<Framebuffer> m_Framebuffer;
     Ref<Model> m_Model;
     Camera m_Camera;
@@ -21,7 +21,7 @@ class ModelViewer final : public Level {
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
-        m_Shader = Banshee::MakeUnique<ShaderProgram>("shaders/basic");
+        m_Shader = AssetManager::LoadShaderProgram("shaders/basic").GetResource();
         m_Model = ModelLoader().Load("models/backpack/backpack.obj").GetResource();
     }
 

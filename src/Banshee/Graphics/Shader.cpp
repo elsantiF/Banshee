@@ -4,19 +4,12 @@ namespace Banshee {
 #pragma region Shader class
     Shader::Shader(const String &shaderName, const ShaderType shaderType): m_ShaderName{shaderName}, m_ShaderType{shaderType} {
         m_ShaderID = glCreateShader(ShaderTypeToGLenum(shaderType));
+    }
 
-        std::ifstream shaderFile;
-        // TODO: Do better file reading
-        shaderFile.open(AssetManager::GetRoot().generic_string() + "/" + shaderName + GetShaderExtension(shaderType));
-        Logger::PANIC(!shaderFile.is_open(), "Can't open " + ShaderTypeToString(shaderType) + " shader: " + shaderName);
-        std::stringstream shaderStream;
-        shaderStream << shaderFile.rdbuf();
-        shaderFile.close();
-        const String shaderCode = shaderStream.str();
-
+    void Shader::Compile(const String &shaderSource) const {
         // TODO: Find a better way to do this
-        const char *shaderCodeChar = shaderCode.c_str();
-        Logger::INFO("Compiling " + ShaderTypeToString(shaderType) + " shader of: " + shaderName);
+        const char *shaderCodeChar = shaderSource.c_str();
+        Logger::INFO("Compiling " + ShaderTypeToString(m_ShaderType) + " shader of: " + m_ShaderName);
         glShaderSource(m_ShaderID, 1, &shaderCodeChar, nullptr);
         glCompileShader(m_ShaderID);
         CheckCompilationError();
@@ -93,20 +86,20 @@ namespace Banshee {
     ShaderProgram::ShaderProgram(const String &shaderName): m_ShaderProgramName{shaderName} {
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + shaderName);
-
-        const auto vertexShader = Shader(shaderName, VERTEX_SHADER);
-        const auto fragmentShader = Shader(shaderName, FRAGMENT_SHADER);
-
-        glAttachShader(m_ProgramID, vertexShader.GetShaderID());
-        glAttachShader(m_ProgramID, fragmentShader.GetShaderID());
-        glLinkProgram(m_ProgramID);
-
-        CheckCompilationError();
-        GetUniforms();
     }
 
     ShaderProgram::~ShaderProgram() {
         glDeleteProgram(m_ProgramID);
+    }
+
+    void ShaderProgram::AttachShader(const Shader &shader) const {
+        glAttachShader(m_ProgramID, shader.GetShaderID());
+    }
+
+    void ShaderProgram::Link() {
+        glLinkProgram(m_ProgramID);
+        CheckCompilationError();
+        GetUniforms();
     }
 
     void ShaderProgram::GetUniforms() {

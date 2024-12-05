@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -33,6 +30,7 @@ namespace Banshee {
         explicit Shader(const String &shaderName, ShaderType shaderType);
         ~Shader();
 
+        void Compile(const String &shaderSource) const;
         [[nodiscard]] u32 GetShaderID() const;
     };
 
@@ -51,6 +49,9 @@ namespace Banshee {
 
         void Bind() const;
         void Unbind();
+
+        void AttachShader(const Shader &shader) const;
+        void Link();
 
         void SetInt(const String &uniformName, i32 value) const;
         void SetVec3(const String &uniformName, glm::vec3 vec3) const;

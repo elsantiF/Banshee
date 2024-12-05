@@ -14,7 +14,7 @@ float vertices[] = {
 
 namespace Banshee {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
-        m_Shader = MakeUnique<ShaderProgram>("shaders/framebuffer");
+        m_Shader = AssetManager::LoadShaderProgram("shaders/framebuffer").GetResource();
         m_VAO = MakeUnique<VertexArray>();
 
         const auto m_VBO = MakeRef<VertexBuffer>();
