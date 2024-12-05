@@ -15,7 +15,6 @@ namespace Banshee {
         u32 m_Framebuffer{};
         UniquePtr<ShaderProgram> m_Shader;
         UniquePtr<VertexArray> m_VAO;
-        UniquePtr<VertexBuffer> m_VBO;
         UniquePtr<Texture> m_Texture;
         UniquePtr<Renderbuffer> m_Renderbuffer;
 

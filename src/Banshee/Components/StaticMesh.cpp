@@ -8,12 +8,12 @@ namespace Banshee {
 
         m_VAO = MakeUnique<VertexArray>();
 
-        const auto m_VBO = VertexBuffer();
-        m_VBO.LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
+        const auto m_VBO = MakeRef<VertexBuffer>();
+        m_VBO->LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
         m_VAO->SetVertexBuffer(m_VBO);
 
-        const auto m_EBO = ElementBuffer();
-        m_EBO.LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
+        const auto m_EBO = MakeRef<ElementBuffer>();
+        m_EBO->LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
         m_VAO->SetElementBuffer(m_EBO);
 
         m_VAO->Bind();

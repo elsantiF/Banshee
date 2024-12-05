@@ -16,11 +16,12 @@ namespace Banshee {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
         m_Shader = MakeUnique<ShaderProgram>("shaders/framebuffer");
         m_VAO = MakeUnique<VertexArray>();
-        m_VAO->Bind();
 
-        m_VBO = MakeUnique<VertexBuffer>();
+        const auto m_VBO = MakeRef<VertexBuffer>();
         m_VBO->LoadData(sizeof(vertices), vertices);
+        m_VAO->SetVertexBuffer(m_VBO);
 
+        m_VAO->Bind();
         m_VAO->EnableAttribute(0, 2, 4 * sizeof(float), nullptr);
         m_VAO->EnableAttribute(1, 2, 4 * sizeof(float), reinterpret_cast<void *>(2 * sizeof(float)));
 

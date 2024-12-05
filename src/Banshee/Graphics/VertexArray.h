@@ -10,8 +10,8 @@ namespace Banshee {
     class VertexArray {
         u32 m_VAO{};
 
-        VertexBuffer m_VBO;
-        ElementBuffer m_IBO;
+        Ref<VertexBuffer> m_VBO;
+        Ref<ElementBuffer> m_IBO;
 
     public:
         VertexArray();
@@ -21,7 +21,7 @@ namespace Banshee {
         void Unbind();
         void EnableAttribute(u32 index, i32 size, i32 offset, const void *data);
 
-        void SetVertexBuffer(const VertexBuffer &vbo);
-        void SetElementBuffer(const ElementBuffer &ebo);
+        void SetVertexBuffer(const Ref<VertexBuffer> &vbo);
+        void SetElementBuffer(const Ref<ElementBuffer> &ebo);
     };
 }

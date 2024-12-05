@@ -22,16 +22,16 @@ namespace Banshee {
         glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, offset, data);
     }
 
-    void VertexArray::SetVertexBuffer(const VertexBuffer &vbo) {
+    void VertexArray::SetVertexBuffer(const Ref<VertexBuffer> &vbo) {
         Bind();
-        vbo.Bind();
+        vbo->Bind();
         m_VBO = vbo;
         Unbind();
     }
 
-    void VertexArray::SetElementBuffer(const ElementBuffer &ebo) {
+    void VertexArray::SetElementBuffer(const Ref<ElementBuffer> &ebo) {
         Bind();
-        ebo.Bind();
+        ebo->Bind();
         m_IBO = ebo;
         Unbind();
     }
