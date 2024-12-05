@@ -1,5 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 #include "ModelLoader.h"
 
 // TODO: This needs a refactor
@@ -36,7 +34,7 @@ namespace Banshee {
     void ModelLoader::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
         Vector<Vertex> vertices;
         Vector<u32> indices;
-        Vector<Texture> textures;
+        Vector<Resource<Texture>> texturesResources;
 
         for (u32 i = 0; i < mesh->mNumVertices; i++) {
             Vertex vertex;
@@ -87,29 +85,29 @@ namespace Banshee {
 
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        Vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        Vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        Vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-        Vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        Vector<Resource<Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        Vector<Resource<Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        Vector<Resource<Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        Vector<Resource<Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        texturesResources.insert(texturesResources.end(), diffuseMaps.begin(), diffuseMaps.end());
+        texturesResources.insert(texturesResources.end(), specularMaps.begin(), specularMaps.end());
+        texturesResources.insert(texturesResources.end(), normalMaps.begin(), normalMaps.end());
+        texturesResources.insert(texturesResources.end(), heightMaps.begin(), heightMaps.end());
 
-        m_Meshes.emplace_back(vertices, indices, textures);
+        m_Meshes.emplace_back(vertices, indices, texturesResources);
     }
 
-    Vector<Texture> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
-        Vector<Texture> textures;
+    Vector<Resource<Texture>> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+        Vector<Resource<Texture>> textures;
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
 
             bool foundTexture = false;
+            fs::path filePath = m_Directory / str.C_Str();
 
             for (const auto &texture: m_Textures) {
-                fs::path filePath = m_Directory / str.C_Str();
                 if (texture.GetFilePath() == filePath) {
                     textures.push_back(texture);
                     foundTexture = true;
@@ -118,18 +116,9 @@ namespace Banshee {
             }
 
             if (!foundTexture) {
-                auto path = m_Directory / str.C_Str();
-                stbi_set_flip_vertically_on_load(true);
-                int width, height, channels;
-                const unsigned char *data = stbi_load(path.generic_string().c_str(), &width, &height, &channels, 0);
-                if (!data) {
-                    Logger::CRITICAL("Error loading texture: " + path.generic_string());
-                }
+                TextureLoader loader;
+                auto texture = loader.Load(filePath);
 
-                const TextureSpec spec{static_cast<u32>(width), static_cast<u32>(height), static_cast<u32>(channels)};
-                Texture texture(spec, data);
-                texture.SetType(typeName);
-                texture.SetFilePath(path);
                 textures.push_back(texture);
                 m_Textures.push_back(texture);
             }

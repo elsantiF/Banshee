@@ -11,6 +11,7 @@
 #include "Graphics/Texture.h"
 #include "Resource.h"
 #include "AssetManager.h"
+#include "TextureLoader.h"
 
 namespace Banshee {
     // TODO: This needs a refactor
@@ -22,11 +23,11 @@ namespace Banshee {
 
         Vector<Mesh> m_Meshes;
         Vector<u32> m_Indices;
-        Vector<Texture> m_Textures;
+        Vector<Resource<Texture>> m_Textures;
 
         void ProcessNode(const aiNode *node, const aiScene *scene);
         void ProcessMesh(const aiMesh *mesh, const aiScene *scene);
-        Vector<Texture> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
+        Vector<Resource<Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
     public:
         ModelLoader() = default;

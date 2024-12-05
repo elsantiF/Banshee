@@ -73,12 +73,4 @@ namespace Banshee {
     u32 Texture::GetTextureID() const {
         return m_TextureID;
     }
-
-    void Texture::SetFilePath(const fs::path &path) {
-        m_FilePath = path;
-    }
-
-    const fs::path &Texture::GetFilePath() const {
-        return m_FilePath;
-    }
 }

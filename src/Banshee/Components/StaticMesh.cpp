@@ -1,7 +1,7 @@
 #include "StaticMesh.h"
 
 namespace Banshee {
-    Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Texture> &textures): m_Vertices{vertices},
+    Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures): m_Vertices{vertices},
         m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
@@ -46,7 +46,7 @@ namespace Banshee {
             glActiveTexture(GL_TEXTURE0 + i);
 
             String number;
-            const String name = m_Textures[i].GetType();
+            const String name = m_Textures[i].GetResource()->GetType();
             if (name == "texture_diffuse") {
                 number = std::to_string(diffuseNr++);
             } else if (name == "texture_specular") {
@@ -58,7 +58,7 @@ namespace Banshee {
             }
 
             shader.SetInt(name + number, i);
-            m_Textures[i].Bind();
+            m_Textures[i].GetResource()->Bind();
         }
 
         m_VAO->Bind();

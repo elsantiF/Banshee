@@ -21,5 +21,7 @@ namespace Banshee {
         Transform &GetTransform();
 
         void Draw(const ShaderProgram &shader);
+
+        Vector<Mesh> &GetMeshes() { return m_Meshes; } // TODO: This is only for debug
     };
 }

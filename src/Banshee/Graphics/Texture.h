@@ -15,7 +15,6 @@ namespace Banshee {
         u32 m_TextureID{};
         String m_TextureType;
         TextureSpec m_TextureSpec;
-        fs::path m_FilePath;
 
     public:
         Texture();
@@ -30,8 +29,5 @@ namespace Banshee {
         void SetType(const String &type);
 
         [[nodiscard]] u32 GetTextureID() const;
-
-        void SetFilePath(const fs::path &path);
-        [[nodiscard]] const fs::path &GetFilePath() const;
     };
 }
