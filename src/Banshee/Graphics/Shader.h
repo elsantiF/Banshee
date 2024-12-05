@@ -50,7 +50,7 @@ namespace Banshee {
         ~ShaderProgram();
 
         void Bind() const;
-        static void Unbind();
+        void Unbind();
 
         void SetInt(const String &uniformName, i32 value) const;
         void SetVec3(const String &uniformName, glm::vec3 vec3) const;

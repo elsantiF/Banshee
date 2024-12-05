@@ -27,7 +27,7 @@ namespace Banshee {
         ~Framebuffer();
 
         void Bind() const;
-        static void Unbind();
+        void Unbind();
         void Draw() const;
     };
 }

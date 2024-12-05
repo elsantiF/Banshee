@@ -18,8 +18,8 @@ namespace Banshee {
         ~VertexArray();
 
         void Bind() const;
-        static void Unbind();
-        static void EnableAttribute(u32 index, i32 size, i32 offset, const void *data);
+        void Unbind();
+        void EnableAttribute(u32 index, i32 size, i32 offset, const void *data);
 
         void SetVertexBuffer(const VertexBuffer &vbo);
         void SetElementBuffer(const ElementBuffer &ebo);

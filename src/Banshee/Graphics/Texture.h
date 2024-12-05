@@ -23,7 +23,7 @@ namespace Banshee {
         ~Texture();
 
         void Bind() const;
-        static void Unbind();
+        void Unbind();
 
         [[nodiscard]] String GetType() const;
         void SetType(const String &type);
