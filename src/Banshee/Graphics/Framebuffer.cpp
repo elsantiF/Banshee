@@ -13,7 +13,7 @@ float vertices[] = {
 };
 
 namespace Banshee {
-    Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width(width), m_Height(height) {
+    Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
         m_Shader = MakeUnique<ShaderProgram>("shaders/framebuffer");
         m_VAO = MakeUnique<VertexArray>();
         m_VAO->Bind();
@@ -30,10 +30,8 @@ namespace Banshee {
         m_Texture = MakeUnique<Texture>(m_Width, m_Height, 3);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->GetTextureID(), 0);
 
-        glGenRenderbuffers(1, &m_Renderbuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, m_Renderbuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_Renderbuffer);
+        m_Renderbuffer = MakeUnique<Renderbuffer>(m_Width, m_Height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_Renderbuffer->GetID());
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             Logger::ERROR("Framebuffer is not complete!");
@@ -44,7 +42,6 @@ namespace Banshee {
 
     Framebuffer::~Framebuffer() {
         glDeleteFramebuffers(1, &m_Framebuffer);
-        glDeleteRenderbuffers(1, &m_Renderbuffer);
     }
 
     void Framebuffer::Bind() const {
