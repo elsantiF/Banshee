@@ -22,7 +22,7 @@ class ModelViewer final : public Level {
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Shader = Banshee::MakeUnique<ShaderProgram>("shaders/basic");
-        m_Model = ModelLoader("models/backpack/backpack.obj").GetResource();
+        m_Model = ModelLoader().Load("models/backpack/backpack.obj").GetResource();
     }
 
     void OnUpdate(const f64 delta) override {
@@ -81,6 +81,9 @@ class ModelViewer final : public Level {
 
         ImGui::SeparatorText("Render");
         ImGui::Checkbox("Wireframe Render?", &m_Wireframe);
+
+        ImGui::SeparatorText("Memory Debug");
+        ImGui::Text("m_Model ref count: %d", m_Model.use_count());
 
         ImGui::End();
     }

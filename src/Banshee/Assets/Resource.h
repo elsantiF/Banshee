@@ -4,16 +4,14 @@
 
 namespace Banshee {
     template<typename T>
-    class Resource {
+    class Resource final {
     protected:
         Ref<T> m_Resource;
         fs::path m_FilePath;
 
     public:
-        Resource() = default;
-        virtual ~Resource() = default;
-
-        virtual void Load(const fs::path &filePath) = 0;
+        Resource(Ref<T> resource, const fs::path &filepath): m_Resource{resource}, m_FilePath{filepath} {};
+        ~Resource() = default;
 
         [[nodiscard]] const Ref<T> &GetResource() const {
             return m_Resource;
@@ -22,5 +20,14 @@ namespace Banshee {
         [[nodiscard]] const fs::path &GetFilePath() const {
             return m_FilePath;
         }
+    };
+
+    template<typename T>
+    class ResourceImporter {
+    public:
+        virtual ~ResourceImporter() = default;
+
+    private:
+        virtual Resource<T> Load(const fs::path &path) = 0;
     };
 }

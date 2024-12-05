@@ -2,11 +2,7 @@
 
 // TODO: This needs a refactor
 namespace Banshee {
-    ModelLoader::ModelLoader(const fs::path &modelPath) {
-        Load(modelPath);
-    }
-
-    void ModelLoader::Load(const fs::path &modelPath) {
+    Resource<Model> ModelLoader::Load(const fs::path &modelPath) {
         const fs::path realPath = AssetManager::GetRoot() / modelPath;
         m_Scene = m_Importer.ReadFile(realPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs);
         Logger::INFO("Loading model: " + modelPath.generic_string());
@@ -18,8 +14,9 @@ namespace Banshee {
         m_Directory = realPath.parent_path();
         ProcessNode(m_Scene->mRootNode, m_Scene); // mRootNode can be null, but don't know when
 
-        m_Resource = MakeRef<Model>(Model{std::move(m_Meshes)});
-        m_FilePath = realPath;
+        const auto m_Resource = MakeRef<Model>(Model{std::move(m_Meshes)});
+
+        return Resource<Model>{m_Resource, realPath};
     }
 
     // Change this, don't use recursion, use something like BFS
