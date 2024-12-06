@@ -23,9 +23,9 @@ namespace Banshee {
     };
 
     template<typename T>
-    class ResourceImporter {
+    class ResourceManager {
     public:
-        virtual ~ResourceImporter() = default;
+        virtual ~ResourceManager() = default;
 
     private:
         virtual Resource<T> Load(const fs::path &path) = 0;

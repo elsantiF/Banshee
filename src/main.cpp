@@ -1,3 +1,5 @@
+#include <Assets/ModelManager.h>
+
 #include "Banshee/Core/Core.h"
 #include "Banshee/Core/Application.h"
 #include "Banshee/Core/Level.h"
@@ -5,7 +7,7 @@
 #include "Banshee/Components/Model.h"
 #include "Banshee/Components/Camera.h"
 #include "Banshee/Assets/AssetManager.h"
-#include "Banshee/Assets/ModelLoader.h"
+#include "Banshee/Assets/ModelManager.h"
 
 using namespace Banshee;
 
@@ -22,7 +24,7 @@ class ModelViewer final : public Level {
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Shader = AssetManager::LoadShaderProgram("shaders/basic").GetResource();
-        m_Model = ModelLoader().Load("models/backpack/backpack.obj").GetResource();
+        m_Model = ModelManager().Load("models/backpack/backpack.obj").GetResource();
     }
 
     void OnUpdate(const f64 delta) override {

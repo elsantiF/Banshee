@@ -1,8 +1,8 @@
-#include "ModelLoader.h"
+#include "ModelManager.h"
 
 // TODO: This needs a refactor
 namespace Banshee {
-    Resource<Model> ModelLoader::Load(const fs::path &modelPath) {
+    Resource<Model> ModelManager::Load(const fs::path &modelPath) {
         const fs::path realPath = AssetManager::GetRoot() / modelPath;
         m_Scene = m_Importer.ReadFile(realPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs);
         Logger::INFO("Loading model: " + modelPath.generic_string());
@@ -20,7 +20,7 @@ namespace Banshee {
     }
 
     // Change this, don't use recursion, use something like BFS
-    void ModelLoader::ProcessNode(const aiNode *node, const aiScene *scene) {
+    void ModelManager::ProcessNode(const aiNode *node, const aiScene *scene) {
         for (u32 i = 0; i < node->mNumMeshes; i++) {
             const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
             ProcessMesh(mesh, scene);
@@ -31,7 +31,7 @@ namespace Banshee {
         }
     }
 
-    void ModelLoader::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
+    void ModelManager::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
         Vector<Vertex> vertices;
         Vector<u32> indices;
         Vector<Resource<Texture>> texturesResources;
@@ -98,7 +98,7 @@ namespace Banshee {
         m_Meshes.emplace_back(vertices, indices, texturesResources);
     }
 
-    Vector<Resource<Texture>> ModelLoader::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+    Vector<Resource<Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         Vector<Resource<Texture>> textures;
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
@@ -116,8 +116,7 @@ namespace Banshee {
             }
 
             if (!foundTexture) {
-                TextureLoader loader;
-                auto texture = loader.Load(filePath);
+                auto texture = TextureManager().Load(filePath);
 
                 textures.push_back(texture);
                 m_Textures.push_back(texture);

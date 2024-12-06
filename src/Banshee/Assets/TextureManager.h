@@ -6,9 +6,9 @@
 #include "Resource.h"
 
 namespace Banshee {
-    class TextureLoader final : public ResourceImporter<Texture> {
+    class TextureManager final : public ResourceManager<Texture> {
     public:
-        TextureLoader();
+        TextureManager();
 
         Resource<Texture> Load(const fs::path &texturePath) override;
     };

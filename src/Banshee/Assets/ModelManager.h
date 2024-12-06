@@ -11,12 +11,12 @@
 #include "Graphics/Texture.h"
 #include "Resource.h"
 #include "AssetManager.h"
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
 namespace Banshee {
     // TODO: This needs a refactor
-    // TODO: I think this is now
-    class ModelLoader final : public ResourceImporter<Model> {
+    // TODO: I think this is now thread-safe, test it
+    class ModelManager final : public ResourceManager<Model> {
         Assimp::Importer m_Importer;
         const aiScene *m_Scene;
         fs::path m_Directory;
@@ -30,7 +30,7 @@ namespace Banshee {
         Vector<Resource<Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
     public:
-        ModelLoader() = default;
+        ModelManager() = default;
 
         Resource<Model> Load(const fs::path &modelPath) override;
     };

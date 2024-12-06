@@ -1,13 +1,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-#include "TextureLoader.h"
+#include "TextureManager.h"
 
 namespace Banshee {
-    TextureLoader::TextureLoader() {
+    TextureManager::TextureManager() {
       stbi_set_flip_vertically_on_load(true);
     }
 
-    Resource<Texture> TextureLoader::Load(const fs::path &texturePath) {
+    Resource<Texture> TextureManager::Load(const fs::path &texturePath) {
         int width, height, channels;
         u8 *data = stbi_load(texturePath.generic_string().c_str(), &width, &height, &channels, 0);
         if (!data) {
