@@ -12,7 +12,8 @@
 using namespace Banshee;
 
 class ModelViewer final : public Level {
-    Ref<ShaderProgram> m_Shader;
+    Ref<ShaderProgram> m_ShaderMaterial;
+    Ref<ShaderProgram> m_ShaderFramebuffer;
     UniquePtr<Framebuffer> m_Framebuffer;
     Ref<Model> m_Model;
     Camera m_Camera;
@@ -20,11 +21,13 @@ class ModelViewer final : public Level {
 
     void OnCreate() override {
         AssetManager::SetRoot(fs::current_path().parent_path() / "resources");
+        m_ShaderMaterial = AssetManager::LoadShaderProgram("shaders/basic").GetResource();
+        m_ShaderFramebuffer = AssetManager::LoadShaderProgram("shaders/framebuffer").GetResource();
+        m_Model = ModelManager().Load("models/backpack/backpack.obj").GetResource();
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
-        m_Shader = AssetManager::LoadShaderProgram("shaders/basic").GetResource();
-        m_Model = ModelManager().Load("models/backpack/backpack.obj").GetResource();
+        m_Framebuffer->SetShader(m_ShaderFramebuffer);
     }
 
     void OnUpdate(const f64 delta) override {
@@ -45,12 +48,12 @@ class ModelViewer final : public Level {
             Renderer::SetPolygonMode(PolygonMode::FILL);
         }
 
-        m_Shader->Bind();
-        m_Shader->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
-        m_Shader->SetMat4("u_MatView", m_Camera.GetViewMatrix());
-        m_Shader->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
+        m_ShaderMaterial->Bind();
+        m_ShaderMaterial->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
+        m_ShaderMaterial->SetMat4("u_MatView", m_Camera.GetViewMatrix());
+        m_ShaderMaterial->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
 
-        m_Model->Draw(*m_Shader);
+        m_Model->Draw(*m_ShaderMaterial);
         // End of level rendering
 
         Renderer::SetPolygonMode(PolygonMode::FILL);

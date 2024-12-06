@@ -25,6 +25,8 @@ namespace Banshee {
         Framebuffer(u32 width, u32 height);
         ~Framebuffer();
 
+        void SetShader(const Ref<ShaderProgram> &shader);
+
         void Bind() const;
         void Unbind();
         void Draw() const;

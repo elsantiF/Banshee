@@ -14,7 +14,6 @@ float vertices[] = {
 
 namespace Banshee {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
-        m_Shader = AssetManager::LoadShaderProgram("shaders/framebuffer").GetResource();
         m_VAO = MakeUnique<VertexArray>();
 
         const auto m_VBO = MakeRef<VertexBuffer>();
@@ -43,6 +42,10 @@ namespace Banshee {
 
     Framebuffer::~Framebuffer() {
         glDeleteFramebuffers(1, &m_Framebuffer);
+    }
+
+    void Framebuffer::SetShader(const Ref<ShaderProgram> &shader) {
+        m_Shader = shader;
     }
 
     void Framebuffer::Bind() const {
