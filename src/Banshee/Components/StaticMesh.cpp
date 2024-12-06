@@ -1,7 +1,7 @@
 #include "StaticMesh.h"
 
 namespace Banshee {
-    Mesh::Mesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures): m_Vertices{vertices},
+    StaticMesh::StaticMesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures): m_Vertices{vertices},
         m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
@@ -35,7 +35,7 @@ namespace Banshee {
         m_VAO->Unbind();
     }
 
-    void Mesh::Draw(const ShaderProgram &shader) const {
+    void StaticMesh::Draw(const ShaderProgram &shader) const {
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;

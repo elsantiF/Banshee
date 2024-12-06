@@ -9,19 +9,19 @@
 
 namespace Banshee {
     class Model {
-        Vector<Mesh> m_Meshes;
+        Vector<StaticMesh> m_Meshes;
         Transform m_Transform;
 
         void CalculateModelMatrix();
 
     public:
         Model() = default;
-        explicit Model(Vector<Mesh> &&meshes);
+        explicit Model(Vector<StaticMesh> &&meshes);
 
         Transform &GetTransform();
 
         void Draw(const ShaderProgram &shader);
 
-        Vector<Mesh> &GetMeshes() { return m_Meshes; } // TODO: This is only for debug
+        Vector<StaticMesh> &GetMeshes() { return m_Meshes; } // TODO: This is only for debug
     };
 }

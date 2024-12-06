@@ -1,7 +1,7 @@
 #include "Model.h"
 
 namespace Banshee {
-    Model::Model(Vector<Mesh> &&meshes): m_Meshes(std::move(meshes)) {}
+    Model::Model(Vector<StaticMesh> &&meshes): m_Meshes{std::move(meshes)} {}
 
     Transform &Model::GetTransform() {
         return m_Transform;
@@ -9,7 +9,7 @@ namespace Banshee {
 
     void Model::Draw(const ShaderProgram &shader) {
         shader.SetMat4("u_MatModel", m_Transform.GetModelMatrix());
-        for (Mesh &mesh: m_Meshes) {
+        for (auto &mesh: m_Meshes) {
             mesh.Draw(shader);
         }
     }

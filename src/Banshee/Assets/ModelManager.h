@@ -21,7 +21,7 @@ namespace Banshee {
         const aiScene *m_Scene;
         fs::path m_Directory;
 
-        Vector<Mesh> m_Meshes;
+        Vector<StaticMesh> m_Meshes;
         Vector<u32> m_Indices;
         Vector<Resource<Texture>> m_Textures;
 
