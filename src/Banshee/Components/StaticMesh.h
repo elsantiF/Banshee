@@ -1,15 +1,14 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <Spectre.h>
 
 #include "Core/Core.h"
-#include "Graphics/Vertex.h"
-#include "Graphics/VertexArray.h"
-#include "Graphics/GraphicBuffer.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Texture.h"
+#include "Assets/Resource.h"
 
 namespace Banshee {
+    using namespace Spectre; // TODO: This is temporary
+
     class StaticMesh {
         Vector<Vertex> m_Vertices;
         Vector<u32> m_Indices;

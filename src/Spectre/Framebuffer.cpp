@@ -12,7 +12,7 @@ float vertices[] = {
      1.0f,  1.0f,  1.0f, 1.0f
 };
 
-namespace Banshee {
+namespace Spectre {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
         m_VAO = MakeUnique<VertexArray>();
 

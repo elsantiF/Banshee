@@ -1,10 +1,11 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <GSL.h>
 
-#include "Core/Core.h"
+namespace Spectre {
+    using namespace GSL; // TODO: This is temporary
 
-namespace Banshee {
     enum BufferType {
         VERTEX_BUFFER = GL_ARRAY_BUFFER,
         ELEMENT_BUFFER = GL_ELEMENT_ARRAY_BUFFER

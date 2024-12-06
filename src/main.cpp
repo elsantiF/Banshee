@@ -1,15 +1,15 @@
+#include <Spectre.h>
 #include <Assets/ModelManager.h>
-
 #include "Banshee/Core/Core.h"
 #include "Banshee/Core/Application.h"
 #include "Banshee/Core/Level.h"
-#include "Banshee/Graphics/Shader.h"
 #include "Banshee/Components/Model.h"
 #include "Banshee/Components/Camera.h"
 #include "Banshee/Assets/AssetManager.h"
 #include "Banshee/Assets/ModelManager.h"
 
 using namespace Banshee;
+using namespace Spectre;
 
 class ModelViewer final : public Level {
     Ref<ShaderProgram> m_ShaderMaterial;

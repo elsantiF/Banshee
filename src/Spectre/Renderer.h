@@ -3,10 +3,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <GSL.h>
 
-#include "Core/Core.h"
+namespace Spectre {
+    using namespace GSL; // TODO: This is temporary
 
-namespace Banshee {
     enum PolygonMode {
         FILL = GL_FILL,
         LINE = GL_LINE,

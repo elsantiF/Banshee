@@ -1,6 +1,6 @@
 #include "GraphicBuffer.h"
 
-namespace Banshee {
+namespace Spectre {
     BufferBase::BufferBase(const BufferType type) : m_BufferType{type} {
         glGenBuffers(1, &m_BufferID);
         Logger::PANIC(m_BufferID == 0, "Can't create buffer");

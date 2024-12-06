@@ -3,11 +3,11 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <GSL.h>
 
-#include "Core/Core.h"
-#include "Assets/AssetManager.h"
+namespace Spectre {
+    using namespace GSL; // TODO: This is temporary
 
-namespace Banshee {
     enum ShaderType {
         VERTEX_SHADER,
         FRAGMENT_SHADER,

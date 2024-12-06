@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-namespace Banshee {
+namespace Spectre {
     Texture::Texture() {
         glGenTextures(1, &m_TextureID);
     }

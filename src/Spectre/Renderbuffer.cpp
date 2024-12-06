@@ -1,6 +1,6 @@
 #include "Renderbuffer.h"
 
-namespace Banshee {
+namespace Spectre {
     Renderbuffer::Renderbuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
         glGenRenderbuffers(1, &m_Renderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, m_Renderbuffer);

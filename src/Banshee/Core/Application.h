@@ -6,8 +6,8 @@
 #include <backends/imgui_impl_opengl3.h>
 
 #include "Core.h"
-#include "Graphics/Renderer.h" // This needs to be in this order
-#include "Graphics/Framebuffer.h"
+#include "Renderer.h" // This needs to be in this order, TODO: Change this to <Spectre/Renderer.h>
+#include "Framebuffer.h" // TODO: Change this to <Spectre/Framebuffer.h>
 #include "Window.h"
 #include "Level.h"
 

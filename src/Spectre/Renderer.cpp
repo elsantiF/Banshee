@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-namespace Banshee {
+namespace Spectre {
     void Renderer::Init() {
         Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), "Failed to initialize GLAD");
 

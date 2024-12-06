@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-namespace Banshee {
+namespace Spectre {
 #pragma region Shader class
     Shader::Shader(const String &shaderName, const ShaderType shaderType): m_ShaderName{shaderName}, m_ShaderType{shaderType} {
         m_ShaderID = glCreateShader(ShaderTypeToGLenum(shaderType));

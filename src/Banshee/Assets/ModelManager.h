@@ -8,7 +8,7 @@
 #include "Core/Core.h"
 #include "Components/StaticMesh.h"
 #include "Components/Model.h"
-#include "Graphics/Texture.h"
+#include "Texture.h" // TODO: Change this to <Spectre/Texture.h>
 #include "Resource.h"
 #include "AssetManager.h"
 #include "TextureManager.h"

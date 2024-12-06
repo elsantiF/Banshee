@@ -1,8 +1,8 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <GSL.h>
 
-#include "Core/Core.h"
 #include "GraphicBuffer.h"
 #include "Shader.h"
 #include "Texture.h"
@@ -10,7 +10,9 @@
 #include "Renderbuffer.h"
 
 // TODO: Refactor this to use Mesh instead of m_VAO and m_VBO
-namespace Banshee {
+namespace Spectre {
+    using namespace GSL; // TODO: This is temporary
+
     class Framebuffer {
         u32 m_Framebuffer{};
         Ref<ShaderProgram> m_Shader;

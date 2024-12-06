@@ -1,10 +1,11 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <GSL.h>
 
-#include "Core/Core.h"
+namespace Spectre {
+    using namespace GSL; // TODO: This is temporary
 
-namespace Banshee {
     struct TextureSpec {
         u32 width = 0;
         u32 height = 0;

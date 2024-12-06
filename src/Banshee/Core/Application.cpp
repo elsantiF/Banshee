@@ -14,7 +14,7 @@ namespace Banshee {
 
         m_Window = MakeUnique<Window>("GL Renderer", 1280, 720);
 
-        Renderer::Init();
+        Spectre::Renderer::Init();
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();

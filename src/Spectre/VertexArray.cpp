@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-namespace Banshee {
+namespace Spectre {
     VertexArray::VertexArray() {
         glGenVertexArrays(1, &m_VAO);
     }
