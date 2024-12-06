@@ -20,7 +20,7 @@ namespace Banshee {
             .channels = static_cast<u32>(channels)
         };
 
-        const auto m_Resource = MakeRef<Texture>(Texture{spec, data});
+        const auto m_Resource = MakeRef<Texture>(spec, data);
 
         stbi_image_free(data);
 

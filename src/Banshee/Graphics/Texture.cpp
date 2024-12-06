@@ -50,8 +50,7 @@ namespace Banshee {
 
 
     Texture::~Texture() {
-        // TODO: Fix this, this is called from ModelLoader and deletes the texture
-        // glDeleteTextures(1, &m_TextureID);
+        glDeleteTextures(1, &m_TextureID);
     }
 
     void Texture::Bind() const {
