@@ -7,8 +7,6 @@
 
 // TODO: Add support to multiple vertex buffers
 namespace Spectre {
-    using namespace Poltergeist; // TODO: This is temporary
-
     class VertexArray {
         u32 m_VAO{};
 

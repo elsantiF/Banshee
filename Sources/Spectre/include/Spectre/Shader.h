@@ -6,8 +6,6 @@
 #include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace Poltergeist; // TODO: This is temporary
-
     enum ShaderType {
         VERTEX_SHADER,
         FRAGMENT_SHADER,

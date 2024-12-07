@@ -4,8 +4,6 @@
 #include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace Poltergeist; // TODO: This is temporary
-
     struct TextureSpec {
         u32 width = 0;
         u32 height = 0;

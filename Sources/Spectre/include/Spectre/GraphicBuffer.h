@@ -4,8 +4,6 @@
 #include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace Poltergeist; // TODO: This is temporary
-
     enum BufferType {
         VERTEX_BUFFER = GL_ARRAY_BUFFER,
         ELEMENT_BUFFER = GL_ELEMENT_ARRAY_BUFFER

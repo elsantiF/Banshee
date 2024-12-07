@@ -11,8 +11,6 @@
 
 // TODO: Refactor this to use Mesh instead of m_VAO and m_VBO
 namespace Spectre {
-    using namespace Poltergeist; // TODO: This is temporary
-
     class Framebuffer {
         u32 m_Framebuffer{};
         Ref<ShaderProgram> m_Shader;
