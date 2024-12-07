@@ -1,18 +1,18 @@
 [submodule "src/ThirdParty/stb"]
-	path = src/ThirdParty/stb
+	path = Thirdparty/stb
 	url = git@github.com:nothings/stb.git
 [submodule "src/ThirdParty/glm"]
-	path = src/ThirdParty/glm
+	path = Thirdparty/glm
 	url = git@github.com:g-truc/glm.git
 [submodule "src/ThirdParty/imgui"]
-	path = src/ThirdParty/imgui
+	path = Thirdparty/imgui
 	url = git@github.com:ocornut/imgui.git
 [submodule "src/ThirdParty/glfw"]
-	path = src/ThirdParty/glfw
+	path = Thirdparty/glfw
 	url = git@github.com:glfw/glfw.git
 [submodule "src/ThirdParty/assimp"]
-	path = src/ThirdParty/assimp
+	path = Thirdparty/assimp
 	url = git@github.com:assimp/assimp.git
 [submodule "src/ThirdParty/fmt"]
-	path = src/ThirdParty/fmt
+	path = Thirdparty/fmt
 	url = git@github.com:fmtlib/fmt.git
