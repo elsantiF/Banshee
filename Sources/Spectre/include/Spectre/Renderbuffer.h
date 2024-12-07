@@ -1,11 +1,11 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 // TODO: Add support to other formats rather than just GL_DEPTH24_STENCIL8
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     class Renderbuffer {
         u32 m_Renderbuffer{};

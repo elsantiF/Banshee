@@ -1,10 +1,10 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     enum BufferType {
         VERTEX_BUFFER = GL_ARRAY_BUFFER,

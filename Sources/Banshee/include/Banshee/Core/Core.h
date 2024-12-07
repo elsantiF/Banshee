@@ -4,10 +4,10 @@
 #include <utility>
 #include <filesystem>
 
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 namespace Banshee {
-    using namespace GSL;
+    using namespace Poltergeist;
 
 #pragma region Utilities
     using String = std::string;

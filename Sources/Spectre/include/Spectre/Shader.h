@@ -3,10 +3,10 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     enum ShaderType {
         VERTEX_SHADER,

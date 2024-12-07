@@ -1,13 +1,13 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 #include "GraphicBuffer.h"
 
 // TODO: Add support to multiple vertex buffers
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     class VertexArray {
         u32 m_VAO{};

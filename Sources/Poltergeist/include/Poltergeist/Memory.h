@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace GSL {
+namespace Poltergeist {
     template<typename T>
     using UniquePtr = std::unique_ptr<T>;
 

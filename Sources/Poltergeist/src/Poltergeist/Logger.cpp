@@ -1,6 +1,6 @@
-#include "GSL/Logger.h"
+#include "Poltergeist/Logger.h"
 
-namespace GSL {
+namespace Poltergeist {
     fmt::color Logger::GetColor(const LogType type) {
         switch (type) {
             case LogType::INFO:

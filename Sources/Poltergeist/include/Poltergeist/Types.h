@@ -1,6 +1,6 @@
 #pragma once
 
-namespace GSL {
+namespace Poltergeist {
     using i8 = signed char;
     using i16 = short;
     using i32 = int;

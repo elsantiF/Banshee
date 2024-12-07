@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 #include "GraphicBuffer.h"
 #include "Shader.h"
@@ -11,7 +11,7 @@
 
 // TODO: Refactor this to use Mesh instead of m_VAO and m_VBO
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     class Framebuffer {
         u32 m_Framebuffer{};

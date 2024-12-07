@@ -4,7 +4,7 @@
 #include <map>
 #include <unordered_map>
 
-namespace GSL {
+namespace Poltergeist {
     template<typename T>
     using Vector = std::vector<T>;
 

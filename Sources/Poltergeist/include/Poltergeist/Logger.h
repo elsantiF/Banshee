@@ -4,7 +4,7 @@
 #include <fmt/chrono.h>
 #include <fmt/color.h>
 
-namespace GSL {
+namespace Poltergeist {
     using String = std::string;
 
     enum LogType {

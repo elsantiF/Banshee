@@ -3,10 +3,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <GSL/GSL.h>
+#include <Poltergeist/Poltergeist.h>
 
 namespace Spectre {
-    using namespace GSL; // TODO: This is temporary
+    using namespace Poltergeist; // TODO: This is temporary
 
     enum PolygonMode {
         FILL = GL_FILL,
