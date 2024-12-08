@@ -27,6 +27,7 @@ List of all tasks that need to be done.
 - [ ] Refactor Logger
 - [ ] Refactor all Graphics files
 - [ ] Change to glm modules
+- [ ] Add option to compile as shared library
 
 ## Future tasks
 - [ ] PBR materials

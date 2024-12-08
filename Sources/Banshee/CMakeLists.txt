@@ -1,10 +1,6 @@
 project(Banshee)
 
-if (BANSHEE_STATIC)
-    add_library(Banshee STATIC)
-else ()
-    add_library(Banshee SHARED)
-endif ()
+add_library(Banshee STATIC)
 
 if (USE_HYBRID_GRAPHICS AND WIN32)
     target_compile_definitions(Banshee PUBLIC
