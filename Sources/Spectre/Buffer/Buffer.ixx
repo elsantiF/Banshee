@@ -6,10 +6,7 @@ export module Spectre.Buffer;
 import Poltergeist;
 
 export namespace Spectre {
-    enum BufferType {
-        VERTEX_BUFFER = GL_ARRAY_BUFFER,
-        ELEMENT_BUFFER = GL_ELEMENT_ARRAY_BUFFER
-    };
+    enum BufferType { VERTEX_BUFFER = GL_ARRAY_BUFFER, ELEMENT_BUFFER = GL_ELEMENT_ARRAY_BUFFER };
 
     class BufferBase {
         u32 m_BufferID{};

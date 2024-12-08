@@ -1,13 +1,13 @@
 module;
 #include <cstddef>
-#include <string>
 #include <glad/glad.h>
+#include <string>
 
 module Banshee.Components.StaticMesh;
 
 namespace Banshee {
-    StaticMesh::StaticMesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures): m_Vertices{vertices},
-        m_Indices{indices}, m_Textures{textures} {
+    StaticMesh::StaticMesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures)
+        : m_Vertices{vertices}, m_Indices{indices}, m_Textures{textures} {
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
 
@@ -28,7 +28,7 @@ namespace Banshee {
         // Normal Attribute
         m_VAO->EnableAttribute(1, 3, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, normal)));
 
-        //UVs Attribute
+        // UVs Attribute
         m_VAO->EnableAttribute(2, 2, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, texCoords)));
 
         // Tangent Attribute

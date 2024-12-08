@@ -4,11 +4,9 @@ module;
 module Spectre.Texture;
 
 namespace Spectre {
-    Texture::Texture() {
-        glGenTextures(1, &m_TextureID);
-    }
+    Texture::Texture() { glGenTextures(1, &m_TextureID); }
 
-    Texture::Texture(const TextureSpec spec): m_TextureSpec{spec} {
+    Texture::Texture(const TextureSpec spec) : m_TextureSpec{spec} {
         glGenTextures(1, &m_TextureID);
 
         GLenum format;
@@ -31,7 +29,7 @@ namespace Spectre {
         m_TextureType = "undefined";
     }
 
-    Texture::Texture(const TextureSpec spec, const u8 *textureData): m_TextureSpec{spec} {
+    Texture::Texture(const TextureSpec spec, const u8 *textureData) : m_TextureSpec{spec} {
         glGenTextures(1, &m_TextureID);
 
         GLenum format;
@@ -51,28 +49,15 @@ namespace Spectre {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
+    Texture::~Texture() { glDeleteTextures(1, &m_TextureID); }
 
-    Texture::~Texture() {
-        glDeleteTextures(1, &m_TextureID);
-    }
+    void Texture::Bind() const { glBindTexture(GL_TEXTURE_2D, m_TextureID); }
 
-    void Texture::Bind() const {
-        glBindTexture(GL_TEXTURE_2D, m_TextureID);
-    }
+    void Texture::Unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
 
-    void Texture::Unbind() {
-        glBindTexture(GL_TEXTURE_2D, 0);
-    }
+    String Texture::GetType() const { return m_TextureType; }
 
-    String Texture::GetType() const {
-        return m_TextureType;
-    }
+    void Texture::SetType(const String &type) { m_TextureType = type; }
 
-    void Texture::SetType(const String &type) {
-        m_TextureType = type;
-    }
-
-    u32 Texture::GetTextureID() const {
-        return m_TextureID;
-    }
+    u32 Texture::GetTextureID() const { return m_TextureID; }
 }

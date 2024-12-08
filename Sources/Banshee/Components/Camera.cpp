@@ -1,7 +1,7 @@
 module;
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <GLFW/glfw3.h>
 
 module Banshee.Components.Camera;
 
@@ -94,24 +94,16 @@ namespace Banshee {
         UpdateCameraVectors();
     }
 
-    f32 Camera::GetFov() const {
-        return m_Fov;
-    }
+    f32 Camera::GetFov() const { return m_Fov; }
 
     void Camera::SetFov(const f32 fov) {
         m_Fov = fov;
         m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
     }
 
-    glm::mat4 Camera::GetViewMatrix() const {
-        return glm::lookAt(m_Transform.GetPosition(), m_Transform.GetPosition() + m_Front, m_Up);
-    }
+    glm::mat4 Camera::GetViewMatrix() const { return glm::lookAt(m_Transform.GetPosition(), m_Transform.GetPosition() + m_Front, m_Up); }
 
-    glm::mat4 Camera::GetProjectionMatrix() const {
-        return m_ProjectionMatrix;
-    }
+    glm::mat4 Camera::GetProjectionMatrix() const { return m_ProjectionMatrix; }
 
-    Transform Camera::GetTransform() const {
-        return m_Transform;
-    }
+    Transform Camera::GetTransform() const { return m_Transform; }
 }

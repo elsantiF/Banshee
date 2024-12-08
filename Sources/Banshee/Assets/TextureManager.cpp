@@ -1,14 +1,12 @@
 module;
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 #include <filesystem>
+#include <stb_image.h>
 
 module Banshee.Assets.TextureManager;
 
 namespace Banshee {
-    TextureManager::TextureManager() {
-      stbi_set_flip_vertically_on_load(true);
-    }
+    TextureManager::TextureManager() { stbi_set_flip_vertically_on_load(true); }
 
     Resource<Texture> TextureManager::Load(const fs::path &texturePath) {
         int width, height, channels;
@@ -17,11 +15,7 @@ namespace Banshee {
             Logger::CRITICAL("Error loading texture: " + texturePath.generic_string());
         }
 
-        TextureSpec spec {
-            .width = static_cast<u32>(width),
-            .height = static_cast<u32>(height),
-            .channels = static_cast<u32>(channels)
-        };
+        TextureSpec spec{.width = static_cast<u32>(width), .height = static_cast<u32>(height), .channels = static_cast<u32>(channels)};
 
         const auto m_Resource = MakeRef<Texture>(spec, data);
 

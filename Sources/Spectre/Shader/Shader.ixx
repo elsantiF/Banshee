@@ -8,12 +8,7 @@ export module Spectre.Shader;
 import Poltergeist;
 
 export namespace Spectre {
-    enum ShaderType {
-        VERTEX_SHADER,
-        FRAGMENT_SHADER,
-        GEOMETRY_SHADER,
-        COMPUTE_SHADER
-    };
+    enum ShaderType { VERTEX_SHADER, FRAGMENT_SHADER, GEOMETRY_SHADER, COMPUTE_SHADER };
 
     class Shader {
         String m_ShaderName;

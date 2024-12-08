@@ -14,6 +14,7 @@ export namespace Banshee {
 
         glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
         bool m_Dirty = true;
+
     public:
         [[nodiscard]] glm::mat4 GetModelMatrix();
 

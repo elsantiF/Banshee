@@ -1,17 +1,13 @@
 module;
-#include <sstream>
 #include <fstream>
+#include <sstream>
 
 module Banshee.Assets.AssetManager;
 
 namespace Banshee {
-    void AssetManager::SetRoot(const fs::path &path) {
-        m_RootPath = fs::path(path);
-    }
+    void AssetManager::SetRoot(const fs::path &path) { m_RootPath = fs::path(path); }
 
-    fs::path AssetManager::GetRoot() {
-        return m_RootPath;
-    }
+    fs::path AssetManager::GetRoot() { return m_RootPath; }
 
     Resource<ShaderProgram> AssetManager::LoadShaderProgram(const String &shaderName) {
         // TODO: Do better file reading

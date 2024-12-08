@@ -1,8 +1,8 @@
 module;
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
 #include <filesystem>
 #include <glm/glm.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
 module Banshee.Assets.ModelManager;
 
@@ -62,8 +62,7 @@ namespace Banshee {
                 glm::vec2 texCoords;
                 texCoords.x = mesh->mTextureCoords[0][i].x;
                 texCoords.y = mesh->mTextureCoords[0][i].y;
-                vertex.texCoords = texCoords; {
-                }
+                vertex.texCoords = texCoords;
             }
 
             if (mesh->HasTangentsAndBitangents()) {
@@ -113,7 +112,7 @@ namespace Banshee {
             bool foundTexture = false;
             fs::path filePath = m_Directory / str.C_Str();
 
-            for (const auto &texture: m_Textures) {
+            for (const auto &texture : m_Textures) {
                 if (texture.GetFilePath() == filePath) {
                     textures.push_back(texture);
                     foundTexture = true;

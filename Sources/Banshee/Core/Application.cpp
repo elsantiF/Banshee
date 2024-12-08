@@ -1,10 +1,10 @@
 module;
-#include <utility>
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <glad/glad.h>
+#include <imgui.h>
+#include <utility>
 
 // TODO: Fix this
 /*#ifdef BE_OVER_9000
@@ -77,11 +77,7 @@ namespace Banshee {
         }
     }
 
-    UniquePtr<Window> &Application::GetWindow() {
-        return m_Window;
-    }
+    UniquePtr<Window> &Application::GetWindow() { return m_Window; }
 
-    Application *Application::GetInstance() {
-        return s_Instance;
-    }
+    Application *Application::GetInstance() { return s_Instance; }
 }

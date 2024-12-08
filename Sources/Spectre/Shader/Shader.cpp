@@ -1,13 +1,13 @@
 module;
-#include <string>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <string>
 
 module Spectre.Shader;
 
 namespace Spectre {
 #pragma region Shader class
-    Shader::Shader(const String &shaderName, const ShaderType shaderType): m_ShaderName{shaderName}, m_ShaderType{shaderType} {
+    Shader::Shader(const String &shaderName, const ShaderType shaderType) : m_ShaderName{shaderName}, m_ShaderType{shaderType} {
         m_ShaderID = glCreateShader(ShaderTypeToGLenum(shaderType));
     }
 
@@ -20,9 +20,7 @@ namespace Spectre {
         CheckCompilationError();
     }
 
-    Shader::~Shader() {
-        glDeleteShader(m_ShaderID);
-    }
+    Shader::~Shader() { glDeleteShader(m_ShaderID); }
 
     void Shader::CheckCompilationError() const {
         i32 success;
@@ -34,72 +32,48 @@ namespace Spectre {
         }
     }
 
-    u32 Shader::GetShaderID() const {
-        return m_ShaderID;
-    }
+    u32 Shader::GetShaderID() const { return m_ShaderID; }
 
     GLenum Shader::ShaderTypeToGLenum(const ShaderType shaderType) {
         switch (shaderType) {
-            case VERTEX_SHADER:
-                return GL_VERTEX_SHADER;
-            case FRAGMENT_SHADER:
-                return GL_FRAGMENT_SHADER;
-            case GEOMETRY_SHADER:
-                return GL_GEOMETRY_SHADER;
-            case COMPUTE_SHADER:
-                return GL_COMPUTE_SHADER;
-            default:
-                static_assert("Invalid shader type");
-                return 0;
+        case VERTEX_SHADER: return GL_VERTEX_SHADER;
+        case FRAGMENT_SHADER: return GL_FRAGMENT_SHADER;
+        case GEOMETRY_SHADER: return GL_GEOMETRY_SHADER;
+        case COMPUTE_SHADER: return GL_COMPUTE_SHADER;
+        default: static_assert("Invalid shader type"); return 0;
         }
     }
 
     String Shader::ShaderTypeToString(const ShaderType shaderType) {
         switch (shaderType) {
-            case VERTEX_SHADER:
-                return "Vertex";
-            case FRAGMENT_SHADER:
-                return "Fragment";
-            case GEOMETRY_SHADER:
-                return "Geometry";
-            case COMPUTE_SHADER:
-                return "Compute";
-            default:
-                static_assert("Invalid shader type");
-                return "";
+        case VERTEX_SHADER: return "Vertex";
+        case FRAGMENT_SHADER: return "Fragment";
+        case GEOMETRY_SHADER: return "Geometry";
+        case COMPUTE_SHADER: return "Compute";
+        default: static_assert("Invalid shader type"); return "";
         }
     }
 
     String Shader::GetShaderExtension(const ShaderType shaderType) {
         switch (shaderType) {
-            case VERTEX_SHADER:
-                return ".vert";
-            case FRAGMENT_SHADER:
-                return ".frag";
-            case GEOMETRY_SHADER:
-                return ".geom";
-            case COMPUTE_SHADER:
-                return ".comp";
-            default:
-                static_assert("Invalid shader type");
-                return "";
+        case VERTEX_SHADER: return ".vert";
+        case FRAGMENT_SHADER: return ".frag";
+        case GEOMETRY_SHADER: return ".geom";
+        case COMPUTE_SHADER: return ".comp";
+        default: static_assert("Invalid shader type"); return "";
         }
     }
 #pragma endregion
 
 #pragma region ShaderProgram class
-    ShaderProgram::ShaderProgram(const String &shaderName): m_ShaderProgramName{shaderName} {
+    ShaderProgram::ShaderProgram(const String &shaderName) : m_ShaderProgramName{shaderName} {
         m_ProgramID = glCreateProgram();
         Logger::PANIC(m_ProgramID == 0, "Can't create shader: " + shaderName);
     }
 
-    ShaderProgram::~ShaderProgram() {
-        glDeleteProgram(m_ProgramID);
-    }
+    ShaderProgram::~ShaderProgram() { glDeleteProgram(m_ProgramID); }
 
-    void ShaderProgram::AttachShader(const Shader &shader) const {
-        glAttachShader(m_ProgramID, shader.GetShaderID());
-    }
+    void ShaderProgram::AttachShader(const Shader &shader) const { glAttachShader(m_ProgramID, shader.GetShaderID()); }
 
     void ShaderProgram::Link() {
         glLinkProgram(m_ProgramID);
@@ -136,13 +110,9 @@ namespace Spectre {
         }
     }
 
-    void ShaderProgram::Bind() const {
-        glUseProgram(m_ProgramID);
-    }
+    void ShaderProgram::Bind() const { glUseProgram(m_ProgramID); }
 
-    void ShaderProgram::Unbind() {
-        glUseProgram(0);
-    }
+    void ShaderProgram::Unbind() { glUseProgram(0); }
 
     void ShaderProgram::SetInt(const String &uniformName, const i32 value) const {
         if (m_Uniforms.contains(uniformName)) {

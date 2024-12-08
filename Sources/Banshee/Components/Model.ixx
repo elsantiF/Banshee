@@ -10,8 +10,6 @@ export namespace Banshee {
         Vector<StaticMesh> m_Meshes;
         Transform m_Transform;
 
-        void CalculateModelMatrix();
-
     public:
         Model() = default;
         explicit Model(Vector<StaticMesh> &&meshes);

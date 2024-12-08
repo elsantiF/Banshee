@@ -4,6 +4,7 @@ module;
 module Spectre.Framebuffer;
 
 // TODO: Move this to a separate file
+// clang-format off
 float vertices[] = {
     //position     //texture
     -1.0f,  1.0f,  0.0f, 1.0f,
@@ -14,6 +15,7 @@ float vertices[] = {
      1.0f, -1.0f,  1.0f, 0.0f,
      1.0f,  1.0f,  1.0f, 1.0f
 };
+// clang-format on
 
 namespace Spectre {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
@@ -43,22 +45,16 @@ namespace Spectre {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    Framebuffer::~Framebuffer() {
-        glDeleteFramebuffers(1, &m_Framebuffer);
-    }
+    Framebuffer::~Framebuffer() { glDeleteFramebuffers(1, &m_Framebuffer); }
 
-    void Framebuffer::SetShader(const Ref<ShaderProgram> &shader) {
-        m_Shader = shader;
-    }
+    void Framebuffer::SetShader(const Ref<ShaderProgram> &shader) { m_Shader = shader; }
 
     void Framebuffer::Bind() const {
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
         glViewport(0, 0, m_Width, m_Height);
     }
 
-    void Framebuffer::Unbind() {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    }
+    void Framebuffer::Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
     void Framebuffer::Draw() const {
         m_Shader->Bind();

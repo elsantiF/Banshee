@@ -1,6 +1,6 @@
 module;
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 export module Spectre.Renderer;
@@ -8,11 +8,7 @@ export module Spectre.Renderer;
 import Poltergeist;
 
 export namespace Spectre {
-    enum PolygonMode {
-        FILL = GL_FILL,
-        LINE = GL_LINE,
-        POINT = GL_POINT
-    };
+    enum PolygonMode { FILL = GL_FILL, LINE = GL_LINE, POINT = GL_POINT };
 
     class Renderer {
         static void APIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,

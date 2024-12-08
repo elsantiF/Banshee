@@ -6,26 +6,22 @@ export module Banshee.Assets.Resource;
 import Poltergeist;
 
 export namespace Banshee {
-    template<typename T>
+    template <typename T>
     class Resource final {
     protected:
         Ref<T> m_Resource;
         fs::path m_FilePath;
 
     public:
-        Resource(Ref<T> resource, const fs::path &filepath): m_Resource{resource}, m_FilePath{filepath} {};
+        Resource(Ref<T> resource, const fs::path &filepath) : m_Resource{resource}, m_FilePath{filepath} {};
         ~Resource() = default;
 
-        [[nodiscard]] const Ref<T> &GetResource() const {
-            return m_Resource;
-        }
+        [[nodiscard]] const Ref<T> &GetResource() const { return m_Resource; }
 
-        [[nodiscard]] const fs::path &GetFilePath() const {
-            return m_FilePath;
-        }
+        [[nodiscard]] const fs::path &GetFilePath() const { return m_FilePath; }
     };
 
-    template<typename T>
+    template <typename T>
     class ResourceManager {
     public:
         virtual ~ResourceManager() = default;
