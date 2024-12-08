@@ -15,6 +15,9 @@ fmt::color Logger::GetColor(const LogType type) {
         case LogType::CRITICAL:
             return fmt::color::red;
     }
+
+    // This should never happen, put it here to avoid warnings
+    return fmt::color::white;
 }
 
 String Logger::GetLogTypeString(const LogType type) {
@@ -28,6 +31,9 @@ String Logger::GetLogTypeString(const LogType type) {
         case LogType::CRITICAL:
             return "CRITICAL";
     }
+
+    // This should never happen, put it here to avoid warnings
+    return "UNKNOWN";
 }
 
 void Logger::InternalPrint(const LogType type, const String &message) {
