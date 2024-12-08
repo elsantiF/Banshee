@@ -11,9 +11,9 @@ List of all tasks that need to be done.
 - [ ] Support for shadows
 
 ## Secondary tasks
-- [ ] Refactor ModelLoader
-- [ ] Add TextureLoader
-- [ ] Add ShaderLoader
+- [x] Refactor ModelLoader (partially done)
+- [x] Add TextureLoader
+- [x] Add ShaderLoader (it's in AssetManager, but it's done)
 - [ ] Make AssetManager a proper asset manager
 - [ ] Add a base Component class
 - [ ] Refactor Camera
@@ -25,7 +25,7 @@ List of all tasks that need to be done.
 - [ ] Add a SceneManager
 - [ ] Add a World class
 - [ ] Refactor Logger
-- [ ] Refactor all Graphics files
+- [x] Refactor all Graphics files (partially done)
 - [ ] Change to glm modules
 - [ ] Add option to compile as shared library
 
