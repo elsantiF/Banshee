@@ -34,40 +34,40 @@ endif ()
 
 target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
         # Assets
-        include/Banshee/Assets/AssetManager.ixx
-        include/Banshee/Assets/ModelManager.ixx
-        include/Banshee/Assets/Resource.ixx
-        include/Banshee/Assets/TextureManager.ixx
+        Assets/AssetManager.ixx
+        Assets/ModelManager.ixx
+        Assets/Resource.ixx
+        Assets/TextureManager.ixx
 
         # Components
-        include/Banshee/Components/Camera.ixx
-        include/Banshee/Components/Model.ixx
-        include/Banshee/Components/StaticMesh.ixx
-        include/Banshee/Components/Transform.ixx
+        Components/Camera.ixx
+        Components/Model.ixx
+        Components/StaticMesh.ixx
+        Components/Transform.ixx
 
         # Core
-        include/Banshee/Core/Application.ixx
-        include/Banshee/Core/InputManager.ixx
-        include/Banshee/Core/Level.ixx
-        include/Banshee/Core/Window.ixx
+        Core/Application.ixx
+        Core/InputManager.ixx
+        Core/Level.ixx
+        Core/Window.ixx
 )
 
 target_sources(Banshee PUBLIC
         # Assets
-        src/Banshee/Assets/AssetManager.cpp
-        src/Banshee/Assets/ModelManager.cpp
-        src/Banshee/Assets/TextureManager.cpp
+        Assets/AssetManager.cpp
+        Assets/ModelManager.cpp
+        Assets/TextureManager.cpp
 
         # Components
-        src/Banshee/Components/Camera.cpp
-        src/Banshee/Components/Model.cpp
-        src/Banshee/Components/StaticMesh.cpp
-        src/Banshee/Components/Transform.cpp
+        Components/Camera.cpp
+        Components/Model.cpp
+        Components/StaticMesh.cpp
+        Components/Transform.cpp
 
         # Core
-        src/Banshee/Core/Application.cpp
-        src/Banshee/Core/InputManager.cpp
-        src/Banshee/Core/Window.cpp
+        Core/Application.cpp
+        Core/InputManager.cpp
+        Core/Window.cpp
 )
 
 target_link_libraries(Banshee stb glm::glm assimp::assimp glad glfw imgui Poltergeist Spectre)
