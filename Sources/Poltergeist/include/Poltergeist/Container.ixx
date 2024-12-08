@@ -1,17 +1,18 @@
-#pragma once
-
+module;
 #include <vector>
 #include <map>
 #include <unordered_map>
 
-template<typename T>
+export module Poltergeist.Container;
+
+export template<typename T>
 using Vector = std::vector<T>;
 
-template<typename K, typename V>
+export template<typename K, typename V>
 using Map = std::map<K, V>;
 
-template<typename K, typename V>
+export template<typename K, typename V>
 using UnorderedMap = std::unordered_map<K, V>;
 
-template<typename T, typename U>
+export template<typename T, typename U>
 using Pair = std::pair<T, U>; // Is not a "container" but it's used in the same way

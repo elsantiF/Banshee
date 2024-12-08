@@ -1,4 +1,10 @@
-#include "Spectre/Renderer.h"
+module;
+#include <string>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+module Spectre.Renderer;
 
 namespace Spectre {
     void Renderer::Init() {

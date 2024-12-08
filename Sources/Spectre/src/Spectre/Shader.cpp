@@ -1,4 +1,9 @@
-#include "Spectre/Shader.h"
+module;
+#include <string>
+#include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
+
+module Spectre.Shader;
 
 namespace Spectre {
 #pragma region Shader class

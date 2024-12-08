@@ -1,10 +1,12 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
-#include <Poltergeist/Poltergeist.h>
+
+export module Spectre.Renderbuffer;
+
+import Poltergeist;
 
 // TODO: Add support to other formats rather than just GL_DEPTH24_STENCIL8
-namespace Spectre {
+export namespace Spectre {
     class Renderbuffer {
         u32 m_Renderbuffer{};
         u32 m_Width;

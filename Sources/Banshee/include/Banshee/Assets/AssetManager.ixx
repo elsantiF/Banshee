@@ -1,14 +1,13 @@
-#pragma once
-
+module;
 #include <filesystem>
-#include <fstream>
-#include <sstream>
-#include <Spectre/Shader.h>
 
-#include "Banshee/Core/Core.h"
-#include "Resource.h"
+export module Banshee.Assets.AssetManager;
 
-namespace Banshee {
+import Poltergeist;
+import Spectre.Shader;
+import Banshee.Assets.Resource;
+
+export namespace Banshee {
     using namespace Spectre; // TODO: This is temporary
 
     class AssetManager {

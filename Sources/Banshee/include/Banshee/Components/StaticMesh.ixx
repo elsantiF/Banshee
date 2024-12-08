@@ -1,12 +1,13 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
-#include <Spectre/Spectre.h>
 
-#include "Banshee/Core/Core.h"
-#include "Banshee/Assets/Resource.h"
+export module Banshee.Components.StaticMesh;
 
-namespace Banshee {
+import Poltergeist;
+import Spectre;
+import Banshee.Assets.Resource;
+
+export namespace Banshee {
     using namespace Spectre; // TODO: This is temporary
 
     class StaticMesh {

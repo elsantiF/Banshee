@@ -1,8 +1,11 @@
-#pragma once
+module;
+#include <filesystem>
 
-#include "Banshee/Core/Core.h"
+export module Banshee.Assets.Resource;
 
-namespace Banshee {
+import Poltergeist;
+
+export namespace Banshee {
     template<typename T>
     class Resource final {
     protected:

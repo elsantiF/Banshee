@@ -1,8 +1,8 @@
-#pragma once
+export module Banshee.Core.Level;
 
-#include "Core.h"
+import Poltergeist;
 
-namespace Banshee {
+export namespace Banshee {
     class Level {
     public:
         Level() = default;

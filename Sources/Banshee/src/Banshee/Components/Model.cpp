@@ -1,4 +1,7 @@
-#include "Banshee/Components/Model.h"
+module;
+#include <memory>
+
+module Banshee.Components.Model;
 
 namespace Banshee {
     Model::Model(Vector<StaticMesh> &&meshes): m_Meshes{std::move(meshes)} {}

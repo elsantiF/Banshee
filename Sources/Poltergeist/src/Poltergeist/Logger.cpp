@@ -1,4 +1,9 @@
-#include "Poltergeist/Logger.h"
+module;
+#include <fmt/core.h>
+#include <fmt/chrono.h>
+#include <fmt/color.h>
+
+module Poltergeist.Logger;
 
 fmt::color Logger::GetColor(const LogType type) {
     switch (type) {

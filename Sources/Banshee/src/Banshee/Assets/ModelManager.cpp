@@ -1,4 +1,10 @@
-#include "Banshee/Assets/ModelManager.h"
+module;
+#include <filesystem>
+#include <glm/glm.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+module Banshee.Assets.ModelManager;
 
 // TODO: This needs a refactor
 namespace Banshee {

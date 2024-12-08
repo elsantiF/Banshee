@@ -1,12 +1,17 @@
-#include <Spectre/Spectre.h>
-#include <Banshee/Assets/ModelManager.h>
-#include "Banshee/Core/Core.h"
-#include "Banshee/Core/Application.h"
-#include "Banshee/Core/Level.h"
-#include "Banshee/Components/Model.h"
-#include "Banshee/Components/Camera.h"
-#include "Banshee/Assets/AssetManager.h"
-#include "Banshee/Assets/ModelManager.h"
+#include <imgui.h>
+#include <filesystem>
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+
+import Poltergeist;
+import Spectre;
+import Banshee.Assets.AssetManager;
+import Banshee.Assets.ModelManager;
+import Banshee.Components.Camera;
+import Banshee.Components.Model;
+import Banshee.Components.Transform;
+import Banshee.Core.Application;
+import Banshee.Core.Level;
 
 using namespace Banshee;
 using namespace Spectre;
@@ -20,7 +25,8 @@ class ModelViewer final : public Level {
     bool m_Wireframe = false;
 
     void OnCreate() override {
-        AssetManager::SetRoot(fs::current_path().parent_path() / "Resources");
+        // TODO: Fix the parent of the parent of the parent path
+        AssetManager::SetRoot(fs::current_path().parent_path().parent_path().parent_path() / "Resources");
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
         m_Model = ModelManager().Load("Models/Backpack/backpack.obj").GetResource();

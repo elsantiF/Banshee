@@ -1,4 +1,7 @@
-#include "Spectre/Framebuffer.h"
+module;
+#include <glad/glad.h>
+
+module Spectre.Framebuffer;
 
 // TODO: Move this to a separate file
 float vertices[] = {

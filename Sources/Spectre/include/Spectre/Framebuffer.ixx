@@ -1,16 +1,17 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
-#include <Poltergeist/Poltergeist.h>
 
-#include "GraphicBuffer.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "VertexArray.h"
-#include "Renderbuffer.h"
+export module Spectre.Framebuffer;
+
+import Poltergeist;
+import Spectre.GraphicBuffer;
+import Spectre.Shader;
+import Spectre.Texture;
+import Spectre.VertexArray;
+import Spectre.Renderbuffer;
 
 // TODO: Refactor this to use Mesh instead of m_VAO and m_VBO
-namespace Spectre {
+export namespace Spectre {
     class Framebuffer {
         u32 m_Framebuffer{};
         Ref<ShaderProgram> m_Shader;

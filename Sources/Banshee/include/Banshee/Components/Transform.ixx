@@ -1,11 +1,12 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Banshee/Core/Core.h"
+export module Banshee.Components.Transform;
 
-namespace Banshee {
+import Poltergeist;
+
+export namespace Banshee {
     class Transform {
         glm::vec3 m_Position = glm::vec3(0.0f);
         glm::vec3 m_Rotation = glm::vec3(0.0f);

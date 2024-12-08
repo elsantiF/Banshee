@@ -1,6 +1,9 @@
+module;
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-#include "Banshee/Assets/TextureManager.h"
+#include <filesystem>
+
+module Banshee.Assets.TextureManager;
 
 namespace Banshee {
     TextureManager::TextureManager() {

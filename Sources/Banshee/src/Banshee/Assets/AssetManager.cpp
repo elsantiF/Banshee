@@ -1,4 +1,8 @@
-#include "Banshee/Assets/AssetManager.h"
+module;
+#include <sstream>
+#include <fstream>
+
+module Banshee.Assets.AssetManager;
 
 namespace Banshee {
     void AssetManager::SetRoot(const fs::path &path) {

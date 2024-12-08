@@ -1,21 +1,19 @@
-#pragma once
-
+module;
 #include <filesystem>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
-#include <Spectre/Texture.h>
+export module Banshee.Assets.ModelManager;
 
-#include "Banshee/Core/Core.h"
-#include "Banshee/Components/StaticMesh.h"
-#include "Banshee/Components/Model.h"
+import Poltergeist;
+import Spectre;
+import Banshee.Components.StaticMesh;
+import Banshee.Components.Model;
+import Banshee.Assets.AssetManager;
+import Banshee.Assets.Resource;
+import Banshee.Assets.TextureManager;
 
-#include "Resource.h"
-#include "AssetManager.h"
-#include "TextureManager.h"
-
-namespace Banshee {
+export namespace Banshee {
     // TODO: This needs a refactor
     // TODO: I think this is now thread-safe, test it
     class ModelManager final : public ResourceManager<Model> {

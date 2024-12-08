@@ -1,7 +1,27 @@
 project(Spectre)
 
 add_library(Spectre STATIC)
-file(GLOB_RECURSE SPECTRE_SOURCES "src/*.cpp")
-target_sources(Spectre PUBLIC ${SPECTRE_SOURCES})
-target_include_directories(Spectre SYSTEM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(Spectre glad Poltergeist glfw glm)
+
+target_sources(Spectre PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
+        include/Spectre/Framebuffer.ixx
+        include/Spectre/GraphicBuffer.ixx
+        include/Spectre/Renderbuffer.ixx
+        include/Spectre/Renderer.ixx
+        include/Spectre/Shader.ixx
+        include/Spectre/Spectre.ixx
+        include/Spectre/Texture.ixx
+        include/Spectre/Vertex.ixx
+        include/Spectre/VertexArray.ixx
+)
+
+target_sources(Spectre PUBLIC
+        src/Spectre/Framebuffer.cpp
+        src/Spectre/GraphicBuffer.cpp
+        src/Spectre/Renderbuffer.cpp
+        src/Spectre/Renderer.cpp
+        src/Spectre/Shader.cpp
+        src/Spectre/Texture.cpp
+        src/Spectre/VertexArray.cpp
+)
+
+target_link_libraries(Spectre glm glfw glad Poltergeist)

@@ -1,4 +1,7 @@
-#include "Spectre/VertexArray.h"
+module;
+#include <glad/glad.h>
+
+module Spectre.VertexArray;
 
 namespace Spectre {
     VertexArray::VertexArray() {

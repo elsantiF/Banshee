@@ -1,12 +1,13 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
-#include <Poltergeist/Poltergeist.h>
 
-#include "GraphicBuffer.h"
+export module Spectre.VertexArray;
+
+import Poltergeist;
+import Spectre.GraphicBuffer;
 
 // TODO: Add support to multiple vertex buffers
-namespace Spectre {
+export namespace Spectre {
     class VertexArray {
         u32 m_VAO{};
 

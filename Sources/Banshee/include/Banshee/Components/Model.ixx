@@ -1,13 +1,11 @@
-#pragma once
+export module Banshee.Components.Model;
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+import Poltergeist;
+import Spectre.Shader;
+import Banshee.Components.Transform;
+import Banshee.Components.StaticMesh;
 
-#include "Banshee/Core/Core.h"
-#include "Banshee/Components/StaticMesh.h"
-#include "Transform.h"
-
-namespace Banshee {
+export namespace Banshee {
     class Model {
         Vector<StaticMesh> m_Meshes;
         Transform m_Transform;

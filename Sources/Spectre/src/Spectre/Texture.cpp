@@ -1,4 +1,7 @@
-#include "Spectre/Texture.h"
+module;
+#include <glad/glad.h>
+
+module Spectre.Texture;
 
 namespace Spectre {
     Texture::Texture() {

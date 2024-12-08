@@ -1,9 +1,11 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
-#include <Poltergeist/Poltergeist.h>
 
-namespace Spectre {
+export module Spectre.Texture;
+
+import Poltergeist;
+
+export namespace Spectre {
     struct TextureSpec {
         u32 width = 0;
         u32 height = 0;

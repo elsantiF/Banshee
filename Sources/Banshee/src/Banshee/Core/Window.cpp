@@ -1,4 +1,9 @@
-#include "Banshee/Core/Window.h"
+module;
+#include <GLFW/glfw3.h>
+
+module Banshee.Core.Window;
+
+import Banshee.Core.InputManager;
 
 namespace Banshee {
     Window::Window(const String &title, const u32 width, const u32 height): m_Width{width}, m_Height{height}, m_WindowTitle{title} {

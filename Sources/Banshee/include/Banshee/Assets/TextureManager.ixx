@@ -1,12 +1,14 @@
-#pragma once
+module;
+#include <filesystem>
 
-#include <Spectre/Texture.h>
+export module Banshee.Assets.TextureManager;
 
-#include "Banshee/Core/Core.h"
-#include "AssetManager.h"
-#include "Resource.h"
+import Poltergeist;
+import Spectre.Texture;
+import Banshee.Assets.AssetManager;
+import Banshee.Assets.Resource;
 
-namespace Banshee {
+export namespace Banshee {
     using namespace Spectre; // TODO: This is temporary
 
     class TextureManager final : public ResourceManager<Texture> {

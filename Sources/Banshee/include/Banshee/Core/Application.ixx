@@ -1,18 +1,10 @@
-#pragma once
+export module Banshee.Core.Application;
 
-#include <glad/glad.h>
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+import Poltergeist;
+import Banshee.Core.Window;
+import Banshee.Core.Level;
 
-#include "Spectre/Renderer.h" // This needs to be in this order
-#include "Spectre/Framebuffer.h"
-
-#include "Banshee/Core/Core.h"
-#include "Banshee/Core/Window.h"
-#include "Banshee/Core/Level.h"
-
-namespace Banshee {
+export namespace Banshee {
     class Application {
         inline static Application *s_Instance = nullptr;
         UniquePtr<Level> m_ActualLevel;

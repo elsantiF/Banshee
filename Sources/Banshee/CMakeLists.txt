@@ -36,7 +36,42 @@ elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
     endif ()
 endif ()
 
-file(GLOB_RECURSE BANSHEE_SOURCES "src/*.cpp") # TODO: Change this to only include the necessary files
-target_sources(Banshee PUBLIC ${BANSHEE_SOURCES})
-target_include_directories(Banshee SYSTEM PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(Banshee stb glm assimp::assimp glad glfw imgui Poltergeist Spectre)
+target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
+        # Assets
+        include/Banshee/Assets/AssetManager.ixx
+        include/Banshee/Assets/ModelManager.ixx
+        include/Banshee/Assets/Resource.ixx
+        include/Banshee/Assets/TextureManager.ixx
+
+        # Components
+        include/Banshee/Components/Camera.ixx
+        include/Banshee/Components/Model.ixx
+        include/Banshee/Components/StaticMesh.ixx
+        include/Banshee/Components/Transform.ixx
+
+        # Core
+        include/Banshee/Core/Application.ixx
+        include/Banshee/Core/InputManager.ixx
+        include/Banshee/Core/Level.ixx
+        include/Banshee/Core/Window.ixx
+)
+
+target_sources(Banshee PUBLIC
+        # Assets
+        src/Banshee/Assets/AssetManager.cpp
+        src/Banshee/Assets/ModelManager.cpp
+        src/Banshee/Assets/TextureManager.cpp
+
+        # Components
+        src/Banshee/Components/Camera.cpp
+        src/Banshee/Components/Model.cpp
+        src/Banshee/Components/StaticMesh.cpp
+        src/Banshee/Components/Transform.cpp
+
+        # Core
+        src/Banshee/Core/Application.cpp
+        src/Banshee/Core/InputManager.cpp
+        src/Banshee/Core/Window.cpp
+)
+
+target_link_libraries(Banshee stb glm::glm assimp::assimp glad glfw imgui Poltergeist Spectre)

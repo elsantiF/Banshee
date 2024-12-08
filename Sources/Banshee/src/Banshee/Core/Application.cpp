@@ -1,11 +1,22 @@
-#include "Banshee/Core/Application.h"
+module;
+#include <utility>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
-#ifdef BE_OVER_9000
+// TODO: Fix this
+/*#ifdef BE_OVER_9000
 extern "C" {
 __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
 __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
-#endif
+#endif*/
+
+module Banshee.Core.Application;
+
+import Spectre.Renderer;
 
 namespace Banshee {
     Application::Application(UniquePtr<Level> level) {

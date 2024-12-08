@@ -1,8 +1,8 @@
-#pragma once
+export module Banshee.Core.InputManager;
 
-#include "Core.h"
+import Poltergeist;
 
-namespace Banshee {
+export namespace Banshee {
     class InputManager {
         inline static UnorderedMap<int, bool> m_Keys;
         inline static UnorderedMap<int, bool> m_MouseButtons;

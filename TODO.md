@@ -26,11 +26,12 @@ List of all tasks that need to be done.
 - [ ] Add a World class
 - [ ] Refactor Logger
 - [ ] Refactor all Graphics files
+- [ ] Change to glm modules
 
 ## Future tasks
 - [ ] PBR materials
 - [ ] Add an editor
 - [ ] Better CMake configuration
-- [ ] Change all to use C++ modules
+- [x] Change all to use C++ modules (partially done)
 - [ ] Add serialization / reflection
 - [ ] Add Vulkan support

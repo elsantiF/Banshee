@@ -1,14 +1,12 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-#include "Banshee/Core/Core.h"
-#include "Banshee/Core/InputManager.h"
-#include "Banshee/Core/Window.h"
-#include "Transform.h"
+export module Banshee.Components.Camera;
 
-namespace Banshee {
+import Poltergeist;
+import Banshee.Components.Transform;
+
+export namespace Banshee {
     class Camera {
         f32 m_Fov{};
         f32 m_Aspect{};

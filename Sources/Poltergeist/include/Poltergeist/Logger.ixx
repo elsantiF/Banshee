@@ -1,19 +1,20 @@
-#pragma once
-
+module;
 #include <fmt/core.h>
 #include <fmt/chrono.h>
 #include <fmt/color.h>
 
-#include "String.h"
+export module Poltergeist.Logger;
 
-enum LogType {
+import Poltergeist.String;
+
+export enum LogType {
     INFO,
     WARN,
     ERROR,
     CRITICAL
 };
 
-class Logger {
+export class Logger {
     static fmt::color GetColor(LogType type);
     static String GetLogTypeString(LogType type);
 

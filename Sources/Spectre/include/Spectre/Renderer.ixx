@@ -1,11 +1,13 @@
-#pragma once
-
+module;
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <Poltergeist/Poltergeist.h>
 
-namespace Spectre {
+export module Spectre.Renderer;
+
+import Poltergeist;
+
+export namespace Spectre {
     enum PolygonMode {
         FILL = GL_FILL,
         LINE = GL_LINE,

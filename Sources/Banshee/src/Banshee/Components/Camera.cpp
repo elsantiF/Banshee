@@ -1,4 +1,11 @@
-#include "Banshee/Components/Camera.h"
+module;
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
+
+module Banshee.Components.Camera;
+
+import Banshee.Core.InputManager;
 
 namespace Banshee {
     Camera::Camera(const f32 fov, const f32 aspect, const f32 near, const f32 far)

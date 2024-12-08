@@ -1,11 +1,12 @@
-#pragma once
-
+module;
 #include <GLFW/glfw3.h>
 
-#include "Core.h"
-#include "InputManager.h"
+export module Banshee.Core.Window;
 
-namespace Banshee {
+import Poltergeist;
+import Banshee.Core.InputManager;
+
+export namespace Banshee {
     using WindowSize = Pair<f32, f32>;
 
     // TODO: Add a way to set the window to be resizable

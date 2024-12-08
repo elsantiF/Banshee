@@ -1,4 +1,8 @@
-#include "Banshee/Core/InputManager.h"
+module;
+#include <unordered_map>
+#include <utility>
+
+module Banshee.Core.InputManager;
 
 namespace Banshee {
     void InputManager::SetKeyPressed(const int keycode, const bool isPressed) {

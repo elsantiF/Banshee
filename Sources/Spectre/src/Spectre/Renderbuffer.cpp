@@ -1,4 +1,7 @@
-#include "Spectre/Renderbuffer.h"
+module;
+#include <glad/glad.h>
+
+module Spectre.Renderbuffer;
 
 namespace Spectre {
     Renderbuffer::Renderbuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {

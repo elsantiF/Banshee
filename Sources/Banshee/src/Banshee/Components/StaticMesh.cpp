@@ -1,4 +1,9 @@
-#include "Banshee/Components/StaticMesh.h"
+module;
+#include <cstddef>
+#include <string>
+#include <glad/glad.h>
+
+module Banshee.Components.StaticMesh;
 
 namespace Banshee {
     StaticMesh::StaticMesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures): m_Vertices{vertices},

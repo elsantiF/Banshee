@@ -1,8 +1,9 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
 
-namespace Spectre {
+export module Spectre.Vertex;
+
+export namespace Spectre {
     struct Vertex {
         glm::vec3 position = glm::vec3(0.f, 0.f, 0.f);
         glm::vec3 normal = glm::vec3(0.f, 0.f, 0.f);
