@@ -1,7 +1,7 @@
 module;
 #include <glad/glad.h>
 
-module Spectre.GraphicBuffer;
+module Spectre.Buffer;
 
 namespace Spectre {
     BufferBase::BufferBase(const BufferType type) : m_BufferType{type} {

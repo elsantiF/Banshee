@@ -4,7 +4,7 @@ module;
 export module Spectre.Framebuffer;
 
 import Poltergeist;
-import Spectre.GraphicBuffer;
+import Spectre.Buffer;
 import Spectre.Shader;
 import Spectre.Texture;
 import Spectre.VertexArray;

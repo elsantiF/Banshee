@@ -1,7 +1,7 @@
 module;
 #include <glad/glad.h>
 
-export module Spectre.GraphicBuffer;
+export module Spectre.Buffer;
 
 import Poltergeist;
 

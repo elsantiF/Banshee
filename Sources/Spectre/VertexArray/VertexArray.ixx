@@ -4,7 +4,7 @@ module;
 export module Spectre.VertexArray;
 
 import Poltergeist;
-import Spectre.GraphicBuffer;
+import Spectre.Buffer;
 
 // TODO: Add support to multiple vertex buffers
 export namespace Spectre {
