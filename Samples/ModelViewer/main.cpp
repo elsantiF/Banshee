@@ -26,8 +26,7 @@ class ModelViewer final : public Level {
     bool m_Wireframe = false;
 
     void OnCreate() override {
-        // TODO: Fix the parent of the parent of the parent path
-        AssetManager::SetRoot(fs::current_path().parent_path().parent_path().parent_path() / "Resources");
+        AssetManager::SetRoot(fs::current_path() / "Resources");
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
         m_Model = ModelManager().Load("Models/Backpack/backpack.obj").GetResource();
