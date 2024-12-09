@@ -2,16 +2,22 @@ module;
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
+#include <tracy/Tracy.hpp>
+#include <tracy/TracyOpenGL.hpp>
 
 module Spectre.Shader;
 
 namespace Spectre {
 #pragma region Shader class
     Shader::Shader(const String &shaderName, const ShaderType shaderType) : m_ShaderName{shaderName}, m_ShaderType{shaderType} {
+        ZoneScoped;
+        TracyGpuZone("Shader::Shader");
         m_ShaderID = glCreateShader(ShaderTypeToGLenum(shaderType));
     }
 
     void Shader::Compile(const String &shaderSource) const {
+        ZoneScoped;
+        TracyGpuZone("Shader::Compile");
         // TODO: Find a better way to do this
         const char *shaderCodeChar = shaderSource.c_str();
         Logger::INFO("Compiling " + ShaderTypeToString(m_ShaderType) + " shader of: " + m_ShaderName);
@@ -82,6 +88,9 @@ namespace Spectre {
     }
 
     void ShaderProgram::GetUniforms() {
+        // I want to know how long this takes, remove later
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::GetUniforms");
         GLint numUniforms = 0;
         glGetProgramiv(m_ProgramID, GL_ACTIVE_UNIFORMS, &numUniforms);
 
@@ -110,11 +119,21 @@ namespace Spectre {
         }
     }
 
-    void ShaderProgram::Bind() const { glUseProgram(m_ProgramID); }
+    void ShaderProgram::Bind() const {
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::Bind");
+        glUseProgram(m_ProgramID);
+    }
 
-    void ShaderProgram::Unbind() { glUseProgram(0); }
+    void ShaderProgram::Unbind() {
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::Unbind");
+        glUseProgram(0);
+    }
 
     void ShaderProgram::SetInt(const String &uniformName, const i32 value) const {
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::SetInt");
         if (m_Uniforms.contains(uniformName)) {
             const auto uniformLocation = m_Uniforms.at(uniformName);
             glUniform1i(uniformLocation, value);
@@ -122,11 +141,15 @@ namespace Spectre {
     }
 
     void ShaderProgram::SetVec3(const String &uniformName, glm::vec3 vec3) const {
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::SetVec3");
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniform3fv(uniformLocation, 1, glm::value_ptr(vec3));
     }
 
     void ShaderProgram::SetMat4(const String &uniformName, glm::mat4 mat4) const {
+        ZoneScoped;
+        TracyGpuZone("ShaderProgram::SetMat4");
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(mat4));
     }

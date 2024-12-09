@@ -1,5 +1,7 @@
 module;
 #include <glad/glad.h>
+#include <tracy/Tracy.hpp>
+#include <tracy/TracyOpenGL.hpp>
 
 module Spectre.Framebuffer;
 
@@ -19,6 +21,8 @@ float vertices[] = {
 
 namespace Spectre {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
+        ZoneScoped;
+        TracyGpuZone("Framebuffer::Framebuffer");
         m_VAO = MakeUnique<VertexArray>();
 
         const auto m_VBO = MakeRef<VertexBuffer>();
@@ -50,13 +54,21 @@ namespace Spectre {
     void Framebuffer::SetShader(const Ref<ShaderProgram> &shader) { m_Shader = shader; }
 
     void Framebuffer::Bind() const {
+        ZoneScoped;
+        TracyGpuZone("Framebuffer::Bind");
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
         glViewport(0, 0, m_Width, m_Height);
     }
 
-    void Framebuffer::Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
+    void Framebuffer::Unbind() {
+        ZoneScoped;
+        TracyGpuZone("Framebuffer::Unbind");
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
 
     void Framebuffer::Draw() const {
+        ZoneScoped;
+        TracyGpuZone("Framebuffer::Draw");
         m_Shader->Bind();
         m_VAO->Bind();
         m_Texture->Bind();

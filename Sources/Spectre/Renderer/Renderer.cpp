@@ -3,11 +3,14 @@ module;
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <string>
+#include <tracy/Tracy.hpp>
+#include <tracy/TracyOpenGL.hpp>
 
 module Spectre.Renderer;
 
 namespace Spectre {
     void Renderer::Init() {
+        ZoneScoped;
         Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), "Failed to initialize GLAD");
 
         // glViewport(0, 0, 1280, 720);
@@ -90,5 +93,10 @@ namespace Spectre {
 
     void Renderer::SetClearColor(const glm::vec4 &color) { glClearColor(color.r, color.g, color.b, color.a); }
 
-    void Renderer::SetPolygonMode(const PolygonMode mode) { glPolygonMode(GL_FRONT_AND_BACK, mode); }
+    void Renderer::SetPolygonMode(const PolygonMode mode) {
+        // This method is profiled because I think takes a long time to execute
+        ZoneScoped;
+        TracyGpuZone("Renderer::SetPolygonMode");
+        glPolygonMode(GL_FRONT_AND_BACK, mode);
+    }
 }

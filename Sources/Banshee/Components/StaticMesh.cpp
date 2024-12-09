@@ -3,6 +3,7 @@ module;
 #include <glad/glad.h>
 #include <string>
 #include <tracy/Tracy.hpp>
+#include <tracy/TracyOpenGL.hpp>
 
 module Banshee.Components.StaticMesh;
 
@@ -43,6 +44,7 @@ namespace Banshee {
 
     void StaticMesh::Draw(const ShaderProgram &shader) const {
         ZoneScoped;
+        TracyGpuZone("StaticMesh::Draw");
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;
