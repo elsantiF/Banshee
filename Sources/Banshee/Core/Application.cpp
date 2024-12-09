@@ -53,6 +53,7 @@ namespace Banshee {
 
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
+            ZoneScoped;
             // Update scene
             m_ActualLevel->OnUpdate(m_Delta);
 

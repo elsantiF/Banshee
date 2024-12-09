@@ -2,6 +2,7 @@ module;
 #define STB_IMAGE_IMPLEMENTATION
 #include <filesystem>
 #include <stb_image.h>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Assets.TextureManager;
 
@@ -9,6 +10,7 @@ namespace Banshee {
     TextureManager::TextureManager() { stbi_set_flip_vertically_on_load(true); }
 
     Resource<Texture> TextureManager::Load(const fs::path &texturePath) {
+        ZoneScoped;
         int width, height, channels;
         u8 *data = stbi_load(texturePath.generic_string().c_str(), &width, &height, &channels, 0);
         if (!data) {

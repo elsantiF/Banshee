@@ -26,6 +26,7 @@ class ModelViewer final : public Level {
     bool m_Wireframe = false;
 
     void OnCreate() override {
+        ZoneScoped;
         AssetManager::SetRoot(fs::current_path() / "Resources");
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();

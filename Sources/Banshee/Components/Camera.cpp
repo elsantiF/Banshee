@@ -2,6 +2,7 @@ module;
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Components.Camera;
 
@@ -20,6 +21,7 @@ namespace Banshee {
     }
 
     void Camera::UpdateCameraVectors() {
+        ZoneScoped;
         glm::vec3 front;
 
         const f32 radiansYaw = glm::radians(m_Transform.GetRotation().y);
@@ -35,6 +37,7 @@ namespace Banshee {
     }
 
     void Camera::Update(const f64 delta) {
+        ZoneScoped;
         // Position update
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 

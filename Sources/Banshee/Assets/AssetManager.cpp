@@ -1,6 +1,7 @@
 module;
 #include <fstream>
 #include <sstream>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Assets.AssetManager;
 
@@ -10,6 +11,7 @@ namespace Banshee {
     fs::path AssetManager::GetRoot() { return m_RootPath; }
 
     Resource<ShaderProgram> AssetManager::LoadShaderProgram(const String &shaderName) {
+        ZoneScoped;
         // TODO: Do better file reading
         std::ifstream vertexFile;
         vertexFile.open(GetRoot().generic_string() + "/" + shaderName + ".vert");

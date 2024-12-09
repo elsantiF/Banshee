@@ -1,11 +1,13 @@
 module;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Components.Transform;
 
 namespace Banshee {
     glm::mat4 Transform::GetModelMatrix() {
+        ZoneScoped;
         if (!this->m_Dirty) {
             return this->m_ModelMatrix;
         }

@@ -2,6 +2,7 @@ module;
 #include <cstddef>
 #include <glad/glad.h>
 #include <string>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Components.StaticMesh;
 
@@ -41,12 +42,14 @@ namespace Banshee {
     }
 
     void StaticMesh::Draw(const ShaderProgram &shader) const {
+        ZoneScoped;
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;
         u32 normalNr = 1;
         u32 heightNr = 1;
 
+        // TODO: Please, refactor this, is a mess and extremely slow
         for (u32 i = 0; i < m_Textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i);
 

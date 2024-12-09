@@ -3,12 +3,14 @@ module;
 #include <assimp/scene.h>
 #include <filesystem>
 #include <glm/glm.hpp>
+#include <tracy/Tracy.hpp>
 
 module Banshee.Assets.ModelManager;
 
 // TODO: This needs a refactor
 namespace Banshee {
     Resource<Model> ModelManager::Load(const fs::path &modelPath) {
+        ZoneScoped;
         const fs::path realPath = AssetManager::GetRoot() / modelPath;
         m_Scene = m_Importer.ReadFile(realPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs);
         Logger::INFO("Loading model: " + modelPath.generic_string());
@@ -27,6 +29,7 @@ namespace Banshee {
 
     // Change this, don't use recursion, use something like BFS
     void ModelManager::ProcessNode(const aiNode *node, const aiScene *scene) {
+        ZoneScoped;
         for (u32 i = 0; i < node->mNumMeshes; i++) {
             const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
             ProcessMesh(mesh, scene);
@@ -38,6 +41,7 @@ namespace Banshee {
     }
 
     void ModelManager::ProcessMesh(const aiMesh *mesh, const aiScene *scene) {
+        ZoneScoped;
         Vector<Vertex> vertices;
         Vector<u32> indices;
         Vector<Resource<Texture>> texturesResources;
@@ -104,6 +108,7 @@ namespace Banshee {
     }
 
     Vector<Resource<Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+        ZoneScoped;
         Vector<Resource<Texture>> textures;
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
