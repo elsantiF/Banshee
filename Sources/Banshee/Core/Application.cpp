@@ -1,18 +1,17 @@
 module;
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
-#include <glad/glad.h>
 #include <imgui.h>
 #include <utility>
 
-// TODO: Fix this
-/*#ifdef BE_OVER_9000
+#ifdef BE_OVER_9000
 extern "C" {
 __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
 __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
-#endif*/
+#endif
 
 module Banshee.Core.Application;
 

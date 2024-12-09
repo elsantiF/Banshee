@@ -1,6 +1,6 @@
 module;
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 export module Spectre.Renderer;
