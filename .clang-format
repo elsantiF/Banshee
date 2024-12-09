@@ -32,10 +32,10 @@ AlignConsecutiveMacros:
   AlignFunctionPointers: false
   PadOperators: false
 AlignConsecutiveShortCaseStatements:
-  Enabled: false
-  AcrossEmptyLines: false
-  AcrossComments: false
-  AlignCaseArrows: false
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+  AlignCaseArrows: true
   AlignCaseColons: false
 AlignConsecutiveTableGenBreakingDAGArgColons:
   Enabled: false

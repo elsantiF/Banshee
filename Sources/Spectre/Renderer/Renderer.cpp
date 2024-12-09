@@ -40,27 +40,27 @@ namespace Spectre {
 
         String sourceString;
         switch (source) {
-        case GL_DEBUG_SOURCE_API: sourceString = "API"; break;
+        case GL_DEBUG_SOURCE_API:           sourceString = "API"; break;
         case GL_DEBUG_SOURCE_WINDOW_SYSTEM: sourceString = "Window System"; break;
-        case GL_SHADER_COMPILER: sourceString = "Shader Compiler"; break;
-        case GL_DEBUG_SOURCE_THIRD_PARTY: sourceString = "Third Party"; break;
-        case GL_DEBUG_SOURCE_APPLICATION: sourceString = "Application"; break;
+        case GL_SHADER_COMPILER:            sourceString = "Shader Compiler"; break;
+        case GL_DEBUG_SOURCE_THIRD_PARTY:   sourceString = "Third Party"; break;
+        case GL_DEBUG_SOURCE_APPLICATION:   sourceString = "Application"; break;
         case GL_DEBUG_SOURCE_OTHER:
-        default: sourceString = "Other";
+        default:                            sourceString = "Other";
         }
 
         String typeString;
         switch (type) {
-        case GL_DEBUG_TYPE_ERROR: typeString = "Error"; break;
+        case GL_DEBUG_TYPE_ERROR:               typeString = "Error"; break;
         case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeString = "Deprecated Behavior"; break;
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: typeString = "Undefined Behavior"; break;
-        case GL_DEBUG_TYPE_PORTABILITY: typeString = "Portability"; break;
-        case GL_DEBUG_TYPE_PERFORMANCE: typeString = "Performance"; break;
-        case GL_DEBUG_TYPE_MARKER: typeString = "Marker"; break;
-        case GL_DEBUG_TYPE_PUSH_GROUP: typeString = "Push Group"; break;
-        case GL_DEBUG_TYPE_POP_GROUP: typeString = "Pop Group"; break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeString = "Undefined Behavior"; break;
+        case GL_DEBUG_TYPE_PORTABILITY:         typeString = "Portability"; break;
+        case GL_DEBUG_TYPE_PERFORMANCE:         typeString = "Performance"; break;
+        case GL_DEBUG_TYPE_MARKER:              typeString = "Marker"; break;
+        case GL_DEBUG_TYPE_PUSH_GROUP:          typeString = "Push Group"; break;
+        case GL_DEBUG_TYPE_POP_GROUP:           typeString = "Pop Group"; break;
         case GL_DEBUG_TYPE_OTHER:
-        default: typeString = "Other";
+        default:                                typeString = "Other";
         }
 
         switch (severity) {
