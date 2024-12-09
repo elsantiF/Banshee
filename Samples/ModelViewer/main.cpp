@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <tracy/Tracy.hpp>
 
 import Poltergeist;
 import Spectre;
@@ -37,11 +38,13 @@ class ModelViewer final : public Level {
     }
 
     void OnUpdate(const f64 delta) override {
+        ZoneScoped;
         m_Camera.Update(delta);
         m_Model->GetTransform().RotateY(50.0 * delta);
     }
 
     void OnRender(const f64 delta) override {
+        ZoneScoped;
         // Framebuffer begin
         m_Framebuffer->Bind();
         glEnable(GL_DEPTH_TEST);
@@ -73,6 +76,7 @@ class ModelViewer final : public Level {
     }
 
     void OnImGUI(const f64 delta) override {
+        ZoneScoped;
         ImGui::Begin("Engine");
 
         ImGui::Text("Delta: %04f ms", delta * 1000);

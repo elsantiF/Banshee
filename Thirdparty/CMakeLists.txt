@@ -7,6 +7,7 @@ include(glad)
 include(glfw)
 include(imgui)
 add_subdirectory(fmt)
+add_subdirectory(tracy)
 
 # --- Assimp configuration ---
 set(ASSIMP_BUILD_ZLIB ON CACHE BOOL "" FORCE)
