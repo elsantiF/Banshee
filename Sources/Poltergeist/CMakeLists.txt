@@ -16,4 +16,4 @@ target_sources(Poltergeist PUBLIC
         Logger/Logger.cpp
 )
 
-target_link_libraries(Poltergeist fmt::fmt)
+target_link_libraries(Poltergeist fmt::fmt Tracy::TracyClient)

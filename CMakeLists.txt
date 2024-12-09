@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 option(USE_HYBRID_GRAPHICS "Enable Nvidia Optimus/AMD Hybrid Graphics support" ON)
+option(TRACY_ENABLE "Enable Tracy Profiler" ON)
 
 if (MSVC)
     add_compile_options(/MP) # Enable parallel compilation on MSVC
