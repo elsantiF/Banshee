@@ -1,8 +1,33 @@
 module;
-#define STB_IMAGE_IMPLEMENTATION
 #include <filesystem>
-#include <stb_image.h>
 #include <tracy/Tracy.hpp>
+
+#ifdef TRACY_ENABLE
+void *TraceMalloc(size_t size) {
+    void *ptr = malloc(size);
+    TracyAllocS(ptr, size, 15);
+    return ptr;
+}
+
+void *TraceRealloc(void *ptr, size_t newSize) {
+    TracyFreeS(ptr, 15);
+    ptr = realloc(ptr, newSize);
+    TracyAllocS(ptr, newSize, 15);
+    return ptr;
+}
+
+void TraceFree(void *ptr) {
+    TracyFreeS(ptr, 15);
+    free(ptr);
+}
+
+#define STBI_MALLOC(size) TraceMalloc(size)
+#define STBI_REALLOC(ptr, newSize) TraceRealloc(ptr, newSize)
+#define STBI_FREE(ptr) TraceFree(ptr)
+
+#endif
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 module Banshee.Assets.TextureManager;
 
