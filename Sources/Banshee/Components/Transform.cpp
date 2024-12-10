@@ -47,6 +47,7 @@ namespace Banshee {
     glm::vec3 Transform::GetScale() const { return this->m_Scale; }
 
     Transform &Transform::Translate(const glm::vec3 &translation) {
+        ZoneScoped;
         this->m_Position += translation;
         this->m_Dirty = true;
         return *this;
@@ -59,6 +60,7 @@ namespace Banshee {
     Transform &Transform::TranslateZ(const f32 z) { return this->Translate(glm::vec3(0.0f, 0.0f, z)); }
 
     Transform &Transform::Scale(const glm::vec3 &scale) {
+        ZoneScoped;
         this->m_Scale *= scale;
         this->m_Dirty = true;
         return *this;
@@ -73,10 +75,21 @@ namespace Banshee {
     Transform &Transform::ScaleZ(const f32 z) { return this->Scale(glm::vec3(1.0f, 1.0f, z)); }
 
     Transform &Transform::Rotate(const glm::vec3 &rotation) {
+        ZoneScoped;
         this->m_Rotation += rotation;
-        this->m_Rotation.x = glm::mod(this->m_Rotation.x, 360.0f);
-        this->m_Rotation.y = glm::mod(this->m_Rotation.y, 360.0f);
-        this->m_Rotation.z = glm::mod(this->m_Rotation.z, 360.0f);
+
+        if (this->m_Rotation.x > 360.0f || this->m_Rotation.x < -360.0f) {
+            this->m_Rotation.x = glm::mod(this->m_Rotation.x, 360.0f);
+        }
+
+        if (this->m_Rotation.y > 360.0f || this->m_Rotation.y < -360.0f) {
+            this->m_Rotation.y = glm::mod(this->m_Rotation.y, 360.0f);
+        }
+
+        if (this->m_Rotation.z > 360.0f || this->m_Rotation.z < -360.0f) {
+            this->m_Rotation.z = glm::mod(this->m_Rotation.z, 360.0f);
+        }
+
         this->m_Dirty = true;
         return *this;
     }

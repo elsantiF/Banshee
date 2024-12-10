@@ -26,6 +26,18 @@ export namespace Banshee {
         [[nodiscard]] glm::vec3 GetRotation() const;
         [[nodiscard]] glm::vec3 GetScale() const;
 
+        [[nodiscard]] f32 &GetPositionX() { return m_Position.x; }
+        [[nodiscard]] f32 &GetPositionY() { return m_Position.y; }
+        [[nodiscard]] f32 &GetPositionZ() { return m_Position.z; }
+
+        [[nodiscard]] f32 &GetRotationX() { return m_Rotation.x; }
+        [[nodiscard]] f32 &GetRotationY() { return m_Rotation.y; }
+        [[nodiscard]] f32 &GetRotationZ() { return m_Rotation.z; }
+
+        [[nodiscard]] f32 &GetScaleX() { return m_Scale.x; }
+        [[nodiscard]] f32 &GetScaleY() { return m_Scale.y; }
+        [[nodiscard]] f32 &GetScaleZ() { return m_Scale.z; }
+
         Transform &Translate(const glm::vec3 &translation);
         Transform &TranslateX(f32 x);
         Transform &TranslateY(f32 y);

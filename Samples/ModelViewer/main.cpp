@@ -33,6 +33,7 @@ class ModelViewer final : public Level {
         m_Model = ModelManager().Load("Models/Backpack/backpack.obj").GetResource();
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
+        m_Camera.Transform().SetPosition(glm::vec3(-10.f, 0.f, 0.f));
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
     }
@@ -82,7 +83,7 @@ class ModelViewer final : public Level {
         ImGui::Text("Delta: %04f ms", delta * 1000);
 
         ImGui::SeparatorText("Camera");
-        const Transform cameraTransform = m_Camera.GetTransform();
+        const Transform cameraTransform = m_Camera.Transform();
         const glm::vec3 cameraPosition = cameraTransform.GetPosition();
         const glm::vec3 cameraRotation = cameraTransform.GetRotation();
         ImGui::Text("Position: X: %04f Y: %04f Z: %04f", cameraPosition.x, cameraPosition.y, cameraPosition.z);
