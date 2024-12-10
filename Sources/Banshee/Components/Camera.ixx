@@ -35,9 +35,9 @@ export namespace Banshee {
         [[nodiscard]] f32 GetFov() const { return m_Fov; }
 
         // TODO: Add an m_ViewDirty flag to avoid recalculating the view matrix every frame
-        [[nodiscard]] glm::mat4 GetViewMatrix() const {
+        [[nodiscard]] glm::mat4 GetViewMatrix() {
             ZoneScoped;
-            return glm::lookAt(m_Transform.GetPosition(), m_Transform.GetPosition() + m_Front, m_Up);
+            return glm::lookAt(m_Transform.Position(), m_Transform.Position() + m_Front, m_Up);
         }
 
         // TODO: Add an m_ProjectionDirty flag to avoid recalculating the projection matrix every frame

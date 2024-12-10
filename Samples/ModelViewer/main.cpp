@@ -41,7 +41,7 @@ class ModelViewer final : public Level {
     void OnUpdate(const f64 delta) override {
         ZoneScoped;
         m_Camera.Update(delta);
-        m_Model->GetTransform().RotateY(50.0 * delta);
+        m_Model->Transform().RotateY(50.0 * delta);
     }
 
     void OnRender(const f64 delta) override {
@@ -83,17 +83,12 @@ class ModelViewer final : public Level {
         ImGui::Text("Delta: %04f ms", delta * 1000);
 
         ImGui::SeparatorText("Camera");
-        const Transform cameraTransform = m_Camera.Transform();
-        const glm::vec3 cameraPosition = cameraTransform.GetPosition();
-        const glm::vec3 cameraRotation = cameraTransform.GetRotation();
-        ImGui::Text("Position: X: %04f Y: %04f Z: %04f", cameraPosition.x, cameraPosition.y, cameraPosition.z);
-        ImGui::Text("Rotation: X: %04f Y: %04f Z: %04f", cameraRotation.x, cameraRotation.y, cameraRotation.z);
+        ImGui::InputFloat3("Camera Position", &m_Camera.Transform().Position()[0]);
+        ImGui::InputFloat3("Camera Rotation", &m_Camera.Transform().Rotation()[0]);
 
         ImGui::SeparatorText("Model");
-        const glm::vec3 modelPosition = m_Model->GetTransform().GetPosition();
-        const glm::vec3 modelRotation = m_Model->GetTransform().GetRotation();
-        ImGui::Text("Position X: %04f Y: %04f Z: %04f", modelPosition.x, modelPosition.y, modelPosition.z);
-        ImGui::Text("Rotation X: %04f Y: %04f Z: %04f", modelRotation.x, modelRotation.y, modelRotation.z);
+        ImGui::InputFloat3("Model Position", &m_Model->Transform().Position()[0]);
+        ImGui::InputFloat3("Model Rotation", &m_Model->Transform().Rotation()[0]);
 
         ImGui::SeparatorText("Render");
         ImGui::Checkbox("Wireframe Render?", &m_Wireframe);

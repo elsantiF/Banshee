@@ -22,21 +22,21 @@ export namespace Banshee {
         Transform &SetRotation(const glm::vec3 &rotation);
         Transform &SetScale(const glm::vec3 &scale);
 
-        [[nodiscard]] glm::vec3 GetPosition() const;
-        [[nodiscard]] glm::vec3 GetRotation() const;
-        [[nodiscard]] glm::vec3 GetScale() const;
+        [[nodiscard]] glm::vec3 &Position() { return m_Position; }
+        [[nodiscard]] glm::vec3 &Rotation() { return m_Rotation; }
+        [[nodiscard]] glm::vec3 &Scale() { return m_Scale; }
 
-        [[nodiscard]] f32 &GetPositionX() { return m_Position.x; }
-        [[nodiscard]] f32 &GetPositionY() { return m_Position.y; }
-        [[nodiscard]] f32 &GetPositionZ() { return m_Position.z; }
+        [[nodiscard]] f32 &PositionX() { return m_Position.x; }
+        [[nodiscard]] f32 &PositionY() { return m_Position.y; }
+        [[nodiscard]] f32 &PositionZ() { return m_Position.z; }
 
-        [[nodiscard]] f32 &GetRotationX() { return m_Rotation.x; }
-        [[nodiscard]] f32 &GetRotationY() { return m_Rotation.y; }
-        [[nodiscard]] f32 &GetRotationZ() { return m_Rotation.z; }
+        [[nodiscard]] f32 &RotationX() { return m_Rotation.x; }
+        [[nodiscard]] f32 &RotationY() { return m_Rotation.y; }
+        [[nodiscard]] f32 &RotationZ() { return m_Rotation.z; }
 
-        [[nodiscard]] f32 &GetScaleX() { return m_Scale.x; }
-        [[nodiscard]] f32 &GetScaleY() { return m_Scale.y; }
-        [[nodiscard]] f32 &GetScaleZ() { return m_Scale.z; }
+        [[nodiscard]] f32 &ScaleX() { return m_Scale.x; }
+        [[nodiscard]] f32 &ScaleY() { return m_Scale.y; }
+        [[nodiscard]] f32 &ScaleZ() { return m_Scale.z; }
 
         Transform &Translate(const glm::vec3 &translation);
         Transform &TranslateX(f32 x);

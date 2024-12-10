@@ -40,12 +40,6 @@ namespace Banshee {
         return *this;
     }
 
-    glm::vec3 Transform::GetPosition() const { return this->m_Position; }
-
-    glm::vec3 Transform::GetRotation() const { return this->m_Rotation; }
-
-    glm::vec3 Transform::GetScale() const { return this->m_Scale; }
-
     Transform &Transform::Translate(const glm::vec3 &translation) {
         ZoneScoped;
         this->m_Position += translation;

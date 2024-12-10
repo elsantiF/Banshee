@@ -10,9 +10,7 @@ module Banshee.Components.Camera;
 import Banshee.Core.InputManager;
 
 namespace Banshee {
-    Camera::Camera(const f32 fov, const f32 aspect, const f32 near, const f32 far)
-        : m_Fov{fov}, m_Aspect{aspect}, m_Near{near}, m_Far{far} {
-
+    Camera::Camera(const f32 fov, const f32 aspect, const f32 near, const f32 far) : m_Fov{fov}, m_Aspect{aspect}, m_Near{near}, m_Far{far} {
         m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
         m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -23,8 +21,8 @@ namespace Banshee {
         ZoneScoped;
         glm::vec3 front;
 
-        const f32 radiansYaw = glm::radians(m_Transform.GetRotation().y);
-        const f32 radiansPitch = glm::radians(m_Transform.GetRotation().x);
+        const f32 radiansYaw = glm::radians(m_Transform.RotationY());
+        const f32 radiansPitch = glm::radians(m_Transform.RotationX());
 
         front.x = cos(radiansYaw) * cos(radiansPitch);
         front.y = sin(radiansPitch);
@@ -75,7 +73,7 @@ namespace Banshee {
             m_Transform.RotateY(rotationSpeed);
         }
 
-        m_Transform.GetRotationX() = glm::fclamp(m_Transform.GetRotationX(), -89.0f, 89.0f);
+        m_Transform.RotationX() = glm::fclamp(m_Transform.RotationX(), -89.0f, 89.0f);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
             m_Fov = m_Fov + 0.1f;

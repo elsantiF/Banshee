@@ -14,7 +14,7 @@ export namespace Banshee {
         Model() = default;
         explicit Model(Vector<StaticMesh> &&meshes);
 
-        Transform &GetTransform();
+        Transform &Transform() { return m_Transform; }
 
         void Draw(const ShaderProgram &shader);
 
