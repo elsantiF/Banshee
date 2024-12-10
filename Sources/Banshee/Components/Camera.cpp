@@ -14,8 +14,6 @@ namespace Banshee {
         : m_Fov{fov}, m_Aspect{aspect}, m_Near{near}, m_Far{far} {
 
         m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
-
-        m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
         m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
         UpdateCameraVectors();
