@@ -33,7 +33,7 @@ class ModelViewer final : public Level {
         m_Model = ModelManager().Load("Models/Backpack/backpack.obj").GetResource();
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
-        m_Camera.Transform().SetPosition(glm::vec3(-10.f, 0.f, 0.f));
+        m_Camera.Transform().SetPosition(glm::vec3(0.f, 0.f, 10.f));
         m_Framebuffer = MakeUnique<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
     }
@@ -41,7 +41,7 @@ class ModelViewer final : public Level {
     void OnUpdate(const f64 delta) override {
         ZoneScoped;
         m_Camera.Update(delta);
-        m_Model->Transform().RotateY(50.0 * delta);
+        m_Model->Transform().Rotate({0.f, 50.f * delta, 0.f});
     }
 
     void OnRender(const f64 delta) override {
@@ -61,7 +61,7 @@ class ModelViewer final : public Level {
         m_ShaderMaterial->Bind();
         m_ShaderMaterial->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
         m_ShaderMaterial->SetMat4("u_MatView", m_Camera.GetViewMatrix());
-        m_ShaderMaterial->SetVec3("u_LightPosition", glm::vec3(1.2f, 1.f, 2.f));
+        m_ShaderMaterial->SetVec3("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
 
         m_Model->Draw(*m_ShaderMaterial);
         // End of level rendering
@@ -85,13 +85,13 @@ class ModelViewer final : public Level {
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
         ImGui::InputFloat3("Position", &m_Camera.Transform().Position()[0]);
-        ImGui::InputFloat3("Rotation", &m_Camera.Transform().Rotation()[0]);
+        ImGui::InputFloat3("Rotation", &m_Camera.Transform().RotationEuler()[0]);
         ImGui::PopID();
 
         ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
         ImGui::InputFloat3("Position", &m_Model->Transform().Position()[0]);
-        ImGui::InputFloat3("Rotation", &m_Model->Transform().Rotation()[0]);
+        ImGui::InputFloat3("Rotation", &m_Model->Transform().RotationEuler()[0]);
         ImGui::PopID();
 
         ImGui::SeparatorText("Render");
