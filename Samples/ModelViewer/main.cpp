@@ -82,13 +82,17 @@ class ModelViewer final : public Level {
 
         ImGui::Text("Delta: %04f ms", delta * 1000);
 
+        ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
-        ImGui::InputFloat3("Camera Position", &m_Camera.Transform().Position()[0]);
-        ImGui::InputFloat3("Camera Rotation", &m_Camera.Transform().Rotation()[0]);
+        ImGui::InputFloat3("Position", &m_Camera.Transform().Position()[0]);
+        ImGui::InputFloat3("Rotation", &m_Camera.Transform().Rotation()[0]);
+        ImGui::PopID();
 
+        ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
-        ImGui::InputFloat3("Model Position", &m_Model->Transform().Position()[0]);
-        ImGui::InputFloat3("Model Rotation", &m_Model->Transform().Rotation()[0]);
+        ImGui::InputFloat3("Position", &m_Model->Transform().Position()[0]);
+        ImGui::InputFloat3("Rotation", &m_Model->Transform().Rotation()[0]);
+        ImGui::PopID();
 
         ImGui::SeparatorText("Render");
         ImGui::Checkbox("Wireframe Render?", &m_Wireframe);
