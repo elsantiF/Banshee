@@ -10,6 +10,11 @@ uniform vec3 u_LightPosition;
 uniform sampler2D texture_diffuse1;
 
 void main() {
+    vec4 textureColor = texture(texture_diffuse1, TexCoords);
+    if (textureColor.a < 0.1) {
+        discard;
+    }
+
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * vec3(1.0);
 
@@ -19,5 +24,5 @@ void main() {
     vec3 diffuse = diff * vec3(1.0);
 
     vec3 result = (ambient + diffuse) * vec3(1.0);
-    FragColor = vec4(result, 1.0) * texture(texture_diffuse1, TexCoords);
+    FragColor = vec4(result, 1.0) * textureColor;
 }

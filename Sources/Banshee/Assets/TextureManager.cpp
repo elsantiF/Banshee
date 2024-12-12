@@ -36,6 +36,7 @@ namespace Banshee {
 
     Resource<Texture> TextureManager::Load(const fs::path &texturePath) {
         ZoneScoped;
+        Logger::INFO("Loading texture: " + texturePath.generic_string());
         int width, height, channels;
         u8 *data = stbi_load(texturePath.generic_string().c_str(), &width, &height, &channels, 0);
         if (!data) {

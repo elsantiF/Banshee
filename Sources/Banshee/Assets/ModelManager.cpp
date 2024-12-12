@@ -53,7 +53,7 @@ namespace Banshee {
         for (u32 i = 0; i < mesh->mNumVertices; i++) {
             aiVector3f position = transform * mesh->mVertices[i];
             aiVector3f normal = transform * ((mesh->mNormals) ? mesh->mNormals[i] : aiVector3f(0.f));
-            aiVector3f texCoords = transform * ((mesh->mTextureCoords[0]) ? mesh->mTextureCoords[0][i] : aiVector3f(0.f));
+            aiVector3f texCoords = ((mesh->mTextureCoords[0]) ? mesh->mTextureCoords[0][i] : aiVector3f(0.f));
             aiVector3f tangent = transform * ((mesh->mTangents) ? mesh->mTangents[i] : aiVector3f(0.f));
             aiVector3f bitangent = transform * ((mesh->mBitangents) ? mesh->mBitangents[i] : aiVector3f(0.f));
 
