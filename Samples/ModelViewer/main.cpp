@@ -1,6 +1,8 @@
+#include <algorithm>
 #include <imgui.h>
 #include <filesystem>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <tracy/Tracy.hpp>
 
@@ -13,6 +15,7 @@ import Banshee.Components.Model;
 import Banshee.Components.Transform;
 import Banshee.Core.Application;
 import Banshee.Core.Level;
+import Banshee.Core.InputManager;
 
 using namespace Banshee;
 using namespace Spectre;
@@ -41,7 +44,56 @@ class ModelViewer final : public Level {
 
     void OnUpdate(const f64 delta) override {
         ZoneScoped;
-        m_Camera.Update(delta);
+        auto &cameraTransform = m_Camera.Transform();
+        const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
+
+        if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
+            cameraTransform.Translate(cameraTransform.Forward() * positionSpeed);
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_S)) {
+            cameraTransform.Translate(-cameraTransform.Forward() * positionSpeed);
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_D)) {
+            cameraTransform.Translate(cameraTransform.Right() * positionSpeed);
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_A)) {
+            cameraTransform.Translate(-cameraTransform.Right() * positionSpeed);
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_Q)) {
+            cameraTransform.Translate(cameraTransform.Up() * positionSpeed);
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_E)) {
+            cameraTransform.Translate(-cameraTransform.Up() * positionSpeed);
+        }
+
+        // Rotation update
+        const f32 rotationSpeed = 35.0f * static_cast<f32>(delta);
+
+        if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
+            cameraTransform.Rotate(glm::vec3(-rotationSpeed, 0.f, 0.f));
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_UP)) {
+            cameraTransform.Rotate(glm::vec3(rotationSpeed, 0.f, 0.f));
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
+            cameraTransform.Rotate(glm::vec3(0.f, rotationSpeed, 0.f));
+        }
+        if (InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
+            cameraTransform.Rotate(glm::vec3(0.f, -rotationSpeed, 0.f));
+        }
+
+        // TODO: Add this again
+        // m_Transform.RotationX() = glm::fclamp(m_Transform.RotationX(), -89.0f, 89.0f);
+
+        if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
+            m_Camera.Fov() -= 10.f * delta;
+        }
+
+        if (InputManager::IsKeyPressed(GLFW_KEY_KP_SUBTRACT)) {
+            m_Camera.Fov() += 10.f * delta;
+        }
+
+        m_Camera.Fov() = std::clamp(m_Camera.Fov(), 1.0f, 120.0f);
     }
 
     void OnRender(const f64 delta) override {

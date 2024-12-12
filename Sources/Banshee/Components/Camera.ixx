@@ -23,9 +23,8 @@ export namespace Banshee {
     public:
         Camera() = default;
         Camera(f32 fov, f32 aspect, f32 near, f32 far);
-        void Update(f64 delta);
 
-        [[nodiscard]] f32 GetFov() const { return m_Fov; }
+        [[nodiscard]] f32 &Fov() { return m_Fov; }
 
         // TODO: Add an m_ViewDirty flag to avoid recalculating the view matrix every frame
         [[nodiscard]] glm::mat4 GetViewMatrix() {
