@@ -69,7 +69,7 @@ namespace Banshee {
                 number = std::to_string(heightNr++);
             }
 
-            shader.SetInt(name + number, i);
+            shader.Set(name + number, i);
             m_Textures[i].GetResource()->Bind();
         }
 

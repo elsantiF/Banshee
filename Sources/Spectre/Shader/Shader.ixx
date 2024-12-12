@@ -8,7 +8,7 @@ export module Spectre.Shader;
 import Poltergeist;
 
 export namespace Spectre {
-    enum ShaderType { VERTEX_SHADER, FRAGMENT_SHADER, GEOMETRY_SHADER, COMPUTE_SHADER };
+    enum class ShaderType { VERTEX_SHADER, FRAGMENT_SHADER, GEOMETRY_SHADER, COMPUTE_SHADER };
 
     class Shader {
         String m_ShaderName;
@@ -16,9 +16,6 @@ export namespace Spectre {
         ShaderType m_ShaderType;
 
         void CheckCompilationError() const;
-        [[nodiscard]] static GLenum ShaderTypeToGLenum(ShaderType shaderType);
-        [[nodiscard]] static String ShaderTypeToString(ShaderType shaderType);
-        [[nodiscard]] static String GetShaderExtension(ShaderType shaderType);
 
     public:
         Shader() = delete;
@@ -26,7 +23,7 @@ export namespace Spectre {
         ~Shader();
 
         void Compile(const String &shaderSource) const;
-        [[nodiscard]] u32 GetShaderID() const;
+        [[nodiscard]] u32 GetShaderID() const { return m_ShaderID; }
     };
 
     class ShaderProgram {
@@ -48,8 +45,8 @@ export namespace Spectre {
         void AttachShader(const Shader &shader) const;
         void Link();
 
-        void SetInt(const String &uniformName, i32 value) const;
-        void SetVec3(const String &uniformName, glm::vec3 vec3) const;
-        void SetMat4(const String &uniformName, glm::mat4 mat4) const;
+        void Set(const String &uniformName, i32 value) const;
+        void Set(const String &uniformName, glm::vec3 vec3) const;
+        void Set(const String &uniformName, glm::mat4 mat4) const;
     };
 }

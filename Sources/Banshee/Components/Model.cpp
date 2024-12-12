@@ -9,7 +9,7 @@ namespace Banshee {
 
     void Model::Draw(const Spectre::ShaderProgram &shader) {
         ZoneScoped;
-        shader.SetMat4("u_MatModel", m_Transform.GetModelMatrix());
+        shader.Set("u_MatModel", m_Transform.GetModelMatrix());
         for (auto &mesh : m_Meshes) {
             mesh.Draw(shader);
         }

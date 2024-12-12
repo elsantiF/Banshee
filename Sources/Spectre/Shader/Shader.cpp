@@ -8,6 +8,38 @@ module;
 module Spectre.Shader;
 
 namespace Spectre {
+#pragma region Utilities
+    GLenum ShaderTypeToGLenum(const ShaderType shaderType) {
+        switch (shaderType) {
+        case ShaderType::VERTEX_SHADER:   return GL_VERTEX_SHADER;
+        case ShaderType::FRAGMENT_SHADER: return GL_FRAGMENT_SHADER;
+        case ShaderType::GEOMETRY_SHADER: return GL_GEOMETRY_SHADER;
+        case ShaderType::COMPUTE_SHADER:  return GL_COMPUTE_SHADER;
+        default:                          static_assert("Invalid shader type"); return 0;
+        }
+    }
+
+    String ShaderTypeToString(const ShaderType shaderType) {
+        switch (shaderType) {
+        case ShaderType::VERTEX_SHADER:   return "Vertex";
+        case ShaderType::FRAGMENT_SHADER: return "Fragment";
+        case ShaderType::GEOMETRY_SHADER: return "Geometry";
+        case ShaderType::COMPUTE_SHADER:  return "Compute";
+        default:                          static_assert("Invalid shader type"); return "";
+        }
+    }
+
+    String GetShaderExtension(const ShaderType shaderType) {
+        switch (shaderType) {
+        case ShaderType::VERTEX_SHADER:   return ".vert";
+        case ShaderType::FRAGMENT_SHADER: return ".frag";
+        case ShaderType::GEOMETRY_SHADER: return ".geom";
+        case ShaderType::COMPUTE_SHADER:  return ".comp";
+        default:                          static_assert("Invalid shader type"); return "";
+        }
+    }
+#pragma endregion
+
 #pragma region Shader class
     Shader::Shader(const String &shaderName, const ShaderType shaderType) : m_ShaderName{shaderName}, m_ShaderType{shaderType} {
         ZoneScoped;
@@ -35,38 +67,6 @@ namespace Spectre {
             char infoLog[1024];
             glGetShaderInfoLog(m_ShaderID, 1024, nullptr, infoLog);
             Logger::CRITICAL("Error compiling shader: " + m_ShaderName + "\nLog: " + String{infoLog});
-        }
-    }
-
-    u32 Shader::GetShaderID() const { return m_ShaderID; }
-
-    GLenum Shader::ShaderTypeToGLenum(const ShaderType shaderType) {
-        switch (shaderType) {
-        case VERTEX_SHADER: return GL_VERTEX_SHADER;
-        case FRAGMENT_SHADER: return GL_FRAGMENT_SHADER;
-        case GEOMETRY_SHADER: return GL_GEOMETRY_SHADER;
-        case COMPUTE_SHADER: return GL_COMPUTE_SHADER;
-        default: static_assert("Invalid shader type"); return 0;
-        }
-    }
-
-    String Shader::ShaderTypeToString(const ShaderType shaderType) {
-        switch (shaderType) {
-        case VERTEX_SHADER: return "Vertex";
-        case FRAGMENT_SHADER: return "Fragment";
-        case GEOMETRY_SHADER: return "Geometry";
-        case COMPUTE_SHADER: return "Compute";
-        default: static_assert("Invalid shader type"); return "";
-        }
-    }
-
-    String Shader::GetShaderExtension(const ShaderType shaderType) {
-        switch (shaderType) {
-        case VERTEX_SHADER: return ".vert";
-        case FRAGMENT_SHADER: return ".frag";
-        case GEOMETRY_SHADER: return ".geom";
-        case COMPUTE_SHADER: return ".comp";
-        default: static_assert("Invalid shader type"); return "";
         }
     }
 #pragma endregion
@@ -131,7 +131,7 @@ namespace Spectre {
         glUseProgram(0);
     }
 
-    void ShaderProgram::SetInt(const String &uniformName, const i32 value) const {
+    void ShaderProgram::Set(const String &uniformName, const i32 value) const {
         ZoneScoped;
         TracyGpuZone("ShaderProgram::SetInt");
         if (m_Uniforms.contains(uniformName)) {
@@ -140,14 +140,14 @@ namespace Spectre {
         }
     }
 
-    void ShaderProgram::SetVec3(const String &uniformName, glm::vec3 vec3) const {
+    void ShaderProgram::Set(const String &uniformName, glm::vec3 vec3) const {
         ZoneScoped;
         TracyGpuZone("ShaderProgram::SetVec3");
         const auto uniformLocation = m_Uniforms.at(uniformName);
         glUniform3fv(uniformLocation, 1, glm::value_ptr(vec3));
     }
 
-    void ShaderProgram::SetMat4(const String &uniformName, glm::mat4 mat4) const {
+    void ShaderProgram::Set(const String &uniformName, glm::mat4 mat4) const {
         ZoneScoped;
         TracyGpuZone("ShaderProgram::SetMat4");
         const auto uniformLocation = m_Uniforms.at(uniformName);

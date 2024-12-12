@@ -59,9 +59,9 @@ class ModelViewer final : public Level {
         }
 
         m_ShaderMaterial->Bind();
-        m_ShaderMaterial->SetMat4("u_MatProjection", m_Camera.GetProjectionMatrix());
-        m_ShaderMaterial->SetMat4("u_MatView", m_Camera.GetViewMatrix());
-        m_ShaderMaterial->SetVec3("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
+        m_ShaderMaterial->Set("u_MatProjection", m_Camera.GetProjectionMatrix());
+        m_ShaderMaterial->Set("u_MatView", m_Camera.GetViewMatrix());
+        m_ShaderMaterial->Set("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
 
         m_Model->Draw(*m_ShaderMaterial);
         // End of level rendering
