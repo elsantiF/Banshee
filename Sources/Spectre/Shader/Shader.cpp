@@ -9,7 +9,7 @@ module Spectre.Shader;
 
 namespace Spectre {
 #pragma region Utilities
-    GLenum ShaderTypeToGLenum(const ShaderType shaderType) {
+    constexpr GLenum ShaderTypeToGLenum(const ShaderType shaderType) {
         switch (shaderType) {
         case ShaderType::VERTEX_SHADER:   return GL_VERTEX_SHADER;
         case ShaderType::FRAGMENT_SHADER: return GL_FRAGMENT_SHADER;
@@ -19,7 +19,7 @@ namespace Spectre {
         }
     }
 
-    String ShaderTypeToString(const ShaderType shaderType) {
+    constexpr String ShaderTypeToString(const ShaderType shaderType) {
         switch (shaderType) {
         case ShaderType::VERTEX_SHADER:   return "Vertex";
         case ShaderType::FRAGMENT_SHADER: return "Fragment";
@@ -29,7 +29,7 @@ namespace Spectre {
         }
     }
 
-    String GetShaderExtension(const ShaderType shaderType) {
+    constexpr String GetShaderExtension(const ShaderType shaderType) {
         switch (shaderType) {
         case ShaderType::VERTEX_SHADER:   return ".vert";
         case ShaderType::FRAGMENT_SHADER: return ".frag";
