@@ -5,10 +5,10 @@ module;
 export module Poltergeist.Memory;
 
 export template <typename T>
-using UniquePtr = std::unique_ptr<T>;
+using Scope = std::unique_ptr<T>;
 
 export template <typename T, typename... Args>
-UniquePtr<T> MakeUnique(Args &&...args) {
+Scope<T> MakeScope(Args &&...args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 

@@ -13,7 +13,7 @@ namespace Banshee {
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
 
-        m_VAO = MakeUnique<VertexArray>();
+        m_VAO = MakeScope<VertexArray>();
 
         const auto m_VBO = MakeRef<VertexBuffer>();
         m_VBO->LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);

@@ -17,7 +17,7 @@ export namespace Banshee {
         u32 m_IndexCount{};
 
         // TODO: Is really needed to have these here? If mesh is only static perhaps it can use only the VAO
-        UniquePtr<VertexArray> m_VAO;
+        Scope<VertexArray> m_VAO;
 
     public:
         StaticMesh() = default;

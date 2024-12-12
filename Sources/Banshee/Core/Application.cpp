@@ -20,11 +20,11 @@ module Banshee.Core.Application;
 import Spectre.Renderer;
 
 namespace Banshee {
-    Application::Application(UniquePtr<Level> level) {
+    Application::Application(Scope<Level> level) {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
-        m_Window = MakeUnique<Window>("GL Renderer", 1280, 720);
+        m_Window = MakeScope<Window>("GL Renderer", 1280, 720);
 
         Spectre::Renderer::Init();
         TracyGpuContext;
@@ -82,7 +82,7 @@ namespace Banshee {
         }
     }
 
-    UniquePtr<Window> &Application::GetWindow() { return m_Window; }
+    Scope<Window> &Application::GetWindow() { return m_Window; }
 
     Application *Application::GetInstance() { return s_Instance; }
 }

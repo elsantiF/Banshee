@@ -15,9 +15,9 @@ export namespace Spectre {
     class Framebuffer {
         u32 m_Framebuffer{};
         Ref<ShaderProgram> m_Shader;
-        UniquePtr<VertexArray> m_VAO;
-        UniquePtr<Texture> m_Texture;
-        UniquePtr<Renderbuffer> m_Renderbuffer;
+        Scope<VertexArray> m_VAO;
+        Scope<Texture> m_Texture;
+        Scope<Renderbuffer> m_Renderbuffer;
 
         u32 m_Width;
         u32 m_Height;

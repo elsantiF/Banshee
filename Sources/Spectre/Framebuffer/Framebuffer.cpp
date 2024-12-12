@@ -23,7 +23,7 @@ namespace Spectre {
     Framebuffer::Framebuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
         ZoneScoped;
         TracyGpuZone("Framebuffer::Framebuffer");
-        m_VAO = MakeUnique<VertexArray>();
+        m_VAO = MakeScope<VertexArray>();
 
         const auto m_VBO = MakeRef<VertexBuffer>();
         m_VBO->LoadData(sizeof(vertices), vertices);
@@ -36,10 +36,10 @@ namespace Spectre {
         glGenFramebuffers(1, &m_Framebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
 
-        m_Texture = MakeUnique<Texture>(TextureSpec{width, height, 3});
+        m_Texture = MakeScope<Texture>(TextureSpec{width, height, 3});
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->GetTextureID(), 0);
 
-        m_Renderbuffer = MakeUnique<Renderbuffer>(m_Width, m_Height);
+        m_Renderbuffer = MakeScope<Renderbuffer>(m_Width, m_Height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_Renderbuffer->GetID());
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
