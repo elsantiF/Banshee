@@ -30,9 +30,10 @@ class ModelViewer final : public Level {
         AssetManager::SetRoot(fs::current_path() / "Resources");
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
-        m_Model = ModelManager().Load("Models/Backpack/backpack.obj").GetResource();
+        m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
         const auto &window = Application::GetInstance()->GetWindow();
         m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
+        m_Model->Transform().Scale(0.05f);
         m_Camera.Transform().SetPosition(glm::vec3(0.f, 0.f, 10.f));
         m_Framebuffer = MakeScope<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
@@ -41,7 +42,6 @@ class ModelViewer final : public Level {
     void OnUpdate(const f64 delta) override {
         ZoneScoped;
         m_Camera.Update(delta);
-        m_Model->Transform().Rotate({0.f, 50.f * delta, 0.f});
     }
 
     void OnRender(const f64 delta) override {
