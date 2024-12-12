@@ -8,41 +8,43 @@ module;
 module Banshee.Components.StaticMesh;
 
 namespace Banshee {
-    StaticMesh::StaticMesh(const Vector<Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Texture>> &textures)
+    StaticMesh::StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Spectre::Texture>> &textures)
         : m_Vertices{vertices}, m_Indices{indices}, m_Textures{textures} {
+        ZoneScoped;
+        TracyGpuZone("StaticMesh::StaticMesh");
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
 
-        m_VAO = MakeScope<VertexArray>();
+        m_VAO = MakeScope<Spectre::VertexArray>();
 
-        const auto m_VBO = MakeRef<VertexBuffer>();
-        m_VBO->LoadData(m_Vertices.size() * sizeof(Vertex), &m_Vertices[0]);
+        const auto m_VBO = MakeRef<Spectre::VertexBuffer>();
+        m_VBO->LoadData(m_Vertices.size() * sizeof(Spectre::Vertex), &m_Vertices[0]);
         m_VAO->SetVertexBuffer(m_VBO);
 
-        const auto m_EBO = MakeRef<ElementBuffer>();
+        const auto m_EBO = MakeRef<Spectre::ElementBuffer>();
         m_EBO->LoadData(m_Indices.size() * sizeof(u32), &m_Indices[0]);
         m_VAO->SetElementBuffer(m_EBO);
 
         m_VAO->Bind();
         // Position Attribute
-        m_VAO->EnableAttribute(0, 3, sizeof(Vertex), nullptr);
+        m_VAO->EnableAttribute(0, 3, sizeof(Spectre::Vertex), nullptr);
 
         // Normal Attribute
-        m_VAO->EnableAttribute(1, 3, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, normal)));
+        m_VAO->EnableAttribute(1, 3, sizeof(Spectre::Vertex), reinterpret_cast<void *>(offsetof(Spectre::Vertex, normal)));
 
         // UVs Attribute
-        m_VAO->EnableAttribute(2, 2, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, texCoords)));
+        m_VAO->EnableAttribute(2, 2, sizeof(Spectre::Vertex), reinterpret_cast<void *>(offsetof(Spectre::Vertex, texCoords)));
 
         // Tangent Attribute
-        m_VAO->EnableAttribute(3, 3, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, tangent)));
+        m_VAO->EnableAttribute(3, 3, sizeof(Spectre::Vertex), reinterpret_cast<void *>(offsetof(Spectre::Vertex, tangent)));
 
         // Bitangent Attribute
-        m_VAO->EnableAttribute(4, 3, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, bitangent)));
+        m_VAO->EnableAttribute(4, 3, sizeof(Spectre::Vertex), reinterpret_cast<void *>(offsetof(Spectre::Vertex, bitangent)));
 
         m_VAO->Unbind();
     }
 
-    void StaticMesh::Draw(const ShaderProgram &shader) const {
+    void StaticMesh::Draw(const Spectre::ShaderProgram &shader) const {
         ZoneScoped;
         TracyGpuZone("StaticMesh::Draw");
         // TODO: Same as above, this will be moved to another place

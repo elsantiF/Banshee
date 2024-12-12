@@ -8,8 +8,6 @@ import Spectre.Shader;
 import Banshee.Assets.Resource;
 
 export namespace Banshee {
-    using namespace Spectre; // TODO: This is temporary
-
     class AssetManager {
         inline static fs::path m_RootPath = fs::current_path();
 
@@ -17,6 +15,6 @@ export namespace Banshee {
         static void SetRoot(const fs::path &path);
         static fs::path GetRoot();
 
-        static Resource<ShaderProgram> LoadShaderProgram(const String &shaderName);
+        static Resource<Spectre::ShaderProgram> LoadShaderProgram(const String &shaderName);
     };
 }

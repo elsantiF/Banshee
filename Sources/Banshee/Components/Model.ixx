@@ -16,7 +16,7 @@ export namespace Banshee {
 
         Transform &Transform() { return m_Transform; }
 
-        void Draw(const ShaderProgram &shader);
+        void Draw(const Spectre::ShaderProgram &shader);
 
         Vector<StaticMesh> &GetMeshes() { return m_Meshes; } // TODO: This is only for debug
     };

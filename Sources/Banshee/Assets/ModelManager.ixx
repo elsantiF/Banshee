@@ -22,11 +22,11 @@ export namespace Banshee {
         fs::path m_Directory;
 
         Vector<StaticMesh> m_Meshes;
-        Vector<Resource<Texture>> m_Textures;
+        Vector<Resource<Spectre::Texture>> m_Textures;
 
         void ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform);
         void ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform);
-        Vector<Resource<Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
+        Vector<Resource<Spectre::Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
     public:
         ModelManager() = default;

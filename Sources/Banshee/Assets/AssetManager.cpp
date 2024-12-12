@@ -10,7 +10,7 @@ namespace Banshee {
 
     fs::path AssetManager::GetRoot() { return m_RootPath; }
 
-    Resource<ShaderProgram> AssetManager::LoadShaderProgram(const String &shaderName) {
+    Resource<Spectre::ShaderProgram> AssetManager::LoadShaderProgram(const String &shaderName) {
         ZoneScoped;
         // TODO: Do better file reading
         std::ifstream vertexFile;
@@ -29,16 +29,16 @@ namespace Banshee {
         fragmentFile.close();
         const String fragmentCode = fragmentStream.str();
 
-        auto vertexShader = Shader{shaderName + ".vert", ShaderType::VERTEX_SHADER};
+        auto vertexShader = Spectre::Shader{shaderName + ".vert", Spectre::ShaderType::VERTEX_SHADER};
         vertexShader.Compile(vertexCode);
-        auto fragmentShader = Shader{shaderName + ".frag", ShaderType::FRAGMENT_SHADER};
+        auto fragmentShader = Spectre::Shader{shaderName + ".frag", Spectre::ShaderType::FRAGMENT_SHADER};
         fragmentShader.Compile(fragmentCode);
 
-        auto shaderProgram = MakeRef<ShaderProgram>(shaderName);
+        auto shaderProgram = MakeRef<Spectre::ShaderProgram>(shaderName);
         shaderProgram->AttachShader(vertexShader);
         shaderProgram->AttachShader(fragmentShader);
         shaderProgram->Link();
 
-        return Resource<ShaderProgram>{shaderProgram, shaderName};
+        return Resource<Spectre::ShaderProgram>{shaderProgram, shaderName};
     }
 }

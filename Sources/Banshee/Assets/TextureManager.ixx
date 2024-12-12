@@ -9,12 +9,10 @@ import Banshee.Assets.AssetManager;
 import Banshee.Assets.Resource;
 
 export namespace Banshee {
-    using namespace Spectre; // TODO: This is temporary
-
-    class TextureManager final : public ResourceManager<Texture> {
+    class TextureManager final : public ResourceManager<Spectre::Texture> {
     public:
         TextureManager();
 
-        Resource<Texture> Load(const fs::path &texturePath) override;
+        Resource<Spectre::Texture> Load(const fs::path &texturePath) override;
     };
 }

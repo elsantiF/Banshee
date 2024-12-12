@@ -46,9 +46,9 @@ namespace Banshee {
     // This is stolen from Overload, pretty code
     void ModelManager::ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform) {
         ZoneScoped;
-        Vector<Vertex> vertices;
+        Vector<Spectre::Vertex> vertices;
         Vector<u32> indices;
-        Vector<Resource<Texture>> texturesResources;
+        Vector<Resource<Spectre::Texture>> texturesResources;
 
         for (u32 i = 0; i < mesh->mNumVertices; i++) {
             aiVector3f position = transform * mesh->mVertices[i];
@@ -57,7 +57,7 @@ namespace Banshee {
             aiVector3f tangent = transform * ((mesh->mTangents) ? mesh->mTangents[i] : aiVector3f(0.f));
             aiVector3f bitangent = transform * ((mesh->mBitangents) ? mesh->mBitangents[i] : aiVector3f(0.f));
 
-            vertices.push_back(Vertex{
+            vertices.push_back({
                 {position.x, position.y, position.z},
                 {normal.x, normal.y, normal.z},
                 {texCoords.x, texCoords.y},
@@ -76,10 +76,10 @@ namespace Banshee {
 
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        Vector<Resource<Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        Vector<Resource<Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        Vector<Resource<Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-        Vector<Resource<Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        Vector<Resource<Spectre::Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        Vector<Resource<Spectre::Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        Vector<Resource<Spectre::Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        Vector<Resource<Spectre::Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 
         texturesResources.insert(texturesResources.end(), diffuseMaps.begin(), diffuseMaps.end());
         texturesResources.insert(texturesResources.end(), specularMaps.begin(), specularMaps.end());
@@ -89,9 +89,9 @@ namespace Banshee {
         m_Meshes.emplace_back(vertices, indices, texturesResources);
     }
 
-    Vector<Resource<Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+    Vector<Resource<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         ZoneScoped;
-        Vector<Resource<Texture>> textures;
+        Vector<Resource<Spectre::Texture>> textures;
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
