@@ -15,7 +15,7 @@ export namespace Banshee {
         glm::vec3 m_Scale = glm::vec3(1.0f);
 
         glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
-        bool m_Dirty = true;
+        bool m_IsDirty = true;
 
     public:
         [[nodiscard]] glm::mat4 GetModelMatrix();

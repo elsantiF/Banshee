@@ -23,7 +23,7 @@ class ModelViewer final : public Level {
     Scope<Framebuffer> m_Framebuffer;
     Ref<Model> m_Model;
     Camera m_Camera;
-    bool m_Wireframe = false;
+    bool m_IsWireframe = false;
 
     void OnCreate() override {
         ZoneScoped;
@@ -52,7 +52,7 @@ class ModelViewer final : public Level {
         Renderer::Clear();
 
         // Level rendering
-        if (m_Wireframe) {
+        if (m_IsWireframe) {
             Renderer::SetPolygonMode(PolygonMode::LINE);
         } else {
             Renderer::SetPolygonMode(PolygonMode::FILL);
@@ -101,7 +101,7 @@ class ModelViewer final : public Level {
         ImGui::PopID();
 
         ImGui::SeparatorText("Render");
-        ImGui::Checkbox("Wireframe Render?", &m_Wireframe);
+        ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
 
         ImGui::SeparatorText("Memory Debug");
         ImGui::Text("m_Model ref count: %d", m_Model.use_count());
