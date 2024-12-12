@@ -85,13 +85,19 @@ class ModelViewer final : public Level {
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
         ImGui::InputFloat3("Position", &m_Camera.Transform().Position()[0]);
-        ImGui::InputFloat3("Rotation", &m_Camera.Transform().RotationEuler()[0]);
+        auto cameraRotation = m_Camera.Transform().RotationEuler();
+        if (ImGui::InputFloat3("Rotation", &cameraRotation[0])) {
+            m_Camera.Transform().SetRotation(cameraRotation);
+        }
         ImGui::PopID();
 
         ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
         ImGui::InputFloat3("Position", &m_Model->Transform().Position()[0]);
-        ImGui::InputFloat3("Rotation", &m_Model->Transform().RotationEuler()[0]);
+        auto modelRotation = m_Model->Transform().RotationEuler();
+        if (ImGui::InputFloat3("Rotation", &modelRotation[0])) {
+            m_Model->Transform().SetRotation(modelRotation);
+        }
         ImGui::PopID();
 
         ImGui::SeparatorText("Render");
