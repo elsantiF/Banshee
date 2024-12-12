@@ -72,7 +72,7 @@ namespace Banshee {
         }
 
         m_VAO->Bind();
-        glDrawArrays(GL_TRIANGLES, 0, m_IndexCount);
+        glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr);
         m_VAO->Unbind();
         glActiveTexture(GL_TEXTURE0);
     }
