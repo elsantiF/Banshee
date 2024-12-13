@@ -48,8 +48,11 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
         # Core
         Core/Application.ixx
         Core/InputManager.ixx
-        Core/Level.ixx
         Core/Window.ixx
+
+        # World
+        World/Level.ixx
+        World/World.ixx
 )
 
 target_sources(Banshee PUBLIC
@@ -68,6 +71,9 @@ target_sources(Banshee PUBLIC
         Core/Application.cpp
         Core/InputManager.cpp
         Core/Window.cpp
+
+        # World
+        World/World.cpp
 )
 
 target_link_libraries(Banshee stb glm::glm assimp::assimp glad glfw imgui Poltergeist Spectre)

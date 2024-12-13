@@ -14,8 +14,8 @@ import Banshee.Components.Camera;
 import Banshee.Components.Model;
 import Banshee.Components.Transform;
 import Banshee.Core.Application;
-import Banshee.Core.Level;
 import Banshee.Core.InputManager;
+import Banshee.World;
 
 using namespace Banshee;
 using namespace Spectre;
@@ -42,7 +42,7 @@ class ModelViewer final : public Level {
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
     }
 
-    void OnUpdate(const f64 delta) override {
+    void OnTick(const f64 delta) override {
         ZoneScoped;
         auto &cameraTransform = m_Camera.Transform();
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
@@ -96,7 +96,7 @@ class ModelViewer final : public Level {
         m_Camera.Fov() = std::clamp(m_Camera.Fov(), 1.0f, 120.0f);
     }
 
-    void OnRender(const f64 delta) override {
+    void OnRender() override {
         ZoneScoped;
         // Framebuffer begin
         m_Framebuffer->Bind();
@@ -128,11 +128,11 @@ class ModelViewer final : public Level {
         m_Framebuffer->Draw();
     }
 
-    void OnImGUI(const f64 delta) override {
+    void OnImGUI() override {
         ZoneScoped;
         ImGui::Begin("Engine");
 
-        ImGui::Text("Delta: %04f ms", delta * 1000);
+        ImGui::Text("Delta: %04f ms", Application::GetInstance()->GetDelta() * 1000);
 
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
@@ -160,11 +160,16 @@ class ModelViewer final : public Level {
 
         ImGui::End();
     }
+
+    void OnDestroy() override {
+        // Do nothing for now
+        return;
+    }
 };
 
 int main() {
-    Scope<Level> mainLevel = MakeScope<ModelViewer>();
-    Application app((std::move(mainLevel)));
+    Application app;
+    app.SetMainLevel(MakeRef<ModelViewer>());
     app.Render();
     return 0;
 }

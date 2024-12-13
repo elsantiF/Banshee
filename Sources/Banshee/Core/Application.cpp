@@ -20,7 +20,7 @@ module Banshee.Core.Application;
 import Spectre.Renderer;
 
 namespace Banshee {
-    Application::Application(Scope<Level> level) {
+    Application::Application() {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
@@ -35,11 +35,10 @@ namespace Banshee {
         ImGui_ImplOpenGL3_Init("#version 330");
         ImGui::StyleColorsDark();
 
-        m_ActualLevel = std::move(level);
-        m_ActualLevel->OnCreate();
-
         m_LastFrame = glfwGetTime();
         Logger::INFO("Engine started");
+
+        m_World = MakeScope<World>();
     }
 
     Application::~Application() {
@@ -51,25 +50,13 @@ namespace Banshee {
         glfwTerminate();
     }
 
+    void Application::SetMainLevel(const Ref<Level> &level) const { m_World->SetLevel(level); }
+
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
             ZoneScoped;
-            // Update scene
-            m_ActualLevel->OnUpdate(m_Delta);
-
-            // Render scene
-            m_ActualLevel->OnRender(m_Delta);
-
-            // Render ImGUI
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-
-            m_ActualLevel->OnImGUI(m_Delta);
-
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+            m_World->Tick(m_Delta);
+            m_World->Render();
             // Swap buffers
             FrameMark;
             m_Window->SwapBuffers();
