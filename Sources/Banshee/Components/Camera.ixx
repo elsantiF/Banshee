@@ -7,10 +7,11 @@ module;
 export module Banshee.Components.Camera;
 
 import Poltergeist;
+import Banshee.Components.Component;
 import Banshee.Components.Transform;
 
 export namespace Banshee {
-    class Camera {
+    class Camera : public Component {
         f32 m_Fov{};
         f32 m_Aspect{};
         f32 m_Near{};

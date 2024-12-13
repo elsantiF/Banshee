@@ -41,6 +41,7 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
 
         # Components
         Components/Camera.ixx
+        Components/Component.ixx
         Components/Model.ixx
         Components/StaticMesh.ixx
         Components/Transform.ixx

@@ -2,11 +2,12 @@ export module Banshee.Components.Model;
 
 import Poltergeist;
 import Spectre.Shader;
-import Banshee.Components.Transform;
+import Banshee.Components.Component;
 import Banshee.Components.StaticMesh;
+import Banshee.Components.Transform;
 
 export namespace Banshee {
-    class Model {
+    class Model : public Component {
         Vector<StaticMesh> m_Meshes;
         Transform m_Transform;
 

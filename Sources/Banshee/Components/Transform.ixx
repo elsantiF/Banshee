@@ -7,9 +7,10 @@ module;
 export module Banshee.Components.Transform;
 
 import Poltergeist;
+import Banshee.Components.Component;
 
 export namespace Banshee {
-    class Transform {
+    class Transform : public Component {
         glm::vec3 m_Position = glm::vec3(0.0f);
         glm::quat m_Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
         glm::vec3 m_Scale = glm::vec3(1.0f);

@@ -6,9 +6,10 @@ export module Banshee.Components.StaticMesh;
 import Poltergeist;
 import Spectre;
 import Banshee.Assets.Resource;
+import Banshee.Components.Component;
 
 export namespace Banshee {
-    class StaticMesh {
+    class StaticMesh : public Component {
         Vector<Spectre::Vertex> m_Vertices;
         Vector<u32> m_Indices;
         Vector<Resource<Spectre::Texture>> m_Textures;
