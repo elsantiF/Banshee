@@ -15,6 +15,7 @@ namespace Banshee {
             m_ActualLevel->OnDestroy();
         }
         m_ActualLevel = level;
+        m_ActualLevel->SetWorld(this);
         m_ActualLevel->OnCreate();
     }
 

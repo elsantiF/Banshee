@@ -15,7 +15,7 @@ namespace Banshee {
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
 
-        m_VAO = MakeScope<Spectre::VertexArray>();
+        m_VAO = MakeRef<Spectre::VertexArray>();
 
         const auto m_VBO = MakeRef<Spectre::VertexBuffer>();
         m_VBO->LoadData(m_Vertices.size() * sizeof(Spectre::Vertex), &m_Vertices[0]);

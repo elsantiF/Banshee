@@ -25,26 +25,31 @@ class ModelViewer final : public Level {
     Ref<ShaderProgram> m_ShaderFramebuffer;
     Ref<Framebuffer> m_Framebuffer;
     Ref<Model> m_Model;
-    Camera m_Camera;
+    Ref<Camera> m_Camera;
     bool m_IsWireframe = false;
 
     void OnCreate() override {
         ZoneScoped;
         AssetManager::SetRoot(fs::current_path() / "Resources");
+
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
-        m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
-        m_Model->Transform().Scale(10.f);
+
         const auto &window = Application::GetInstance()->GetWindow();
-        m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 500.f);
-        m_Camera.Transform().SetPosition(glm::vec3(0.f, 5.f, 0.f));
+
         m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
+
+        m_Camera = GetWorld().AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
+        m_Camera->Transform().SetPosition(glm::vec3(0.f, 5.f, 0.f));
+
+        m_Model = GetWorld().AddComponent<Model>(*ModelManager().Load("Models/Sponza/sponza.glb").GetResource().get());
+        m_Model->Transform().Scale(10.f);
     }
 
     void OnTick(const f64 delta) override {
         ZoneScoped;
-        auto &cameraTransform = m_Camera.Transform();
+        auto &cameraTransform = m_Camera->Transform();
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
@@ -86,14 +91,14 @@ class ModelViewer final : public Level {
         // m_Transform.RotationX() = glm::fclamp(m_Transform.RotationX(), -89.0f, 89.0f);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
-            m_Camera.Fov() -= 10.f * delta;
+            m_Camera->Fov() -= 10.f * delta;
         }
 
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_SUBTRACT)) {
-            m_Camera.Fov() += 10.f * delta;
+            m_Camera->Fov() += 10.f * delta;
         }
 
-        m_Camera.Fov() = std::clamp(m_Camera.Fov(), 1.0f, 120.0f);
+        m_Camera->Fov() = std::clamp(m_Camera->Fov(), 1.0f, 120.0f);
     }
 
     void OnRender() override {
@@ -111,8 +116,8 @@ class ModelViewer final : public Level {
         }
 
         m_ShaderMaterial->Bind();
-        m_ShaderMaterial->Set("u_MatProjection", m_Camera.GetProjectionMatrix());
-        m_ShaderMaterial->Set("u_MatView", m_Camera.GetViewMatrix());
+        m_ShaderMaterial->Set("u_MatProjection", m_Camera->GetProjectionMatrix());
+        m_ShaderMaterial->Set("u_MatView", m_Camera->GetViewMatrix());
         m_ShaderMaterial->Set("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
 
         m_Model->Draw(*m_ShaderMaterial);
@@ -136,10 +141,10 @@ class ModelViewer final : public Level {
 
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
-        ImGui::InputFloat3("Position", &m_Camera.Transform().Position()[0]);
-        auto cameraRotation = m_Camera.Transform().RotationEuler();
+        ImGui::InputFloat3("Position", &m_Camera->Transform().Position()[0]);
+        auto cameraRotation = m_Camera->Transform().RotationEuler();
         if (ImGui::InputFloat3("Rotation", &cameraRotation[0])) {
-            m_Camera.Transform().SetRotation(cameraRotation);
+            m_Camera->Transform().SetRotation(cameraRotation);
         }
         ImGui::PopID();
 
@@ -156,6 +161,7 @@ class ModelViewer final : public Level {
         ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
 
         ImGui::SeparatorText("Memory Debug");
+        ImGui::Text("m_Camera ref count: %d", m_Camera.use_count());
         ImGui::Text("m_Model ref count: %d", m_Model.use_count());
 
         ImGui::End();

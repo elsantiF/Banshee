@@ -15,7 +15,7 @@ export namespace Banshee {
         Vector<Resource<Spectre::Texture>> m_Textures;
         u32 m_IndexCount{};
 
-        Scope<Spectre::VertexArray> m_VAO;
+        Ref<Spectre::VertexArray> m_VAO;
 
     public:
         StaticMesh() = default;
