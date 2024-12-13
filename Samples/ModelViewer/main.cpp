@@ -46,7 +46,7 @@ class ModelViewer final : public Level {
 
         // TODO: Find a better way to do this
         m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
-        appInstance->GetWorld().AddComponent<Model>(*m_Model);
+        m_Model = appInstance->GetWorld().AddComponent<Model>(*m_Model);
         m_Model->Transform().Scale(10.f);
     }
 
