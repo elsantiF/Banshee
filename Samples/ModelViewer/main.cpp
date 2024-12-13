@@ -23,7 +23,7 @@ using namespace Spectre;
 class ModelViewer final : public Level {
     Ref<ShaderProgram> m_ShaderMaterial;
     Ref<ShaderProgram> m_ShaderFramebuffer;
-    Scope<Framebuffer> m_Framebuffer;
+    Ref<Framebuffer> m_Framebuffer;
     Ref<Model> m_Model;
     Camera m_Camera;
     bool m_IsWireframe = false;
@@ -36,9 +36,9 @@ class ModelViewer final : public Level {
         m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
         m_Model->Transform().Scale(10.f);
         const auto &window = Application::GetInstance()->GetWindow();
-        m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 100.f);
+        m_Camera = Camera(45.f, window->GetAspect(), 0.1f, 500.f);
         m_Camera.Transform().SetPosition(glm::vec3(0.f, 5.f, 0.f));
-        m_Framebuffer = MakeScope<Framebuffer>(window->GetSize().first, window->GetSize().second);
+        m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
     }
 
