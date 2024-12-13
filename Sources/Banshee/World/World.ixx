@@ -4,9 +4,7 @@ module;
 export module Banshee.World;
 
 import Poltergeist;
-
 export import Banshee.World.Level;
-
 import Banshee.Components.Component;
 
 export namespace Banshee {

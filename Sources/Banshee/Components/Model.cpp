@@ -1,11 +1,12 @@
 module;
 #include <memory>
 #include <tracy/Tracy.hpp>
+#include <vector>
 
 module Banshee.Components.Model;
 
 namespace Banshee {
-    Model::Model(Vector<StaticMesh> &&meshes) : m_Meshes{std::move(meshes)} {}
+    Model::Model(Vector<StaticMesh> &meshes) : m_Meshes{std::move(meshes)} {}
 
     void Model::Draw(const Spectre::ShaderProgram &shader) {
         ZoneScoped;

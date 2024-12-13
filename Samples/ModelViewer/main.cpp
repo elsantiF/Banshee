@@ -35,15 +35,18 @@ class ModelViewer final : public Level {
         m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
         m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
 
-        const auto &window = Application::GetInstance()->GetWindow();
+        const auto appInstance = Application::GetInstance();
+        const auto &window = appInstance->GetWindow();
 
         m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
 
-        m_Camera = GetWorld().AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
+        m_Camera = appInstance->GetWorld().AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
         m_Camera->Transform().SetPosition(glm::vec3(0.f, 5.f, 0.f));
 
-        m_Model = GetWorld().AddComponent<Model>(*ModelManager().Load("Models/Sponza/sponza.glb").GetResource().get());
+        // TODO: Find a better way to do this
+        m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
+        appInstance->GetWorld().AddComponent<Model>(*m_Model);
         m_Model->Transform().Scale(10.f);
     }
 

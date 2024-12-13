@@ -24,7 +24,7 @@ namespace Banshee {
         m_Directory = realPath.parent_path();
         ProcessNode(m_Scene->mRootNode, m_Scene, identity); // mRootNode can be null, but don't know when
 
-        const auto m_Resource = MakeRef<Model>(Model{std::move(m_Meshes)});
+        const auto m_Resource = MakeRef<Model>(m_Meshes);
 
         return Resource<Model>{m_Resource, realPath};
     }

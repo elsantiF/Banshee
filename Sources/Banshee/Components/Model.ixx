@@ -13,7 +13,7 @@ export namespace Banshee {
 
     public:
         Model() = default;
-        explicit Model(Vector<StaticMesh> &&meshes);
+        explicit Model(Vector<StaticMesh> &meshes);
 
         Transform &Transform() { return m_Transform; }
 
