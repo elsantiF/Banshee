@@ -164,19 +164,19 @@ class ModelViewer final : public Level {
         ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
 
         ImGui::SeparatorText("Memory Debug");
-        ImGui::Text("m_Camera ref count: %d", m_Camera.use_count());
-        ImGui::Text("m_Model ref count: %d", m_Model.use_count());
+        ImGui::Text("m_Camera ref count: %ld", m_Camera.use_count());
+        ImGui::Text("m_Model ref count: %ld", m_Model.use_count());
         ImGui::End();
 
         ImGui::Begin("Loaded Resources");
         ImGui::SeparatorText("Models");
         for (const auto &[path, resource] : AssetManager::GetModelManager().GetAllLoadedResources()) {
-            ImGui::Text("%s: %d", path.filename().string().c_str(), resource.use_count());
+            ImGui::Text("%s: %ld", path.filename().string().c_str(), resource.use_count());
         }
 
         ImGui::SeparatorText("Textures");
         for (const auto &[path, resource] : AssetManager::GetTextureManager().GetAllLoadedResources()) {
-            ImGui::Text("%s: %d", path.filename().string().c_str(), resource.use_count());
+            ImGui::Text("%s: %ld", path.filename().string().c_str(), resource.use_count());
         }
         ImGui::End();
     }
