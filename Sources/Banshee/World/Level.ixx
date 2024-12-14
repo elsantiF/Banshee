@@ -10,7 +10,7 @@ export namespace Banshee {
 
         virtual void OnCreate() = 0;
         virtual void OnTick(f64 delta) = 0;
-        virtual void OnRender() = 0;
+        virtual void OnRender() const = 0;
         virtual void OnImGUI() = 0;
         virtual void OnDestroy() = 0;
 

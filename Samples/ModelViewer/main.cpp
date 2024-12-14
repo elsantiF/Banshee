@@ -21,11 +21,11 @@ using namespace Banshee;
 using namespace Spectre;
 
 class ModelViewer final : public Level {
-    Ref<ShaderProgram> m_ShaderMaterial;
-    Ref<ShaderProgram> m_ShaderFramebuffer;
-    Ref<Framebuffer> m_Framebuffer;
-    Ref<Model> m_Model;
-    Ref<Camera> m_Camera;
+    Ref<ShaderProgram> m_ShaderMaterial{};
+    Ref<ShaderProgram> m_ShaderFramebuffer{};
+    Ref<Framebuffer> m_Framebuffer{};
+    Ref<Model> m_Model{};
+    Ref<Camera> m_Camera{};
     bool m_IsWireframe = false;
 
     void OnCreate() override {
@@ -103,7 +103,7 @@ class ModelViewer final : public Level {
         m_Camera->Fov() = std::clamp(m_Camera->Fov(), 1.0f, 120.0f);
     }
 
-    void OnRender() override {
+    void OnRender() const override {
         ZoneScoped;
         // Framebuffer begin
         m_Framebuffer->Bind();
