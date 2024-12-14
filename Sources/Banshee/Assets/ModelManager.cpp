@@ -7,12 +7,13 @@ module;
 
 module Banshee.Assets.ModelManager;
 
+import Banshee.Assets.AssetManager;
+
 // TODO: This needs a refactor
 namespace Banshee {
-    Resource<Model> ModelManager::Load(const fs::path &modelPath) {
+    Ref<Model> ModelManager::Load(const fs::path &modelPath) {
         ZoneScoped;
-        const fs::path realPath = AssetManager::GetRoot() / modelPath;
-        m_Scene = m_Importer.ReadFile(realPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices |
+        m_Scene = m_Importer.ReadFile(modelPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices |
                                                                      aiProcess_GenNormals | aiProcess_CalcTangentSpace);
         Logger::INFO("Loading model: " + modelPath.generic_string());
 
@@ -21,12 +22,12 @@ namespace Banshee {
         }
 
         const aiMatrix4x4 identity;
-        m_Directory = realPath.parent_path();
+        m_Directory = modelPath.parent_path();
         ProcessNode(m_Scene->mRootNode, m_Scene, identity); // mRootNode can be null, but don't know when
 
         const auto m_Resource = MakeRef<Model>(m_Meshes);
 
-        return Resource<Model>{m_Resource, realPath};
+        return m_Resource;
     }
 
     // Change this, don't use recursion, use something like BFS
@@ -48,7 +49,7 @@ namespace Banshee {
         ZoneScoped;
         Vector<Spectre::Vertex> vertices;
         Vector<u32> indices;
-        Vector<Resource<Spectre::Texture>> texturesResources;
+        Vector<Ref<Spectre::Texture>> texturesResources;
 
         for (u32 i = 0; i < mesh->mNumVertices; i++) {
             aiVector3f position = transform * mesh->mVertices[i];
@@ -76,10 +77,10 @@ namespace Banshee {
 
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        Vector<Resource<Spectre::Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        Vector<Resource<Spectre::Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        Vector<Resource<Spectre::Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-        Vector<Resource<Spectre::Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        Vector<Ref<Spectre::Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        Vector<Ref<Spectre::Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        Vector<Ref<Spectre::Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        Vector<Ref<Spectre::Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 
         texturesResources.insert(texturesResources.end(), diffuseMaps.begin(), diffuseMaps.end());
         texturesResources.insert(texturesResources.end(), specularMaps.begin(), specularMaps.end());
@@ -89,30 +90,20 @@ namespace Banshee {
         m_Meshes.emplace_back(vertices, indices, texturesResources);
     }
 
-    Vector<Resource<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+    Vector<Ref<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         ZoneScoped;
-        Vector<Resource<Spectre::Texture>> textures;
+        Vector<Ref<Spectre::Texture>> textures;
+
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
 
-            bool foundTexture = false;
             fs::path filePath = m_Directory / str.C_Str();
 
-            for (const auto &texture : m_Textures) {
-                if (texture.GetFilePath() == filePath) {
-                    textures.push_back(texture);
-                    foundTexture = true;
-                    break;
-                }
-            }
+            auto texture = AssetManager::GetTextureManager().Get(filePath);
 
-            if (!foundTexture) {
-                auto texture = TextureManager().Load(filePath);
-
-                textures.push_back(texture);
-                m_Textures.push_back(texture);
-            }
+            textures.push_back(texture);
+            m_Textures.push_back(texture);
         }
 
         return textures;

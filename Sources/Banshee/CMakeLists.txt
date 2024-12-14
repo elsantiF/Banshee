@@ -36,7 +36,7 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
         # Assets
         Assets/AssetManager.ixx
         Assets/ModelManager.ixx
-        Assets/Resource.ixx
+        Assets/ResourceManager.ixx
         Assets/TextureManager.ixx
 
         # Components

@@ -6,39 +6,35 @@ module;
 module Banshee.Assets.AssetManager;
 
 namespace Banshee {
-    void AssetManager::SetRoot(const fs::path &path) { m_RootPath = fs::path(path); }
-
-    fs::path AssetManager::GetRoot() { return m_RootPath; }
-
-    Resource<Spectre::ShaderProgram> AssetManager::LoadShaderProgram(const String &shaderName) {
+    Ref<Spectre::ShaderProgram> AssetManager::LoadShaderProgram(const fs::path &shaderName) {
         ZoneScoped;
         // TODO: Do better file reading
         std::ifstream vertexFile;
-        vertexFile.open(GetRoot().generic_string() + "/" + shaderName + ".vert");
-        Logger::PANIC(!vertexFile.is_open(), "Can't open Vertex Shader: " + shaderName);
+        vertexFile.open(shaderName.generic_string() + ".vert");
+        Logger::PANIC(!vertexFile.is_open(), "Can't open Vertex Shader: " + shaderName.generic_string());
         std::stringstream vertexSteam;
         vertexSteam << vertexFile.rdbuf();
         vertexFile.close();
         const String vertexCode = vertexSteam.str();
 
         std::ifstream fragmentFile;
-        fragmentFile.open(GetRoot().generic_string() + "/" + shaderName + ".frag");
-        Logger::PANIC(!fragmentFile.is_open(), "Can't open Fragment Shader: " + shaderName);
+        fragmentFile.open(shaderName.generic_string() + ".frag");
+        Logger::PANIC(!fragmentFile.is_open(), "Can't open Fragment Shader: " + shaderName.generic_string());
         std::stringstream fragmentStream;
         fragmentStream << fragmentFile.rdbuf();
         fragmentFile.close();
         const String fragmentCode = fragmentStream.str();
 
-        auto vertexShader = Spectre::Shader{shaderName + ".vert", Spectre::ShaderType::VERTEX_SHADER};
+        auto vertexShader = Spectre::Shader{shaderName.generic_string(), Spectre::ShaderType::VERTEX_SHADER};
         vertexShader.Compile(vertexCode);
-        auto fragmentShader = Spectre::Shader{shaderName + ".frag", Spectre::ShaderType::FRAGMENT_SHADER};
+        auto fragmentShader = Spectre::Shader{shaderName.generic_string(), Spectre::ShaderType::FRAGMENT_SHADER};
         fragmentShader.Compile(fragmentCode);
 
-        auto shaderProgram = MakeRef<Spectre::ShaderProgram>(shaderName);
+        auto shaderProgram = MakeRef<Spectre::ShaderProgram>(shaderName.generic_string());
         shaderProgram->AttachShader(vertexShader);
         shaderProgram->AttachShader(fragmentShader);
         shaderProgram->Link();
 
-        return Resource<Spectre::ShaderProgram>{shaderProgram, shaderName};
+        return shaderProgram;
     }
 }

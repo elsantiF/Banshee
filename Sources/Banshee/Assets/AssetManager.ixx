@@ -5,16 +5,20 @@ export module Banshee.Assets.AssetManager;
 
 import Poltergeist;
 import Spectre.Shader;
-import Banshee.Assets.Resource;
+import Banshee.Assets.ResourceManager;
+import Banshee.Assets.ModelManager;
+import Banshee.Assets.TextureManager;
 
 export namespace Banshee {
     class AssetManager {
-        inline static fs::path m_RootPath = fs::current_path();
+        inline static auto m_ModelManager = ModelManager();
+        inline static auto m_TextureManager = TextureManager();
 
     public:
-        static void SetRoot(const fs::path &path);
-        static fs::path GetRoot();
+        // TODO: This is temporary, it will be moved to another place
+        static Ref<Spectre::ShaderProgram> LoadShaderProgram(const fs::path &shaderName);
 
-        static Resource<Spectre::ShaderProgram> LoadShaderProgram(const String &shaderName);
+        static ModelManager &GetModelManager() { return m_ModelManager; }
+        static TextureManager &GetTextureManager() { return m_TextureManager; }
     };
 }

@@ -9,9 +9,7 @@ import Poltergeist;
 import Spectre;
 import Banshee.Components.StaticMesh;
 import Banshee.Components.Model;
-import Banshee.Assets.AssetManager;
-import Banshee.Assets.Resource;
-import Banshee.Assets.TextureManager;
+import Banshee.Assets.ResourceManager;
 
 export namespace Banshee {
     // TODO: This needs a refactor
@@ -22,15 +20,15 @@ export namespace Banshee {
         fs::path m_Directory;
 
         Vector<StaticMesh> m_Meshes;
-        Vector<Resource<Spectre::Texture>> m_Textures;
+        Vector<Ref<Spectre::Texture>> m_Textures;
 
         void ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform);
         void ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform);
-        Vector<Resource<Spectre::Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
+        Vector<Ref<Spectre::Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
     public:
         ModelManager() = default;
 
-        Resource<Model> Load(const fs::path &modelPath) override;
+        Ref<Model> Load(const fs::path &modelPath) override;
     };
 }

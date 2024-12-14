@@ -34,7 +34,7 @@ module Banshee.Assets.TextureManager;
 namespace Banshee {
     TextureManager::TextureManager() { stbi_set_flip_vertically_on_load(true); }
 
-    Resource<Spectre::Texture> TextureManager::Load(const fs::path &texturePath) {
+    Ref<Spectre::Texture> TextureManager::Load(const fs::path &texturePath) {
         ZoneScoped;
         Logger::INFO("Loading texture: " + texturePath.generic_string());
         int width, height, channels;
@@ -49,6 +49,6 @@ namespace Banshee {
 
         stbi_image_free(data);
 
-        return Resource<Spectre::Texture>{m_Resource, texturePath};
+        return m_Resource;
     }
 }

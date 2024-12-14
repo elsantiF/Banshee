@@ -8,7 +8,7 @@ module;
 module Banshee.Components.StaticMesh;
 
 namespace Banshee {
-    StaticMesh::StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Resource<Spectre::Texture>> &textures)
+    StaticMesh::StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Ref<Spectre::Texture>> &textures)
         : m_Vertices{vertices}, m_Indices{indices}, m_Textures{textures} {
         ZoneScoped;
         TracyGpuZone("StaticMesh::StaticMesh");
@@ -58,7 +58,7 @@ namespace Banshee {
             glActiveTexture(GL_TEXTURE0 + i);
 
             String number;
-            const String name = m_Textures[i].GetResource()->GetType();
+            const String name = m_Textures[i]->GetType();
             if (name == "texture_diffuse") {
                 number = std::to_string(diffuseNr++);
             } else if (name == "texture_specular") {
@@ -70,7 +70,7 @@ namespace Banshee {
             }
 
             shader.Set(name + number, i);
-            m_Textures[i].GetResource()->Bind();
+            m_Textures[i]->Bind();
         }
 
         m_VAO->Bind();

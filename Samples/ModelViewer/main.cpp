@@ -30,10 +30,10 @@ class ModelViewer final : public Level {
 
     void OnCreate() override {
         ZoneScoped;
-        AssetManager::SetRoot(fs::current_path() / "Resources");
+        const auto rootPath = fs::current_path() / "Resources";
 
-        m_ShaderMaterial = AssetManager::LoadShaderProgram("Shaders/basic").GetResource();
-        m_ShaderFramebuffer = AssetManager::LoadShaderProgram("Shaders/framebuffer").GetResource();
+        m_ShaderMaterial = AssetManager::LoadShaderProgram((rootPath / "Shaders/basic").generic_string());
+        m_ShaderFramebuffer = AssetManager::LoadShaderProgram((rootPath / "Shaders/framebuffer").generic_string());
 
         const auto appInstance = Application::GetInstance();
         const auto &window = appInstance->GetWindow();
@@ -42,12 +42,11 @@ class ModelViewer final : public Level {
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
 
         m_Camera = appInstance->GetWorld().AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
-        m_Camera->Transform().SetPosition(glm::vec3(0.f, 5.f, 0.f));
+        m_Camera->Transform().SetPosition(glm::vec3(0.f, 1.f, 0.f));
 
         // TODO: Find a better way to do this
-        m_Model = ModelManager().Load("Models/Sponza/sponza.glb").GetResource();
+        m_Model = AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb");
         m_Model = appInstance->GetWorld().AddComponent<Model>(*m_Model);
-        m_Model->Transform().Scale(10.f);
     }
 
     void OnTick(const f64 delta) override {
