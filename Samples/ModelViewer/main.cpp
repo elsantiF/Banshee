@@ -137,10 +137,7 @@ class ModelViewer final : public Level {
 
     void OnImGUI() override {
         ZoneScoped;
-        ImGui::Begin("Engine");
-
-        ImGui::Text("Delta: %04f ms", Application::GetInstance()->GetDelta() * 1000);
-
+        ImGui::Begin("Level");
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
         ImGui::InputFloat3("Position", &m_Camera->Transform().Position()[0]);
@@ -158,6 +155,10 @@ class ModelViewer final : public Level {
             m_Model->Transform().SetRotation(modelRotation);
         }
         ImGui::PopID();
+        ImGui::End();
+
+        ImGui::Begin("Engine");
+        ImGui::Text("Delta: %04f ms", Application::GetInstance()->GetDelta() * 1000);
 
         ImGui::SeparatorText("Render");
         ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
@@ -165,7 +166,18 @@ class ModelViewer final : public Level {
         ImGui::SeparatorText("Memory Debug");
         ImGui::Text("m_Camera ref count: %d", m_Camera.use_count());
         ImGui::Text("m_Model ref count: %d", m_Model.use_count());
+        ImGui::End();
 
+        ImGui::Begin("Loaded Resources");
+        ImGui::SeparatorText("Models");
+        for (const auto &[path, resource] : AssetManager::GetModelManager().GetAllLoadedResources()) {
+            ImGui::Text("%s: %d", path.filename().string().c_str(), resource.use_count());
+        }
+
+        ImGui::SeparatorText("Textures");
+        for (const auto &[path, resource] : AssetManager::GetTextureManager().GetAllLoadedResources()) {
+            ImGui::Text("%s: %d", path.filename().string().c_str(), resource.use_count());
+        }
         ImGui::End();
     }
 

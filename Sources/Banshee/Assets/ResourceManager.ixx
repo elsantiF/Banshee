@@ -47,5 +47,8 @@ export namespace Banshee {
             ZoneScoped;
             m_Resources.clear();
         }
+
+        // IMPORTANT: This is only intended for debugging purposes
+        UnorderedMap<fs::path, Ref<Resource>> &GetAllLoadedResources() { return m_Resources; }
     };
 }
