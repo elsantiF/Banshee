@@ -2,16 +2,14 @@ module;
 #include <cstddef>
 #include <glad/glad.h>
 #include <string>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Banshee.Components.StaticMesh;
 
 namespace Banshee {
     StaticMesh::StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Ref<Spectre::Texture>> &textures)
         : m_Vertices{vertices}, m_Indices{indices}, m_Textures{textures} {
-        ZoneScoped;
-        TracyGpuZone("StaticMesh::StaticMesh");
+        PROFILE_GPU_ZONE();
         // TODO: All this code is temporary, it will be moved to another place
         m_IndexCount = m_Indices.size();
 
@@ -45,8 +43,7 @@ namespace Banshee {
     }
 
     void StaticMesh::Draw(const Spectre::ShaderProgram &shader) const {
-        ZoneScoped;
-        TracyGpuZone("StaticMesh::Draw");
+        PROFILE_GPU_ZONE();
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
         u32 specularNr = 1;

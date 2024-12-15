@@ -3,13 +3,13 @@ module;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Banshee.Components.Transform;
 
 namespace Banshee {
     glm::mat4 Transform::GetModelMatrix() {
-        ZoneScoped;
+        PROFILE_SCOPE();
         if (!this->m_IsDirty) {
             return this->m_ModelMatrix;
         }
@@ -45,14 +45,14 @@ namespace Banshee {
     }
 
     Transform &Transform::Translate(const glm::vec3 &translation) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         this->m_Position += translation;
         this->m_IsDirty = true;
         return *this;
     }
 
     Transform &Transform::Scale(const glm::vec3 &scale) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         this->m_Scale *= scale;
         this->m_IsDirty = true;
         return *this;
@@ -61,7 +61,7 @@ namespace Banshee {
     Transform &Transform::Scale(const f32 scale) { return this->Scale(glm::vec3(scale)); }
 
     Transform &Transform::Rotate(const glm::vec3 &rotation) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         this->m_Rotation *= glm::quat(glm::radians(rotation));
         this->m_IsDirty = true;
         return *this;

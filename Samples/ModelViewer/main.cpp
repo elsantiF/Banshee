@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 import Poltergeist;
 import Spectre;
@@ -29,7 +29,7 @@ class ModelViewer final : public Level {
     bool m_IsWireframe = false;
 
     void OnCreate() override {
-        ZoneScoped;
+        PROFILE_SCOPE();
         const auto rootPath = fs::current_path() / "Resources";
 
         m_ShaderMaterial = AssetManager::LoadShaderProgram((rootPath / "Shaders/basic").generic_string());
@@ -50,7 +50,7 @@ class ModelViewer final : public Level {
     }
 
     void OnTick(const f64 delta) override {
-        ZoneScoped;
+        PROFILE_SCOPE();
         auto &cameraTransform = m_Camera->Transform();
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 
@@ -104,7 +104,7 @@ class ModelViewer final : public Level {
     }
 
     void OnRender() const override {
-        ZoneScoped;
+        PROFILE_SCOPE();
         // Framebuffer begin
         m_Framebuffer->Bind();
         glEnable(GL_DEPTH_TEST);
@@ -136,7 +136,7 @@ class ModelViewer final : public Level {
     }
 
     void OnImGUI() override {
-        ZoneScoped;
+        PROFILE_SCOPE();
         ImGui::Begin("Level");
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");

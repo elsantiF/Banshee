@@ -1,23 +1,23 @@
 module;
 #include <filesystem>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 #ifdef TRACY_ENABLE
 void *TraceMalloc(size_t size) {
     void *ptr = malloc(size);
-    TracyAllocS(ptr, size, 15);
+    PROFILE_MEM_ALLOC(ptr, size);
     return ptr;
 }
 
 void *TraceRealloc(void *ptr, size_t newSize) {
-    TracyFreeS(ptr, 15);
+    PROFILE_MEM_FREE(ptr);
     ptr = realloc(ptr, newSize);
-    TracyAllocS(ptr, newSize, 15);
+    PROFILE_MEM_ALLOC(ptr, newSize);
     return ptr;
 }
 
 void TraceFree(void *ptr) {
-    TracyFreeS(ptr, 15);
+    PROFILE_MEM_FREE(ptr);
     free(ptr);
 }
 
@@ -35,7 +35,7 @@ namespace Banshee {
     TextureManager::TextureManager() { stbi_set_flip_vertically_on_load(true); }
 
     Ref<Spectre::Texture> TextureManager::Load(const fs::path &texturePath) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         Logger::INFO("Loading texture: " + texturePath.generic_string());
         int width, height, channels;
         u8 *data = stbi_load(texturePath.generic_string().c_str(), &width, &height, &channels, 0);

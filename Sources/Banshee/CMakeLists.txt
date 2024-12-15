@@ -18,20 +18,6 @@ elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
     )
 endif ()
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    if (MSVC)
-        target_compile_options(Banshee PRIVATE /W4 /Wall /Zi /Zf /MDd)
-    else ()
-        target_compile_options(Banshee PRIVATE -Wall -Wextra -pedantic)
-    endif ()
-elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
-    if (MSVC)
-        target_compile_options(Banshee PRIVATE /O2)
-    else ()
-        target_compile_options(Banshee PRIVATE -O2)
-    endif ()
-endif ()
-
 target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
         # Assets
         Assets/AssetManager.ixx

@@ -1,28 +1,24 @@
 module;
 #include <glad/glad.h>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Spectre.VertexArray;
 
 namespace Spectre {
     VertexArray::VertexArray() {
-        ZoneScoped;
-        TracyGpuZone("VertexArray::VertexArray");
+        PROFILE_GPU_ZONE();
         glGenVertexArrays(1, &m_VAO);
     }
 
     VertexArray::~VertexArray() { glDeleteVertexArrays(1, &m_VAO); }
 
     void VertexArray::Bind() const {
-        ZoneScoped;
-        TracyGpuZone("VertexArray::Bind");
+        PROFILE_GPU_ZONE();
         glBindVertexArray(m_VAO);
     }
 
     void VertexArray::Unbind() {
-        ZoneScoped;
-        TracyGpuZone("VertexArray::Unbind");
+        PROFILE_GPU_ZONE();
         glBindVertexArray(0);
     }
 

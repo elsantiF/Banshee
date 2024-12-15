@@ -1,7 +1,6 @@
 module;
 #include <glad/glad.h>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Spectre.Buffer;
 
@@ -15,8 +14,7 @@ namespace Spectre {
     }
 
     BufferBase::BufferBase(const BufferType type) : m_BufferType{type} {
-        ZoneScoped;
-        TracyGpuZone("BufferBase::BufferBase");
+        PROFILE_GPU_ZONE();
         glGenBuffers(1, &m_BufferID);
         Logger::PANIC(m_BufferID == 0, "Can't create buffer");
     }
@@ -34,20 +32,17 @@ namespace Spectre {
     BufferType BufferBase::GetType() const { return m_BufferType; }
 
     void BufferBase::Bind() const {
-        ZoneScoped;
-        TracyGpuZone("BufferBase::Bind");
+        PROFILE_GPU_ZONE();
         glBindBuffer(GetBufferType(m_BufferType), m_BufferID);
     }
 
     void BufferBase::Unbind() const {
-        ZoneScoped;
-        TracyGpuZone("BufferBase::Unbind");
+        PROFILE_GPU_ZONE();
         glBindBuffer(GetBufferType(m_BufferType), 0);
     }
 
     void BufferBase::LoadData(const GLsizeiptr size, const void *data) const {
-        ZoneScoped;
-        TracyGpuZone("BufferBase::LoadData");
+        PROFILE_GPU_ZONE();
         Bind();
         glBufferData(GetBufferType(m_BufferType), size, data, GL_STATIC_DRAW);
     }

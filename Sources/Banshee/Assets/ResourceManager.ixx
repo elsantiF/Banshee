@@ -1,6 +1,6 @@
 module;
 #include <filesystem>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 export module Banshee.Assets.ResourceManager;
 
@@ -19,7 +19,7 @@ export namespace Banshee {
         virtual Ref<Resource> Load(const fs::path &path) = 0;
 
         Ref<Resource> Get(const fs::path &path) {
-            ZoneScoped;
+            PROFILE_SCOPE();
             auto it = m_Resources.find(path);
             if (it != m_Resources.end()) {
                 return it->second;
@@ -36,7 +36,7 @@ export namespace Banshee {
         }
 
         void Unload(const fs::path &path) {
-            ZoneScoped;
+            PROFILE_SCOPE();
             auto it = m_Resources.find(path);
             if (it != m_Resources.end()) {
                 m_Resources.erase(it);
@@ -44,7 +44,7 @@ export namespace Banshee {
         }
 
         void UnloadAll() {
-            ZoneScoped;
+            PROFILE_SCOPE();
             m_Resources.clear();
         }
 

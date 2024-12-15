@@ -1,7 +1,6 @@
 module;
 #include <glad/glad.h>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Spectre.Texture;
 
@@ -9,8 +8,7 @@ namespace Spectre {
     Texture::Texture() { glGenTextures(1, &m_TextureID); }
 
     Texture::Texture(const TextureSpec spec) : m_TextureSpec{spec} {
-        ZoneScoped;
-        TracyGpuZone("Texture::Texture");
+        PROFILE_GPU_ZONE();
         glGenTextures(1, &m_TextureID);
 
         GLenum format;
@@ -34,8 +32,7 @@ namespace Spectre {
     }
 
     Texture::Texture(const TextureSpec spec, const u8 *textureData) : m_TextureSpec{spec} {
-        ZoneScoped;
-        TracyGpuZone("Texture::Texture");
+        PROFILE_GPU_ZONE();
         glGenTextures(1, &m_TextureID);
 
         GLenum format;
@@ -58,14 +55,12 @@ namespace Spectre {
     Texture::~Texture() { glDeleteTextures(1, &m_TextureID); }
 
     void Texture::Bind() const {
-        ZoneScoped;
-        TracyGpuZone("Texture::Bind");
+        PROFILE_GPU_ZONE();
         glBindTexture(GL_TEXTURE_2D, m_TextureID);
     }
 
     void Texture::Unbind() {
-        ZoneScoped;
-        TracyGpuZone("Texture::Unbind");
+        PROFILE_GPU_ZONE();
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 

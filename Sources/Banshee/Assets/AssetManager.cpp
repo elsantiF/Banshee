@@ -1,13 +1,13 @@
 module;
 #include <fstream>
 #include <sstream>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Banshee.Assets.AssetManager;
 
 namespace Banshee {
     Ref<Spectre::ShaderProgram> AssetManager::LoadShaderProgram(const fs::path &shaderName) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         // TODO: Do better file reading
         std::ifstream vertexFile;
         vertexFile.open(shaderName.generic_string() + ".vert");

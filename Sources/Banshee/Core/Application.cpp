@@ -5,8 +5,7 @@ module;
 #include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
 #include <utility>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 #ifdef BE_OVER_9000
 extern "C" {
@@ -27,7 +26,6 @@ namespace Banshee {
         m_Window = MakeScope<Window>("GL Renderer", 1280, 720);
 
         Spectre::Renderer::Init();
-        TracyGpuContext;
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -54,13 +52,13 @@ namespace Banshee {
 
     void Application::Render() {
         while (!m_Window->ShouldClose()) {
-            ZoneScoped;
+            PROFILE_SCOPE();
             m_World->Tick(m_Delta);
             m_World->Render();
             // Swap buffers
-            FrameMark;
+            PROFILE_FRAME_MARK();
             m_Window->SwapBuffers();
-            TracyGpuCollect;
+            PROFILE_GPU_COLLECT();
             glfwPollEvents();
 
             const f64 currentFrame = glfwGetTime();

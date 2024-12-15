@@ -3,14 +3,13 @@ module;
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <string>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Spectre.Renderer;
 
 namespace Spectre {
     void Renderer::Init() {
-        ZoneScoped;
+        PROFILE_SCOPE();
         Logger::PANIC(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), "Failed to initialize GLAD");
 
         // glViewport(0, 0, 1280, 720);
@@ -33,6 +32,8 @@ namespace Spectre {
             glDebugMessageCallback(DebugCallback, nullptr);
             glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
         }
+
+        PROFILE_GPU_CONTEXT();
     }
 
     // TODO: Do better logging
@@ -95,8 +96,7 @@ namespace Spectre {
 
     void Renderer::SetPolygonMode(const PolygonMode mode) {
         // This method is profiled because I think takes a long time to execute
-        ZoneScoped;
-        TracyGpuZone("Renderer::SetPolygonMode");
+        PROFILE_GPU_ZONE();
         glPolygonMode(GL_FRONT_AND_BACK, mode);
     }
 }

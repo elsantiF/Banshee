@@ -2,7 +2,7 @@ module;
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 export module Banshee.Components.Camera;
 
@@ -29,13 +29,13 @@ export namespace Banshee {
 
         // TODO: Add an m_ViewDirty flag to avoid recalculating the view matrix every frame
         [[nodiscard]] glm::mat4 GetViewMatrix() {
-            ZoneScoped;
+            PROFILE_SCOPE();
             return glm::lookAt(m_Transform.Position(), m_Transform.Position() + m_Transform.Forward(), m_Transform.Up());
         }
 
         // TODO: Add an m_ProjectionDirty flag to avoid recalculating the projection matrix every frame
         [[nodiscard]] glm::mat4 GetProjectionMatrix() const {
-            ZoneScoped;
+            PROFILE_SCOPE();
             return glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
         }
 

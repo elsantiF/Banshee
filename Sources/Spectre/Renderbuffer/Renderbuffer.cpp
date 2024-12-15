@@ -1,14 +1,12 @@
 module;
 #include <glad/glad.h>
-#include <tracy/Tracy.hpp>
-#include <tracy/TracyOpenGL.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Spectre.Renderbuffer;
 
 namespace Spectre {
     Renderbuffer::Renderbuffer(const u32 width, const u32 height) : m_Width{width}, m_Height{height} {
-        ZoneScoped;
-        TracyGpuZone("Renderbuffer::Renderbuffer");
+        PROFILE_GPU_ZONE();
         glGenRenderbuffers(1, &m_Renderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, m_Renderbuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
@@ -17,14 +15,12 @@ namespace Spectre {
     Renderbuffer::~Renderbuffer() { glDeleteRenderbuffers(1, &m_Renderbuffer); }
 
     void Renderbuffer::Bind() const {
-        ZoneScoped;
-        TracyGpuZone("Renderbuffer::Bind");
+        PROFILE_GPU_ZONE();
         glBindRenderbuffer(GL_RENDERBUFFER, m_Renderbuffer);
     }
 
     void Renderbuffer::Unbind() {
-        ZoneScoped;
-        TracyGpuZone("Renderbuffer::Unbind");
+        PROFILE_GPU_ZONE();
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
     }
 

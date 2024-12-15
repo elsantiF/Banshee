@@ -2,7 +2,7 @@ module;
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Banshee.World;
 
@@ -10,7 +10,7 @@ import Poltergeist;
 
 namespace Banshee {
     void World::SetLevel(const Ref<Level> &level) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         if (m_ActualLevel) {
             m_ActualLevel->OnDestroy();
         }
@@ -19,12 +19,12 @@ namespace Banshee {
     }
 
     void World::Tick(const f64 delta) const {
-        ZoneScoped;
+        PROFILE_SCOPE();
         m_ActualLevel->OnTick(delta);
     }
 
     void World::Render() const {
-        ZoneScoped;
+        PROFILE_SCOPE();
         m_ActualLevel->OnRender();
 
         ImGui_ImplOpenGL3_NewFrame();

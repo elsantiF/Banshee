@@ -3,7 +3,7 @@ module;
 #include <assimp/scene.h>
 #include <filesystem>
 #include <glm/glm.hpp>
-#include <tracy/Tracy.hpp>
+#include <Profiler/Profiler.hpp>
 
 module Banshee.Assets.ModelManager;
 
@@ -12,9 +12,9 @@ import Banshee.Assets.AssetManager;
 // TODO: This needs a refactor
 namespace Banshee {
     Ref<Model> ModelManager::Load(const fs::path &modelPath) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         m_Scene = m_Importer.ReadFile(modelPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices |
-                                                                     aiProcess_GenNormals | aiProcess_CalcTangentSpace);
+                                                                      aiProcess_GenNormals | aiProcess_CalcTangentSpace);
         Logger::INFO("Loading model: " + modelPath.generic_string());
 
         if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
@@ -32,7 +32,7 @@ namespace Banshee {
 
     // Change this, don't use recursion, use something like BFS
     void ModelManager::ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         const aiMatrix4x4 transform = parentTransform * node->mTransformation;
         for (u32 i = 0; i < node->mNumMeshes; i++) {
             const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
@@ -46,7 +46,7 @@ namespace Banshee {
 
     // This is stolen from Overload, pretty code
     void ModelManager::ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         Vector<Spectre::Vertex> vertices;
         Vector<u32> indices;
         Vector<Ref<Spectre::Texture>> texturesResources;
@@ -91,7 +91,7 @@ namespace Banshee {
     }
 
     Vector<Ref<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
-        ZoneScoped;
+        PROFILE_SCOPE();
         Vector<Ref<Spectre::Texture>> textures;
 
         for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
