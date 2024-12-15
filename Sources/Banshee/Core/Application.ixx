@@ -23,7 +23,7 @@ export namespace Banshee {
 
         Scope<Window> &GetWindow();
         static Application *GetInstance();
-        f64 GetDelta() const { return m_Delta; }
-        World &GetWorld() const { return *m_World; }
+        [[nodiscard]] f64 GetDelta() const { return m_Delta; }
+        [[nodiscard]] World &GetWorld() const { return *m_World; }
     };
 }

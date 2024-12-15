@@ -1,6 +1,4 @@
 module;
-#include <fmt/core.h>
-#include <fmt/chrono.h>
 #include <fmt/color.h>
 
 export module Poltergeist.Logger;

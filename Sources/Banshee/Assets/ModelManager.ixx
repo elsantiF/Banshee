@@ -15,9 +15,9 @@ export namespace Banshee {
     // TODO: This needs a refactor
     // TODO: I think this is now thread-safe, test it
     class ModelManager final : public ResourceManager<Model> {
-        Assimp::Importer m_Importer;
-        const aiScene *m_Scene;
-        fs::path m_Directory;
+        Assimp::Importer m_Importer{};
+        const aiScene *m_Scene{};
+        fs::path m_Directory{};
 
         Vector<StaticMesh> m_Meshes;
         Vector<Ref<Spectre::Texture>> m_Textures;

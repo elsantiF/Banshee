@@ -1,6 +1,3 @@
-module;
-#include <glad/glad.h>
-
 export module Spectre.Framebuffer;
 
 import Poltergeist;

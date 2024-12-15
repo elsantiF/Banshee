@@ -11,7 +11,7 @@ namespace Spectre {
         PROFILE_GPU_ZONE();
         glGenTextures(1, &m_TextureID);
 
-        GLenum format;
+        GLenum format = GL_RED;
         if (m_TextureSpec.channels == 1) {
             format = GL_RED;
         } else if (m_TextureSpec.channels == 3) {
@@ -35,7 +35,7 @@ namespace Spectre {
         PROFILE_GPU_ZONE();
         glGenTextures(1, &m_TextureID);
 
-        GLenum format;
+        GLenum format = GL_RED;
         if (m_TextureSpec.channels == 1) {
             format = GL_RED;
         } else if (m_TextureSpec.channels == 3) {

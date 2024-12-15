@@ -8,8 +8,8 @@ import Banshee.Components.Transform;
 
 export namespace Banshee {
     class Model : public Component {
-        Vector<StaticMesh> m_Meshes;
-        Transform m_Transform;
+        Vector<StaticMesh> m_Meshes{};
+        Transform m_Transform{};
 
     public:
         Model() = default;
