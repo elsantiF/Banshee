@@ -24,4 +24,18 @@
 
 #define PROFILE_FRAME_MARK() FrameMark
 
+#else
+
+#define PROFILE_DEPTH
+#define PROFILE_SCOPE()
+
+#define PROFILE_MEM_ALLOC(ptr, size)
+#define PROFILE_MEM_FREE(ptr)
+
+#define PROFILE_GPU_CONTEXT()
+#define PROFILE_GPU_COLLECT()
+#define PROFILE_GPU_ZONE()
+
+#define PROFILE_FRAME_MARK()
+
 #endif
