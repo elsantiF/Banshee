@@ -149,7 +149,11 @@ class ModelViewer final : public Level {
 
         ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
-        ImGui::InputFloat3("Position", &m_Model->Transform().Position()[0]);
+        // TODO: Simple model position stopped working, need to investigate
+        auto modelPosition = m_Model->Transform().Position();
+        if (ImGui::InputFloat3("Position", &modelPosition[0])) {
+            m_Model->Transform().SetPosition(modelPosition);
+        }
         auto modelRotation = m_Model->Transform().RotationEuler();
         if (ImGui::InputFloat3("Rotation", &modelRotation[0])) {
             m_Model->Transform().SetRotation(modelRotation);
