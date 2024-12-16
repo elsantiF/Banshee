@@ -14,16 +14,16 @@ List of all tasks that need to be done.
 - [x] Refactor ModelLoader (partially done)
 - [x] Add TextureLoader
 - [x] Add ShaderLoader (it's in AssetManager, but it's done)
-- [ ] Make AssetManager a proper asset manager
-- [ ] Add a base Component class
-- [ ] Refactor Camera
+- [x] Make AssetManager a proper asset manager
+- [x] Add a base Component class
+- [x] Refactor Camera
 - [ ] Add OrthographicCamera and PerspectiveCamera
 - [ ] Refactor Mesh and decide what to do with it
 - [ ] Add Actor class
 - [ ] Make a little refactor to the Application class
 - [ ] Better Scene class
 - [ ] Add a SceneManager
-- [ ] Add a World class
+- [x] Add a World class
 - [ ] Refactor Logger
 - [x] Refactor all Graphics files (partially done)
 - [ ] Change to glm modules
@@ -32,7 +32,7 @@ List of all tasks that need to be done.
 ## Future tasks
 - [ ] PBR materials
 - [ ] Add an editor
-- [ ] Better CMake configuration
+- [x] Better CMake configuration (partially done)
 - [x] Change all to use C++ modules (partially done)
-- [ ] Add serialization / reflection
+- [ ] Add serialization / reflection (probably with an external tool)
 - [ ] Add Vulkan support

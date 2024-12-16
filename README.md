@@ -12,7 +12,7 @@ The name is temporary and will be changed in the future. (perhaps)
 - OpenGL 4.6 compatible GPU
 - Git
 - CMake 3.28 or higher
-- C++23 compiler (GCC 11 or higher, Clang 12 or higher, MSVC 19.29 or higher)
+- C++23 compiler (Clang 18 or higher, MSVC 19.30 or higher)
 
 ### Build steps
 
@@ -21,6 +21,13 @@ The name is temporary and will be changed in the future. (perhaps)
 3) Enjoy
 
 Remember to set your working directory to the root of the project when running the executable.
+
+## Important notes
+
+- Banshee is primarily developed on Windows, so it may not work on other platforms. 
+- Also, it is compiled primarily with clang-cl via MSYS2 so MSVC may not work in every commit.
+- The API is extremely unstable and may change at any time, it's better for me to iterate quickly.
+- The modules names can be changed in the future.
 
 ## License
 
