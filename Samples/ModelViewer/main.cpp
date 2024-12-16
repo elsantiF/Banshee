@@ -140,8 +140,11 @@ class ModelViewer final : public Level {
         ImGui::Begin("Level");
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
-        ImGui::InputFloat3("Position", &m_Camera->Transform().Position()[0]);
-        auto cameraRotation = m_Camera->Transform().RotationEuler();
+        auto cameraPosition = m_Camera->Transform().GetPosition();
+        if (ImGui::InputFloat3("Position", &cameraPosition[0])) {
+            m_Camera->Transform().SetPosition(cameraPosition);
+        }
+        auto cameraRotation = m_Camera->Transform().GetRotationEuler();
         if (ImGui::InputFloat3("Rotation", &cameraRotation[0])) {
             m_Camera->Transform().SetRotation(cameraRotation);
         }
@@ -149,12 +152,11 @@ class ModelViewer final : public Level {
 
         ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
-        // TODO: Simple model position stopped working, need to investigate
-        auto modelPosition = m_Model->Transform().Position();
+        auto modelPosition = m_Model->Transform().GetPosition();
         if (ImGui::InputFloat3("Position", &modelPosition[0])) {
             m_Model->Transform().SetPosition(modelPosition);
         }
-        auto modelRotation = m_Model->Transform().RotationEuler();
+        auto modelRotation = m_Model->Transform().GetRotationEuler();
         if (ImGui::InputFloat3("Rotation", &modelRotation[0])) {
             m_Model->Transform().SetRotation(modelRotation);
         }

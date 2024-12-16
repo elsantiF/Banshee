@@ -30,7 +30,7 @@ export namespace Banshee {
         // TODO: Add an m_ViewDirty flag to avoid recalculating the view matrix every frame
         [[nodiscard]] glm::mat4 GetViewMatrix() {
             PROFILE_SCOPE();
-            return glm::lookAt(m_Transform.Position(), m_Transform.Position() + m_Transform.Forward(), m_Transform.Up());
+            return m_Transform.GetInverseModelMatrix();
         }
 
         // TODO: Add an m_ProjectionDirty flag to avoid recalculating the projection matrix every frame
