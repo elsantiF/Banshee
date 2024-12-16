@@ -7,8 +7,6 @@ module;
 
 module Banshee.Components.Transform;
 
-import Poltergeist.Logger;
-
 namespace Banshee {
     void Transform::UpdateMatrices() {
         if (!m_IsDirty) {
@@ -17,7 +15,6 @@ namespace Banshee {
 
         m_ModelMatrix = glm::translate(glm::mat4(1.0f), m_Position) * glm::toMat4(m_Rotation) * glm::scale(glm::mat4(1.0f), m_Scale);
         m_InverseModelMatrix = glm::inverse(m_ModelMatrix);
-        Logger::INFO(std::to_string(glm::determinant(m_InverseModelMatrix)));
         m_IsDirty = false;
     }
 
