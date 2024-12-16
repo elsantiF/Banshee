@@ -12,11 +12,11 @@ export namespace Banshee {
     protected:
         UnorderedMap<fs::path, Ref<Resource>> m_Resources;
 
+        virtual Ref<Resource> Load(const fs::path &path) = 0;
+
     public:
         ResourceManager() = default;
         virtual ~ResourceManager() = default;
-
-        virtual Ref<Resource> Load(const fs::path &path) = 0;
 
         Ref<Resource> Get(const fs::path &path) {
             PROFILE_SCOPE();

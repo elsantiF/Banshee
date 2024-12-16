@@ -23,6 +23,7 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
         Assets/AssetManager.ixx
         Assets/ModelManager.ixx
         Assets/ResourceManager.ixx
+        Assets/ShaderManager.ixx
         Assets/TextureManager.ixx
 
         # Components
@@ -44,8 +45,8 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
 
 target_sources(Banshee PUBLIC
         # Assets
-        Assets/AssetManager.cpp
         Assets/ModelManager.cpp
+        Assets/ShaderManager.cpp
         Assets/TextureManager.cpp
 
         # Components

@@ -26,9 +26,9 @@ export namespace Banshee {
         void ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform);
         Vector<Ref<Spectre::Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
 
+        Ref<Model> Load(const fs::path &modelPath) override;
+
     public:
         ModelManager() = default;
-
-        Ref<Model> Load(const fs::path &modelPath) override;
     };
 }

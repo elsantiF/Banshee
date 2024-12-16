@@ -32,8 +32,8 @@ class ModelViewer final : public Level {
         PROFILE_SCOPE();
         const auto rootPath = fs::current_path() / "Resources";
 
-        m_ShaderMaterial = AssetManager::LoadShaderProgram((rootPath / "Shaders/basic").generic_string());
-        m_ShaderFramebuffer = AssetManager::LoadShaderProgram((rootPath / "Shaders/framebuffer").generic_string());
+        m_ShaderMaterial = AssetManager::GetShaderManager().Get((rootPath / "Shaders/basic").generic_string());
+        m_ShaderFramebuffer = AssetManager::GetShaderManager().Get((rootPath / "Shaders/framebuffer").generic_string());
 
         const auto appInstance = Application::GetInstance();
         const auto &window = appInstance->GetWindow();
@@ -176,6 +176,11 @@ class ModelViewer final : public Level {
 
         ImGui::SeparatorText("Textures");
         for (const auto &[path, resource] : AssetManager::GetTextureManager().GetAllLoadedResources()) {
+            ImGui::Text("%s: %ld", path.filename().string().c_str(), resource.use_count());
+        }
+
+        ImGui::SeparatorText("Shaders");
+        for (const auto &[path, resource] : AssetManager::GetShaderManager().GetAllLoadedResources()) {
             ImGui::Text("%s: %ld", path.filename().string().c_str(), resource.use_count());
         }
         ImGui::End();

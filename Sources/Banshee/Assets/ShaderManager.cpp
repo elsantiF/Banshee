@@ -3,10 +3,12 @@ module;
 #include <sstream>
 #include <Profiler/Profiler.hpp>
 
-module Banshee.Assets.AssetManager;
+module Banshee.Assets.ShaderManager;
+
+import Poltergeist;
 
 namespace Banshee {
-    Ref<Spectre::ShaderProgram> AssetManager::LoadShaderProgram(const fs::path &shaderName) {
+    Ref<Spectre::ShaderProgram> ShaderManager::Load(const fs::path &shaderName) {
         PROFILE_SCOPE();
         // TODO: Do better file reading
         std::ifstream vertexFile;

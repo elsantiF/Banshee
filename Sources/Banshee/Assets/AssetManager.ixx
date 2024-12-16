@@ -8,17 +8,17 @@ import Spectre.Shader;
 import Banshee.Assets.ResourceManager;
 import Banshee.Assets.ModelManager;
 import Banshee.Assets.TextureManager;
+import Banshee.Assets.ShaderManager;
 
 export namespace Banshee {
     class AssetManager {
         inline static auto m_ModelManager = ModelManager();
         inline static auto m_TextureManager = TextureManager();
+        inline static auto m_ShaderManager = ShaderManager();
 
     public:
-        // TODO: This is temporary, it will be moved to another place
-        static Ref<Spectre::ShaderProgram> LoadShaderProgram(const fs::path &shaderName);
-
-        static ModelManager &GetModelManager() { return m_ModelManager; }
-        static TextureManager &GetTextureManager() { return m_TextureManager; }
+        static auto &GetModelManager() { return m_ModelManager; }
+        static auto &GetTextureManager() { return m_TextureManager; }
+        static auto &GetShaderManager() { return m_ShaderManager; }
     };
 }
