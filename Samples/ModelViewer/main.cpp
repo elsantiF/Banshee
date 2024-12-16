@@ -46,7 +46,7 @@ class ModelViewer final : public Level {
 
         // TODO: Find a better way to do this
         m_Model = AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb");
-        m_Model = appInstance->GetWorld().AddComponent<Model>(*m_Model);
+        appInstance->GetWorld().AddComponent<Model>(m_Model);
     }
 
     void OnTick(const f64 delta) override {
