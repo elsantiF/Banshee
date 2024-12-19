@@ -41,12 +41,12 @@ class ModelViewer final : public Level {
         m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
 
-        m_Camera = appInstance->GetWorld().AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
+        m_Camera = AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
         m_Camera->Transform().SetPosition(glm::vec3(0.f, 1.f, 0.f));
 
         // TODO: Find a better way to do this
         m_Model = AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb");
-        appInstance->GetWorld().AddComponent<Model>(m_Model);
+        AddComponent<Model>(m_Model);
     }
 
     void OnTick(const f64 delta) override {

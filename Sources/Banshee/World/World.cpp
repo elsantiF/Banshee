@@ -9,12 +9,13 @@ module Banshee.World;
 import Poltergeist;
 
 namespace Banshee {
-    void World::SetLevel(const Ref<Level> &level) {
+    void World::SetLevel(const Ref<ILevel> &level) {
         PROFILE_SCOPE();
         if (m_ActualLevel) {
             m_ActualLevel->OnDestroy();
         }
         m_ActualLevel = level;
+        m_ActualLevel->SetWorld(this);
         m_ActualLevel->OnCreate();
     }
 

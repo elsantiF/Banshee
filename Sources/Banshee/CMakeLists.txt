@@ -40,6 +40,7 @@ target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
 
         # World
         World/Entity.ixx
+        World/Interfaces.ixx
         World/Level.ixx
         World/World.ixx
 )
