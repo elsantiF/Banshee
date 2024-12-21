@@ -2,7 +2,6 @@
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-#include <filesystem>
 #include <Poltergeist/Poltergeist.hpp>
 #include <Spectre/Spectre.hpp>
 #include "Banshee/Components/StaticMesh.hpp"

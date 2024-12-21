@@ -1,9 +1,4 @@
-#include <algorithm>
 #include <imgui.h>
-#include <filesystem>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 #include <Poltergeist/Poltergeist.hpp>
 #include <Spectre/Spectre.hpp>
 #include <Banshee/Banshee.hpp>

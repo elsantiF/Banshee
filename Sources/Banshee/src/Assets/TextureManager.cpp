@@ -1,4 +1,3 @@
-#include <filesystem>
 #include "Banshee/Assets/TextureManager.hpp"
 
 #ifdef TRACY_ENABLE

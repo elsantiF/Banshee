@@ -1,6 +1,5 @@
 #pragma once
 
-#include <filesystem>
 #include <Poltergeist/Poltergeist.hpp>
 #include <Spectre/Shader/Shader.hpp>
 #include "ResourceManager.hpp"
