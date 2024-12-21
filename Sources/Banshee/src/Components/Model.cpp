@@ -5,7 +5,7 @@ namespace Banshee {
 
     void Model::Draw(const Spectre::ShaderProgram &shader) {
         PROFILE_SCOPE();
-        shader.Set("u_MatModel", m_Transform.GetModelMatrix());
+        shader.Set("u_MatModel", GetOwner()->GetComponent<Transform>()->GetModelMatrix());
         for (auto &mesh : m_Meshes) {
             mesh.Draw(shader);
         }

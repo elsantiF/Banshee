@@ -16,8 +16,6 @@ namespace Banshee {
 
         glm::mat4 m_ProjectionMatrix{};
 
-        Transform m_Transform{};
-
     public:
         Camera() = default;
         Camera(f32 fov, f32 aspect, f32 near, f32 far);
@@ -27,7 +25,7 @@ namespace Banshee {
         // TODO: Add an m_ViewDirty flag to avoid recalculating the view matrix every frame
         [[nodiscard]] glm::mat4 GetViewMatrix() {
             PROFILE_SCOPE();
-            return m_Transform.GetInverseModelMatrix();
+            return GetOwner()->GetComponent<class Transform>()->GetInverseModelMatrix();
         }
 
         // TODO: Add an m_ProjectionDirty flag to avoid recalculating the projection matrix every frame
@@ -35,7 +33,5 @@ namespace Banshee {
             PROFILE_SCOPE();
             return glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
         }
-
-        [[nodiscard]] Transform &Transform() { return m_Transform; }
     };
 }

@@ -15,8 +15,8 @@ class ModelViewer final : public Level {
     Ref<ShaderProgram> m_ShaderMaterial{};
     Ref<ShaderProgram> m_ShaderFramebuffer{};
     Ref<Framebuffer> m_Framebuffer{};
-    Ref<Model> m_Model{};
-    Ref<Camera> m_Camera{};
+    Ref<Entity> m_Model{};
+    Ref<Entity> m_Camera{};
     bool m_IsWireframe = false;
 
     void OnCreate() override {
@@ -32,57 +32,58 @@ class ModelViewer final : public Level {
         m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
         m_Framebuffer->SetShader(m_ShaderFramebuffer);
 
-        m_Camera = AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
-        m_Camera->Transform().SetPosition(glm::vec3(0.f, 1.f, 0.f));
+        m_Camera = CreateEntity();
+        m_Camera->AddComponent<Transform>()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
+        m_Camera->AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
 
-        // TODO: Find a better way to do this
-        m_Model = AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb");
-        AddComponent<Model>(m_Model);
+        m_Model = CreateEntity();
+        m_Model->AddComponent<Transform>();
+        m_Model->AddComponent<Model>(AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb"));
     }
 
     void OnTick(const f64 delta) override {
         PROFILE_SCOPE();
-        auto &cameraTransform = m_Camera->Transform();
+        auto cameraTransform = m_Camera->GetComponent<Transform>();
         const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
-            cameraTransform.Translate(cameraTransform.Forward() * positionSpeed);
+            cameraTransform->Translate(cameraTransform->Forward() * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_S)) {
-            cameraTransform.Translate(-cameraTransform.Forward() * positionSpeed);
+            cameraTransform->Translate(-cameraTransform->Forward() * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_D)) {
-            cameraTransform.Translate(cameraTransform.Right() * positionSpeed);
+            cameraTransform->Translate(cameraTransform->Right() * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_A)) {
-            cameraTransform.Translate(-cameraTransform.Right() * positionSpeed);
+            cameraTransform->Translate(-cameraTransform->Right() * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_Q)) {
-            cameraTransform.Translate(cameraTransform.Up() * positionSpeed);
+            cameraTransform->Translate(cameraTransform->Up() * positionSpeed);
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_E)) {
-            cameraTransform.Translate(-cameraTransform.Up() * positionSpeed);
+            cameraTransform->Translate(-cameraTransform->Up() * positionSpeed);
         }
 
         // Rotation update
         const f32 rotationSpeed = 35.0f * static_cast<f32>(delta);
 
         if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
-            cameraTransform.Rotate(glm::vec3(-rotationSpeed, 0.f, 0.f));
+            cameraTransform->Rotate(glm::vec3(-rotationSpeed, 0.f, 0.f));
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_UP)) {
-            cameraTransform.Rotate(glm::vec3(rotationSpeed, 0.f, 0.f));
+            cameraTransform->Rotate(glm::vec3(rotationSpeed, 0.f, 0.f));
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
-            cameraTransform.Rotate(glm::vec3(0.f, rotationSpeed, 0.f));
+            cameraTransform->Rotate(glm::vec3(0.f, rotationSpeed, 0.f));
         }
         if (InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
-            cameraTransform.Rotate(glm::vec3(0.f, -rotationSpeed, 0.f));
+            cameraTransform->Rotate(glm::vec3(0.f, -rotationSpeed, 0.f));
         }
 
         // TODO: Add this again
         // m_Transform.RotationX() = glm::fclamp(m_Transform.RotationX(), -89.0f, 89.0f);
-
+        /*
         if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
             m_Camera->Fov() -= 10.f * delta;
         }
@@ -92,6 +93,7 @@ class ModelViewer final : public Level {
         }
 
         m_Camera->Fov() = std::clamp(m_Camera->Fov(), 1.0f, 120.0f);
+        */
     }
 
     void OnRender() const override {
@@ -109,11 +111,13 @@ class ModelViewer final : public Level {
         }
 
         m_ShaderMaterial->Bind();
-        m_ShaderMaterial->Set("u_MatProjection", m_Camera->GetProjectionMatrix());
-        m_ShaderMaterial->Set("u_MatView", m_Camera->GetViewMatrix());
+        auto cameraComponent = m_Camera->GetComponent<Camera>();
+        m_ShaderMaterial->Set("u_MatProjection", cameraComponent->GetProjectionMatrix());
+        m_ShaderMaterial->Set("u_MatView", cameraComponent->GetViewMatrix());
         m_ShaderMaterial->Set("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
 
-        m_Model->Draw(*m_ShaderMaterial);
+        auto modelComponent = m_Model->GetComponent<Model>();
+        modelComponent->Draw(*m_ShaderMaterial);
         // End of level rendering
 
         Renderer::SetPolygonMode(PolygonMode::FILL);
@@ -131,25 +135,27 @@ class ModelViewer final : public Level {
         ImGui::Begin("Level");
         ImGui::PushID("Camera");
         ImGui::SeparatorText("Camera");
-        auto cameraPosition = m_Camera->Transform().GetPosition();
+        auto cameraTransform = m_Camera->GetComponent<Transform>();
+        auto cameraPosition = cameraTransform->GetPosition();
         if (ImGui::InputFloat3("Position", &cameraPosition[0])) {
-            m_Camera->Transform().SetPosition(cameraPosition);
+            cameraTransform->SetPosition(cameraPosition);
         }
-        auto cameraRotation = m_Camera->Transform().GetRotationEuler();
+        auto cameraRotation = cameraTransform->GetRotationEuler();
         if (ImGui::InputFloat3("Rotation", &cameraRotation[0])) {
-            m_Camera->Transform().SetRotation(cameraRotation);
+            cameraTransform->SetRotation(cameraRotation);
         }
         ImGui::PopID();
 
         ImGui::PushID("Model");
         ImGui::SeparatorText("Model");
-        auto modelPosition = m_Model->Transform().GetPosition();
+        auto modelTransform = m_Model->GetComponent<Transform>();
+        auto modelPosition = modelTransform->GetPosition();
         if (ImGui::InputFloat3("Position", &modelPosition[0])) {
-            m_Model->Transform().SetPosition(modelPosition);
+            modelTransform->SetPosition(modelPosition);
         }
-        auto modelRotation = m_Model->Transform().GetRotationEuler();
+        auto modelRotation = modelTransform->GetRotationEuler();
         if (ImGui::InputFloat3("Rotation", &modelRotation[0])) {
-            m_Model->Transform().SetRotation(modelRotation);
+            modelTransform->SetRotation(modelRotation);
         }
         ImGui::PopID();
         ImGui::End();
