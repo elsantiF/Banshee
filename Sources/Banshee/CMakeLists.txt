@@ -6,7 +6,7 @@ if (USE_HYBRID_GRAPHICS AND WIN32)
     target_compile_definitions(Banshee PUBLIC
             BE_OVER_9000 # Enables Nvidia Optimus/AMD Hybrid Graphics support
     )
-endif ()
+endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Banshee PRIVATE
@@ -16,54 +16,92 @@ elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(Banshee PRIVATE
             BE_RELEASE
     )
-endif ()
+endif()
 
-target_sources(Banshee PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
+set(BANSHEE_SOURCES
         # Assets
-        Assets/AssetManager.ixx
-        Assets/ModelManager.ixx
-        Assets/ResourceManager.ixx
-        Assets/ShaderManager.ixx
-        Assets/TextureManager.ixx
+        src/Assets/ModelManager.cpp
+        src/Assets/ShaderManager.cpp
+        src/Assets/TextureManager.cpp
 
         # Components
-        Components/Camera.ixx
-        Components/Component.ixx
-        Components/Model.ixx
-        Components/StaticMesh.ixx
-        Components/Transform.ixx
+        src/Components/Camera.cpp
+        src/Components/Model.cpp
+        src/Components/StaticMesh.cpp
+        src/Components/Transform.cpp
 
         # Core
-        Core/Application.ixx
-        Core/InputManager.ixx
-        Core/Window.ixx
+        src/Core/Application.cpp
+        src/Core/InputManager.cpp
+        src/Core/Window.cpp
 
         # World
-        World/Entity.ixx
-        World/Interfaces.ixx
-        World/Level.ixx
-        World/World.ixx
+        src/World/World.cpp
 )
 
-target_sources(Banshee PUBLIC
+set(BANSHEE_HEADERS
         # Assets
-        Assets/ModelManager.cpp
-        Assets/ShaderManager.cpp
-        Assets/TextureManager.cpp
+        include/Banshee/Assets/AssetManager.hpp
+        include/Banshee/Assets/ModelManager.hpp
+        include/Banshee/Assets/ResourceManager.hpp
+        include/Banshee/Assets/ShaderManager.hpp
+        include/Banshee/Assets/TextureManager.hpp
 
         # Components
-        Components/Camera.cpp
-        Components/Model.cpp
-        Components/StaticMesh.cpp
-        Components/Transform.cpp
+        include/Banshee/Components/Camera.hpp
+        include/Banshee/Components/Component.hpp
+        include/Banshee/Components/Model.hpp
+        include/Banshee/Components/StaticMesh.hpp
+        include/Banshee/Components/Transform.hpp
 
         # Core
-        Core/Application.cpp
-        Core/InputManager.cpp
-        Core/Window.cpp
+        include/Banshee/Core/Application.hpp
+        include/Banshee/Core/InputManager.hpp
+        include/Banshee/Core/Window.hpp
 
         # World
-        World/World.cpp
+        include/Banshee/World/Entity.hpp
+        include/Banshee/World/Level.hpp
+        include/Banshee/World/World.hpp
 )
 
-target_link_libraries(Banshee stb glm::glm assimp::assimp glad glfw imgui Poltergeist Spectre)
+target_sources(Banshee
+        PRIVATE
+        ${BANSHEE_SOURCES}
+        PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
+        FILES
+        ${BANSHEE_HEADERS}
+)
+
+target_include_directories(Banshee
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_link_libraries(Banshee
+        PUBLIC
+        stb
+        glm::glm
+        assimp::assimp
+        glad
+        glfw
+        imgui
+        Poltergeist
+        Spectre
+)
+
+install(TARGETS Banshee stb glm assimp zlibstatic glfw imgui
+        EXPORT BansheeTargets
+        FILE_SET HEADERS DESTINATION include/Banshee
+)
+
+install(EXPORT BansheeTargets
+        FILE BansheeConfig.cmake
+        NAMESPACE Banshee::
+        DESTINATION lib/cmake/Banshee
+)

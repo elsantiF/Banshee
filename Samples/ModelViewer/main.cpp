@@ -4,18 +4,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <Profiler/Profiler.hpp>
-
-import Poltergeist;
-import Spectre;
-import Banshee.Assets.AssetManager;
-import Banshee.Assets.ModelManager;
-import Banshee.Components.Camera;
-import Banshee.Components.Model;
-import Banshee.Components.Transform;
-import Banshee.Core.Application;
-import Banshee.Core.InputManager;
-import Banshee.World;
+#include <Poltergeist/Poltergeist.hpp>
+#include <Spectre/Spectre.hpp>
+#include <Banshee/Banshee.hpp>
 
 using namespace Banshee;
 using namespace Spectre;

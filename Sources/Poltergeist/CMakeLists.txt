@@ -2,21 +2,55 @@ project(Poltergeist)
 
 add_library(Poltergeist STATIC)
 
-target_include_directories(Poltergeist PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+set(POLTERGEIST_INCLUDE_FILES
+        include/Poltergeist/Logger/Logger.hpp
+        include/Poltergeist/Memory/Memory.hpp
+        include/Poltergeist/Profiler/Profiler.hpp
+        include/Poltergeist/Container.hpp
+        include/Poltergeist/Filesystem.hpp
+        include/Poltergeist/String.hpp
+        include/Poltergeist/Types.hpp
 
-target_sources(Poltergeist PUBLIC FILE_SET modules TYPE CXX_MODULES FILES
-        Logger/Logger.ixx
-        Memory/Memory.ixx
-        Container.ixx
-        Filesystem.ixx
-        Poltergeist.ixx
-        String.ixx
-        Types.ixx
+        include/Poltergeist/Poltergeist.hpp
 )
 
-target_sources(Poltergeist PUBLIC
-        Logger/Logger.cpp
-        Profiler/Profiler.cpp
+set(POLTERGEIST_SOURCE_FILES
+        src/Logger/Logger.cpp
+        src/Profiler/Profiler.cpp
 )
 
-target_link_libraries(Poltergeist glad fmt::fmt Tracy::TracyClient)
+target_include_directories(Poltergeist
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_sources(Poltergeist
+        PRIVATE
+        ${POLTERGEIST_SOURCE_FILES}
+        PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS include
+        FILES
+        ${POLTERGEIST_INCLUDE_FILES}
+)
+
+target_link_libraries(Poltergeist
+        PUBLIC
+        glad
+        fmt::fmt
+        Tracy::TracyClient
+)
+
+install(TARGETS Poltergeist
+        EXPORT PoltergeistTargets
+        FILE_SET HEADERS
+)
+
+install(EXPORT PoltergeistTargets
+        FILE PoltergeistTargets.cmake
+        NAMESPACE Poltergeist::
+        DESTINATION lib/cmake/Poltergeist
+)

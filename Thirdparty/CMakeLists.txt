@@ -1,11 +1,11 @@
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
-include(stb)
+include(stb.cmake)
+set(GLM_BUILD_INSTALL ON CACHE BOOL "" FORCE)
 add_subdirectory(glm)
-include(glad)
-include(glfw)
-include(imgui)
+include(glad.cmake)
+add_subdirectory(glfw)
+include(imgui.cmake)
 add_subdirectory(fmt)
 add_subdirectory(tracy)
 
