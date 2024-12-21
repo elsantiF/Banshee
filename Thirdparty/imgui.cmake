@@ -5,8 +5,6 @@ add_library(imgui STATIC)
 file(GLOB IMGUI_FILES "imgui/*.cpp")
 file(GLOB IMGUI_HEADERS "imgui/*.h")
 
-find_package(glfw3)
-
 target_sources(imgui
         PRIVATE ${IMGUI_FILES} "imgui/backends/imgui_impl_glfw.cpp" "imgui/backends/imgui_impl_opengl3.cpp"
         PUBLIC FILE_SET HEADERS BASE_DIRS imgui
