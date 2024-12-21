@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include <Poltergeist/Poltergeist.hpp>
+#include <GLFW/glfw3.h>
 #include "InputManager.hpp"
 
 namespace Banshee {

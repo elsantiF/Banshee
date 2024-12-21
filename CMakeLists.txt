@@ -21,7 +21,8 @@ if (ENABLE_PROFILER)
     set(TRACY_ENABLE ON CACHE BOOL "" FORCE)
     set(TRACY_CALLSTACK ON CACHE BOOL "" FORCE)
 else ()
-    set(TRACY_ENABLE OFF CACHE BOOL "" FORCE) # Why this else is needed? I don't know
+    set(TRACY_ENABLE OFF CACHE BOOL "" FORCE)
+    set(TRACY_CALLSTACK OFF CACHE BOOL "" FORCE)
 endif ()
 
 if (NOT MSVC)
