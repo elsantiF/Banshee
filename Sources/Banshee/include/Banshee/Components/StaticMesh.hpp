@@ -2,10 +2,10 @@
 
 #include <Poltergeist/Poltergeist.hpp>
 #include <Spectre/Spectre.hpp>
-#include "Component.hpp"
+#include "ComponentBase.hpp"
 
 namespace Banshee {
-    class StaticMesh : public Component {
+    class StaticMesh {
         Vector<Spectre::Vertex> m_Vertices{};
         Vector<u32> m_Indices{};
         Vector<Ref<Spectre::Texture>> m_Textures{};
@@ -17,8 +17,6 @@ namespace Banshee {
         StaticMesh() = default;
         StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Ref<Spectre::Texture>> &textures);
 
-        void Draw(const Spectre::ShaderProgram &shader) const;
-
-        Vector<Ref<Spectre::Texture>> &GetTextures() { return m_Textures; } // TODO: This is only for debug
+        void Draw(const Ref<Spectre::ShaderProgram> &shader) const;
     };
 }

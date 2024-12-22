@@ -9,7 +9,7 @@
 
 // Components
 #include "Banshee/Components/Camera.hpp"
-#include "Banshee/Components/Component.hpp"
+#include "Banshee/Components/ComponentBase.hpp"
 #include "Banshee/Components/Model.hpp"
 #include "Banshee/Components/StaticMesh.hpp"
 #include "Banshee/Components/Transform.hpp"

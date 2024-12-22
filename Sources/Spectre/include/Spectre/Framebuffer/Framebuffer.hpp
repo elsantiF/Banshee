@@ -28,5 +28,8 @@ namespace Spectre {
         void Bind() const;
         void Unbind();
         void Draw() const;
+
+        u32 GetWidth() const { return m_Width; }
+        u32 GetHeight() const { return m_Height; }
     };
 }

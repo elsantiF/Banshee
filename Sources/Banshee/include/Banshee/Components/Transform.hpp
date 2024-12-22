@@ -4,11 +4,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <imgui.h>
 #include <Poltergeist/Poltergeist.hpp>
-#include "Component.hpp"
+#include "ComponentBase.hpp"
 
 namespace Banshee {
-    class Transform : public Component {
+    class Transform final : public ComponentBase {
         glm::vec3 m_Position = glm::vec3(0.0f);
         glm::quat m_Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
         glm::vec3 m_Scale = glm::vec3(1.0f);
@@ -19,6 +20,18 @@ namespace Banshee {
 
     public:
         void UpdateMatrices();
+
+        [[nodiscard]] String GetName() const override { return "Transform"; }
+        void OnCreate() override {}
+        void OnTick(f64 delta) override {}
+        void OnRender(Camera *camera) const override {}
+        void OnDestroy() override {}
+
+        void OnImGui() override {
+            ImGui::InputFloat3("Position", &m_Position.x);
+            ImGui::InputFloat3("Rotation", &m_Rotation.x);
+            ImGui::InputFloat3("Scale", &m_Scale.x);
+        }
 
         [[nodiscard]] glm::mat4 GetModelMatrix();
         [[nodiscard]] glm::mat4 GetInverseModelMatrix();

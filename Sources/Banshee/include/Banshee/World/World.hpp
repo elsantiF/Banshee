@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Poltergeist/Poltergeist.hpp>
-#include <Banshee/Components/Component.hpp>
+#include <Banshee/Components/ComponentBase.hpp>
 #include "Level.hpp"
 
 namespace Banshee {

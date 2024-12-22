@@ -25,7 +25,6 @@ set(BANSHEE_SOURCES
         src/Assets/TextureManager.cpp
 
         # Components
-        src/Components/Camera.cpp
         src/Components/Model.cpp
         src/Components/StaticMesh.cpp
         src/Components/Transform.cpp
@@ -36,6 +35,7 @@ set(BANSHEE_SOURCES
         src/Core/Window.cpp
 
         # World
+        src/World/Level.cpp
         src/World/World.cpp
 )
 
@@ -49,7 +49,7 @@ set(BANSHEE_HEADERS
 
         # Components
         include/Banshee/Components/Camera.hpp
-        include/Banshee/Components/Component.hpp
+        include/Banshee/Components/ComponentBase.hpp
         include/Banshee/Components/Model.hpp
         include/Banshee/Components/StaticMesh.hpp
         include/Banshee/Components/Transform.hpp

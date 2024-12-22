@@ -36,7 +36,7 @@ namespace Banshee {
         m_VAO->Unbind();
     }
 
-    void StaticMesh::Draw(const Spectre::ShaderProgram &shader) const {
+    void StaticMesh::Draw(const Ref<Spectre::ShaderProgram> &shader) const {
         PROFILE_GPU_ZONE();
         // TODO: Same as above, this will be moved to another place
         u32 diffuseNr = 1;
@@ -60,7 +60,7 @@ namespace Banshee {
                 number = std::to_string(heightNr++);
             }
 
-            shader.Set(name + number, i);
+            shader->Set(name + number, i);
             m_Textures[i]->Bind();
         }
 

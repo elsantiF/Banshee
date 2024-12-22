@@ -2,164 +2,41 @@
 #include <Poltergeist/Poltergeist.hpp>
 #include <Spectre/Spectre.hpp>
 #include <Banshee/Banshee.hpp>
+#include "CameraController.h"
 
 using namespace Banshee;
 using namespace Spectre;
 
 class ModelViewer final : public Level {
     Ref<ShaderProgram> m_ShaderMaterial{};
-    Ref<ShaderProgram> m_ShaderFramebuffer{};
-    Ref<Framebuffer> m_Framebuffer{};
     Ref<Entity> m_Model{};
     Ref<Entity> m_Camera{};
-    bool m_IsWireframe = false;
 
     void OnCreate() override {
         PROFILE_SCOPE();
         const auto rootPath = fs::current_path() / "Resources";
 
         m_ShaderMaterial = AssetManager::GetShaderManager().Get((rootPath / "Shaders/basic").generic_string());
-        m_ShaderFramebuffer = AssetManager::GetShaderManager().Get((rootPath / "Shaders/framebuffer").generic_string());
 
-        const auto appInstance = Application::GetInstance();
-        const auto &window = appInstance->GetWindow();
-
-        m_Framebuffer = MakeRef<Framebuffer>(window->GetSize().first, window->GetSize().second);
-        m_Framebuffer->SetShader(m_ShaderFramebuffer);
-
-        m_Camera = CreateEntity();
+        m_Camera = CreateEntity("Camera");
         m_Camera->AddComponent<Transform>()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
-        m_Camera->AddComponent<Camera>(45.f, window->GetAspect(), 0.1f, 500.f);
+        m_Camera->AddComponent<Camera>(45.f, 0.1f, 500.f);
+        m_Camera->AddComponent<CameraController>();
+        SetMainCamera(m_Camera->GetComponent<Camera>());
 
-        m_Model = CreateEntity();
+        m_Model = CreateEntity("Model");
         m_Model->AddComponent<Transform>();
         m_Model->AddComponent<Model>(AssetManager::GetModelManager().Get(rootPath / "Models/Sponza/sponza.glb"));
+        m_Model->GetComponent<Model>()->SetShader(m_ShaderMaterial);
     }
 
-    void OnTick(const f64 delta) override {
+    void OnImGui() override {
         PROFILE_SCOPE();
-        auto cameraTransform = m_Camera->GetComponent<Transform>();
-        const f32 positionSpeed = 10.0f * static_cast<f32>(delta);
-
-        if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
-            cameraTransform->Translate(cameraTransform->Forward() * positionSpeed);
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_S)) {
-            cameraTransform->Translate(-cameraTransform->Forward() * positionSpeed);
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_D)) {
-            cameraTransform->Translate(cameraTransform->Right() * positionSpeed);
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_A)) {
-            cameraTransform->Translate(-cameraTransform->Right() * positionSpeed);
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_Q)) {
-            cameraTransform->Translate(cameraTransform->Up() * positionSpeed);
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_E)) {
-            cameraTransform->Translate(-cameraTransform->Up() * positionSpeed);
-        }
-
-        // Rotation update
-        const f32 rotationSpeed = 35.0f * static_cast<f32>(delta);
-
-        if (InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
-            cameraTransform->Rotate(glm::vec3(-rotationSpeed, 0.f, 0.f));
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_UP)) {
-            cameraTransform->Rotate(glm::vec3(rotationSpeed, 0.f, 0.f));
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
-            cameraTransform->Rotate(glm::vec3(0.f, rotationSpeed, 0.f));
-        }
-        if (InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
-            cameraTransform->Rotate(glm::vec3(0.f, -rotationSpeed, 0.f));
-        }
-
-        // TODO: Add this again
-        // m_Transform.RotationX() = glm::fclamp(m_Transform.RotationX(), -89.0f, 89.0f);
-        /*
-        if (InputManager::IsKeyPressed(GLFW_KEY_KP_ADD)) {
-            m_Camera->Fov() -= 10.f * delta;
-        }
-
-        if (InputManager::IsKeyPressed(GLFW_KEY_KP_SUBTRACT)) {
-            m_Camera->Fov() += 10.f * delta;
-        }
-
-        m_Camera->Fov() = std::clamp(m_Camera->Fov(), 1.0f, 120.0f);
-        */
-    }
-
-    void OnRender() const override {
-        PROFILE_SCOPE();
-        // Framebuffer begin
-        m_Framebuffer->Bind();
-        glEnable(GL_DEPTH_TEST);
-        Renderer::Clear();
-
-        // Level rendering
-        if (m_IsWireframe) {
-            Renderer::SetPolygonMode(PolygonMode::LINE);
-        } else {
-            Renderer::SetPolygonMode(PolygonMode::FILL);
-        }
-
-        m_ShaderMaterial->Bind();
-        auto cameraComponent = m_Camera->GetComponent<Camera>();
-        m_ShaderMaterial->Set("u_MatProjection", cameraComponent->GetProjectionMatrix());
-        m_ShaderMaterial->Set("u_MatView", cameraComponent->GetViewMatrix());
-        m_ShaderMaterial->Set("u_LightPosition", glm::vec3(0.f, 0.f, 2.f));
-
-        auto modelComponent = m_Model->GetComponent<Model>();
-        modelComponent->Draw(*m_ShaderMaterial);
-        // End of level rendering
-
-        Renderer::SetPolygonMode(PolygonMode::FILL);
-
-        m_Framebuffer->Unbind();
-        glDisable(GL_DEPTH_TEST);
-
-        // Framebuffer display
-        Renderer::Clear();
-        m_Framebuffer->Draw();
-    }
-
-    void OnImGUI() override {
-        PROFILE_SCOPE();
-        ImGui::Begin("Level");
-        ImGui::PushID("Camera");
-        ImGui::SeparatorText("Camera");
-        auto cameraTransform = m_Camera->GetComponent<Transform>();
-        auto cameraPosition = cameraTransform->GetPosition();
-        if (ImGui::InputFloat3("Position", &cameraPosition[0])) {
-            cameraTransform->SetPosition(cameraPosition);
-        }
-        auto cameraRotation = cameraTransform->GetRotationEuler();
-        if (ImGui::InputFloat3("Rotation", &cameraRotation[0])) {
-            cameraTransform->SetRotation(cameraRotation);
-        }
-        ImGui::PopID();
-
-        ImGui::PushID("Model");
-        ImGui::SeparatorText("Model");
-        auto modelTransform = m_Model->GetComponent<Transform>();
-        auto modelPosition = modelTransform->GetPosition();
-        if (ImGui::InputFloat3("Position", &modelPosition[0])) {
-            modelTransform->SetPosition(modelPosition);
-        }
-        auto modelRotation = modelTransform->GetRotationEuler();
-        if (ImGui::InputFloat3("Rotation", &modelRotation[0])) {
-            modelTransform->SetRotation(modelRotation);
-        }
-        ImGui::PopID();
-        ImGui::End();
-
         ImGui::Begin("Engine");
         ImGui::Text("Delta: %04f ms", Application::GetInstance()->GetDelta() * 1000);
 
-        ImGui::SeparatorText("Render");
-        ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
+        //ImGui::SeparatorText("Render");
+        //ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);
 
         ImGui::SeparatorText("Memory Debug");
         ImGui::Text("m_Camera ref count: %ld", m_Camera.use_count());
