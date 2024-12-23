@@ -44,6 +44,9 @@ namespace Banshee {
         Vector<u32> indices;
         Vector<Ref<Spectre::Texture>> texturesResources;
 
+        vertices.reserve(mesh->mNumVertices);
+        indices.reserve(mesh->mNumFaces * 3);
+
         for (u32 i = 0; i < mesh->mNumVertices; i++) {
             aiVector3f position = transform * mesh->mVertices[i];
             aiVector3f normal = transform * (mesh->mNormals ? mesh->mNormals[i] : aiVector3f(0.f));
@@ -63,7 +66,11 @@ namespace Banshee {
         for (u32 faceID = 0; faceID < mesh->mNumFaces; faceID++) {
             const auto &face = mesh->mFaces[faceID];
 
-            for (u32 indexID = 0; indexID < face.mNumIndices; indexID++) {
+            if (face.mNumIndices != 3) {
+                Logger::CRITICAL("Face is not a triangle");
+            }
+
+            for (u32 indexID = 0; indexID < 3; indexID++) {
                 indices.push_back(face.mIndices[indexID]);
             }
         }
@@ -86,8 +93,10 @@ namespace Banshee {
     Vector<Ref<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         PROFILE_SCOPE();
         Vector<Ref<Spectre::Texture>> textures;
+        u32 textureCount = mat->GetTextureCount(type);
+        textures.reserve(textureCount);
 
-        for (u32 i = 0; i < mat->GetTextureCount(type); i++) {
+        for (u32 i = 0; i < textureCount; i++) {
             aiString str;
             mat->GetTexture(type, i, &str);
 
