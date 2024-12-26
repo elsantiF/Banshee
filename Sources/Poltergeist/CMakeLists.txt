@@ -4,6 +4,7 @@ add_library(Poltergeist STATIC)
 
 set(POLTERGEIST_INCLUDE_FILES
         include/Poltergeist/Logger/Logger.hpp
+        include/Poltergeist/Math/Math.hpp
         include/Poltergeist/Memory/Memory.hpp
         include/Poltergeist/Profiler/Profiler.hpp
         include/Poltergeist/Container.hpp
@@ -16,6 +17,7 @@ set(POLTERGEIST_INCLUDE_FILES
 
 set(POLTERGEIST_SOURCE_FILES
         src/Logger/Logger.cpp
+        src/Math/Math.cpp
         src/Profiler/Profiler.cpp
 )
 
@@ -40,11 +42,12 @@ target_sources(Poltergeist
 target_link_libraries(Poltergeist
         PUBLIC
         glad
+        glm::glm
         fmt::fmt
         Tracy::TracyClient
 )
 
-install(TARGETS Poltergeist
+install(TARGETS Poltergeist glm
         EXPORT PoltergeistTargets
         FILE_SET HEADERS
 )

@@ -1,9 +1,5 @@
 #pragma once
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/quaternion.hpp>
 #include <imgui.h>
 #include <Poltergeist/Poltergeist.hpp>
 #include "ComponentBase.hpp"
@@ -29,7 +25,10 @@ namespace Banshee {
 
         void OnImGui() override {
             ImGui::InputFloat3("Position", &m_Position.x);
-            ImGui::InputFloat3("Rotation", &m_Rotation.x);
+            auto rotation = GetRotationEuler();
+            if (ImGui::InputFloat3("Rotation", &rotation.x)) {
+                SetRotation(rotation);
+            }
             ImGui::InputFloat3("Scale", &m_Scale.x);
         }
 
@@ -50,7 +49,37 @@ namespace Banshee {
 
         // Euler angles support
         Transform &SetRotation(const glm::vec3 &rotation);
-        [[nodiscard]] glm::vec3 GetRotationEuler() const { return glm::degrees(glm::eulerAngles(m_Rotation)); }
+
+        [[nodiscard]] glm::vec3 GetRotationEuler() const {
+            // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+            // TODO: There is a little problem when a axis is near abs(pi/2), set one of the other axis to -0.0f
+            //     Don't know if is my problem or glm problem, have to investigate. For now it's not a big deal.
+            glm::vec3 angles{};
+            const double test = m_Rotation.x * m_Rotation.y + m_Rotation.z * m_Rotation.w;
+
+            if (test > 0.499) { // singularity at north pole
+                angles.y = 2 * atan2(m_Rotation.x, m_Rotation.w);
+                angles.x = std::numbers::pi / 2;
+                angles.z = 0;
+                return angles;
+            }
+
+            if (test < -0.499) { // singularity at south pole
+                angles.y = -2 * atan2(m_Rotation.x, m_Rotation.w);
+                angles.x = -std::numbers::pi / 2;
+                angles.z = 0;
+                return angles;
+            }
+
+            const f32 sqx = m_Rotation.x * m_Rotation.x;
+            const f32 sqy = m_Rotation.y * m_Rotation.y;
+            const f32 sqz = m_Rotation.z * m_Rotation.z;
+
+            angles.y = atan2(2 * m_Rotation.y * m_Rotation.w - 2 * m_Rotation.x * m_Rotation.z, 1 - 2 * sqy - 2 * sqz);
+            angles.x = asin(2 * test);
+            angles.z = atan2(2 * m_Rotation.x * m_Rotation.w - 2 * m_Rotation.y * m_Rotation.z, 1 - 2 * sqx - 2 * sqz);
+            return glm::degrees(angles);
+        }
 
         Transform &Translate(const glm::vec3 &translation);
 
