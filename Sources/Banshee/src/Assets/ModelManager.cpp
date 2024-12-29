@@ -1,4 +1,5 @@
 #include <assimp/postprocess.h>
+#include <queue>
 #include "Banshee/Assets/AssetManager.hpp"
 #include "Banshee/Assets/ModelManager.hpp"
 
@@ -22,18 +23,26 @@ namespace Banshee {
 
         return m_Resource;
     }
-
-    // Change this, don't use recursion, use something like BFS
+    
     void ModelManager::ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform) {
         PROFILE_SCOPE();
-        const aiMatrix4x4 transform = parentTransform * node->mTransformation;
-        for (u32 i = 0; i < node->mNumMeshes; i++) {
-            const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            ProcessMesh(mesh, scene, transform);
-        }
+        std::queue<Pair<const aiNode *, aiMatrix4x4>> nodeQueue;
+        nodeQueue.emplace(node, parentTransform);
 
-        for (u32 i = 0; i < node->mNumChildren; i++) {
-            ProcessNode(node->mChildren[i], scene, transform);
+        while (!nodeQueue.empty()) {
+            auto [node, parentTransform] = nodeQueue.front();
+            nodeQueue.pop();
+
+            const aiMatrix4x4 transform = parentTransform * node->mTransformation;
+
+            for (u32 i = 0; i < node->mNumMeshes; i++) {
+                const aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+                ProcessMesh(mesh, scene, transform);
+            }
+
+            for (u32 i = 0; i < node->mNumChildren; i++) {
+                nodeQueue.emplace(node->mChildren[i], transform);
+            }
         }
     }
 
@@ -93,7 +102,7 @@ namespace Banshee {
     Vector<Ref<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
         PROFILE_SCOPE();
         Vector<Ref<Spectre::Texture>> textures;
-        u32 textureCount = mat->GetTextureCount(type);
+        const u32 textureCount = mat->GetTextureCount(type);
         textures.reserve(textureCount);
 
         for (u32 i = 0; i < textureCount; i++) {
