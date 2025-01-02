@@ -21,7 +21,7 @@ namespace Banshee {
 
         void ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform);
         void ProcessMesh(const aiMesh *mesh, const aiScene *scene, const aiMatrix4x4 &transform);
-        Vector<Ref<Spectre::Texture>> LoadMaterialTextures(const aiMaterial *mat, aiTextureType type, const String &typeName);
+        Ref<Spectre::Texture> LoadMaterialTexture(const aiMaterial *mat, aiTextureType type) const;
 
         Ref<Model> Load(const fs::path &modelPath) override;
 

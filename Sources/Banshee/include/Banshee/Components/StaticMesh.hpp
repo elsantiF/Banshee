@@ -8,14 +8,17 @@ namespace Banshee {
     class StaticMesh {
         Vector<Spectre::Vertex> m_Vertices{};
         Vector<u32> m_Indices{};
-        Vector<Ref<Spectre::Texture>> m_Textures{};
+        Ref<Spectre::Texture> m_DiffuseTexture{};
+        Ref<Spectre::Texture> m_NormalTexture{};
+
         u32 m_IndexCount{};
 
         Ref<Spectre::VertexArray> m_VAO{};
 
     public:
         StaticMesh() = default;
-        StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Vector<Ref<Spectre::Texture>> &textures);
+        StaticMesh(const Vector<Spectre::Vertex> &vertices, const Vector<u32> &indices, const Ref<Spectre::Texture> &diffuseTexture,
+                   const Ref<Spectre::Texture> &normalTexture);
 
         void Draw(const Ref<Spectre::ShaderProgram> &shader) const;
     };

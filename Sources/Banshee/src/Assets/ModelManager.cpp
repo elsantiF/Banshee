@@ -8,7 +8,7 @@ namespace Banshee {
     Ref<Model> ModelManager::Load(const fs::path &modelPath) {
         PROFILE_SCOPE();
         m_Scene = m_Importer.ReadFile(modelPath.generic_string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices |
-                                                                      aiProcess_GenNormals | aiProcess_CalcTangentSpace);
+                                                                      aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
         Logger::INFO("Loading model: " + modelPath.generic_string());
 
         if (!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode) {
@@ -23,7 +23,7 @@ namespace Banshee {
 
         return m_Resource;
     }
-    
+
     void ModelManager::ProcessNode(const aiNode *node, const aiScene *scene, const aiMatrix4x4 &parentTransform) {
         PROFILE_SCOPE();
         std::queue<Pair<const aiNode *, aiMatrix4x4>> nodeQueue;
@@ -51,7 +51,6 @@ namespace Banshee {
         PROFILE_SCOPE();
         Vector<Spectre::Vertex> vertices;
         Vector<u32> indices;
-        Vector<Ref<Spectre::Texture>> texturesResources;
 
         vertices.reserve(mesh->mNumVertices);
         indices.reserve(mesh->mNumFaces * 3);
@@ -86,37 +85,22 @@ namespace Banshee {
 
         const aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
-        Vector<Ref<Spectre::Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        Vector<Ref<Spectre::Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        Vector<Ref<Spectre::Texture>> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-        Vector<Ref<Spectre::Texture>> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        auto diffuseTexture = LoadMaterialTexture(material, aiTextureType_DIFFUSE);
+        auto normalTexture = LoadMaterialTexture(material, aiTextureType_NORMALS);
 
-        texturesResources.insert(texturesResources.end(), diffuseMaps.begin(), diffuseMaps.end());
-        texturesResources.insert(texturesResources.end(), specularMaps.begin(), specularMaps.end());
-        texturesResources.insert(texturesResources.end(), normalMaps.begin(), normalMaps.end());
-        texturesResources.insert(texturesResources.end(), heightMaps.begin(), heightMaps.end());
-
-        m_Meshes.emplace_back(vertices, indices, texturesResources);
+        m_Meshes.emplace_back(vertices, indices, diffuseTexture, normalTexture);
     }
 
-    Vector<Ref<Spectre::Texture>> ModelManager::LoadMaterialTextures(const aiMaterial *mat, const aiTextureType type, const String &typeName) {
+    Ref<Spectre::Texture> ModelManager::LoadMaterialTexture(const aiMaterial *mat, const aiTextureType type) const {
         PROFILE_SCOPE();
-        Vector<Ref<Spectre::Texture>> textures;
-        const u32 textureCount = mat->GetTextureCount(type);
-        textures.reserve(textureCount);
+        Ref<Spectre::Texture> texture;
+        aiString str;
 
-        for (u32 i = 0; i < textureCount; i++) {
-            aiString str;
-            mat->GetTexture(type, i, &str);
-
-            fs::path filePath = m_Directory / str.C_Str();
-
-            auto texture = AssetManager::GetTextureManager().Get(filePath);
-
-            textures.push_back(texture);
-            m_Textures.push_back(texture);
+        if (mat->GetTexture(type, 0, &str) == aiReturn_SUCCESS) {
+            const fs::path filePath = m_Directory / str.C_Str();
+            texture = AssetManager::GetTextureManager().Get(filePath);
         }
 
-        return textures;
+        return texture;
     }
 }

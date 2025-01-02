@@ -7,10 +7,11 @@ in vec2 TexCoords;
 
 uniform vec3 u_LightPosition;
 
-uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_diffuse;
+uniform sampler2D texture_normal;
 
 void main() {
-    vec4 textureColor = texture(texture_diffuse1, TexCoords);
+    vec4 textureColor = texture(texture_diffuse, TexCoords);
     if (textureColor.a < 0.1) {
         discard;
     }
