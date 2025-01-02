@@ -9,6 +9,6 @@ namespace Banshee {
         Ref<Spectre::Texture> Load(const fs::path &texturePath) override;
 
     public:
-        TextureManager();
+        TextureManager() = default;
     };
 }

@@ -28,8 +28,6 @@ void TraceFree(void *ptr) {
 #include <stb_image.h>
 
 namespace Banshee {
-    TextureManager::TextureManager() { stbi_set_flip_vertically_on_load(true); }
-
     Ref<Spectre::Texture> TextureManager::Load(const fs::path &texturePath) {
         PROFILE_SCOPE();
         Logger::INFO("Loading texture: " + texturePath.generic_string());
