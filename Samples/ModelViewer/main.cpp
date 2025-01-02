@@ -33,7 +33,8 @@ class ModelViewer final : public Level {
     void OnImGui() override {
         PROFILE_SCOPE();
         ImGui::Begin("Engine");
-        ImGui::Text("Delta: %04f ms", Application::GetInstance()->GetDelta() * 1000);
+        ImGui::Text("Last Delta: %.4f ms", Application::GetInstance()->GetDelta() * 1000);
+        ImGui::Text("Average FPS: %.2f", Application::GetInstance()->GetAvgFPS());
 
         //ImGui::SeparatorText("Render");
         //ImGui::Checkbox("Wireframe Render?", &m_IsWireframe);

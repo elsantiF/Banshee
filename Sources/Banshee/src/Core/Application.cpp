@@ -1,3 +1,4 @@
+#include <numeric>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <Spectre/Renderer/Renderer.hpp>
@@ -43,23 +44,31 @@ namespace Banshee {
     void Application::SetMainLevel(const Ref<Level> &level) const { m_World->SetLevel(level); }
 
     void Application::Render() {
+        m_LastFrame = glfwGetTime();
+
         while (!m_Window->ShouldClose()) {
             PROFILE_SCOPE();
+
+            const f64 currentFrame = glfwGetTime();
+            m_Delta = currentFrame - m_LastFrame;
+            m_LastFrame = currentFrame;
+            m_TimeAccumulator += m_Delta;
+            m_FrameTimes.push_back(1.0 / m_Delta);
+
+            if (m_TimeAccumulator >= 1.0) {
+                m_AvgFPS = std::accumulate(m_FrameTimes.begin(), m_FrameTimes.end(), 0.0) / m_FrameTimes.size();
+                m_FrameTimes.clear();
+                m_TimeAccumulator -= 1.0;
+            }
+
             m_World->Tick(m_Delta);
             m_World->Render();
+
             // Swap buffers
             PROFILE_FRAME_MARK();
             m_Window->SwapBuffers();
             PROFILE_GPU_COLLECT();
             glfwPollEvents();
-
-            const f64 currentFrame = glfwGetTime();
-            m_Delta = currentFrame - m_LastFrame;
-            m_LastFrame = currentFrame;
         }
     }
-
-    Scope<Window> &Application::GetWindow() { return m_Window; }
-
-    Application *Application::GetInstance() { return s_Instance; }
 }
