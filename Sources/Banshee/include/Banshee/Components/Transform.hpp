@@ -24,12 +24,20 @@ namespace Banshee {
         void OnDestroy() override {}
 
         void OnImGui() override {
-            ImGui::InputFloat3("Position", &m_Position.x);
+            auto position = GetPosition();
+            if (ImGui::InputFloat3("Position", &position.x)) {
+                SetPosition(position);
+            }
+
             auto rotation = GetRotationEuler();
             if (ImGui::InputFloat3("Rotation", &rotation.x)) {
                 SetRotation(rotation);
             }
-            ImGui::InputFloat3("Scale", &m_Scale.x);
+
+            auto scale = GetScale();
+            if (ImGui::InputFloat3("Scale", &scale.x)) {
+                SetScale(scale);
+            }
         }
 
         [[nodiscard]] glm::mat4 GetModelMatrix();
