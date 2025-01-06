@@ -11,7 +11,6 @@ namespace Spectre {
 
     class Texture {
         u32 m_TextureID{};
-        String m_TextureType;
         TextureSpec m_TextureSpec;
 
     public:
@@ -22,9 +21,6 @@ namespace Spectre {
 
         void Bind() const;
         void Unbind();
-
-        [[nodiscard]] String GetType() const;
-        void SetType(const String &type);
 
         [[nodiscard]] u32 GetTextureID() const;
     };

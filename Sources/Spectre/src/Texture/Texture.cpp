@@ -19,14 +19,12 @@ namespace Spectre {
         }
 
         glBindTexture(GL_TEXTURE_2D, m_TextureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // TODO: This doesn't make sense
-        m_TextureType = "undefined";
+        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, nullptr);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
 
     Texture::Texture(const TextureSpec spec, const u8 *textureData) : m_TextureSpec{spec} {
@@ -43,11 +41,12 @@ namespace Spectre {
         }
 
         glBindTexture(GL_TEXTURE_2D, m_TextureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, textureData);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureSpec.width, m_TextureSpec.height, 0, format, GL_UNSIGNED_BYTE, textureData);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
 
     Texture::~Texture() { glDeleteTextures(1, &m_TextureID); }
@@ -61,10 +60,6 @@ namespace Spectre {
         PROFILE_GPU_ZONE();
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-
-    String Texture::GetType() const { return m_TextureType; }
-
-    void Texture::SetType(const String &type) { m_TextureType = type; }
 
     u32 Texture::GetTextureID() const { return m_TextureID; }
 }
