@@ -16,7 +16,7 @@ namespace Banshee {
         s_Instance = this;
         Logger::PANIC(!glfwInit(), "Failed to initialize GLFW");
 
-        m_Window = MakeScope<Window>("GL Renderer", 1280, 720);
+        m_Window = MakeScope<Window>("Banshee", 1600, 900);
 
         Spectre::Renderer::Init();
 
@@ -26,9 +26,7 @@ namespace Banshee {
         ImGui_ImplOpenGL3_Init("#version 330");
         ImGui::StyleColorsDark();
 
-        m_LastFrame = glfwGetTime();
         Logger::INFO("Engine started");
-
         m_World = MakeScope<World>();
     }
 
